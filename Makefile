@@ -6,11 +6,13 @@
 #    By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 15:24:20 by jlanza            #+#    #+#              #
-#    Updated: 2023/01/24 15:02:39 by jlanza           ###   ########.fr        #
+#    Updated: 2023/01/24 15:43:12 by jlanza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC =	src/main.c
+SRC =	src/main.c \
+		src/ft_error.c \
+		src/import_map.c
 
 LIBFT = ./libft/libft.a
 OBJ = ${SRC:.c=.o}
