@@ -79,7 +79,7 @@ Session.vim
 tags
 
 # PDF
-*.pdf
+#*.pdf
 
 # MAP FILE
-*.ber
+#*.ber
