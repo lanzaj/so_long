@@ -1,43 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flood_check.c                                      :+:      :+:    :+:   */
+/*   check_map_flood.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 00:11:28 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/25 02:25:10 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/01/25 16:24:54 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../so_long.h"
 
-int	get_number_of_lines(char **map)
-{
-	int	i;
-
-	i = 0;
-	while (map[i])
-		i++;
-	return (i);
-}
-
-char	**dup_map(char **map)
-{
-	char	**map_copy;
-	int		i;
-
-	map_copy = ft_calloc(get_number_of_lines(map) + 1, sizeof(*map));
-	i = 0;
-	while (map[i])
-	{
-		map_copy[i] = ft_strdup(map[i]);
-		i++;
-	}
-	return (map_copy);
-}
-
-char	make_water_flow_on_tile(char **map, int i, int j)
+static char	make_water_flow_on_tile(char **map, int i, int j)
 {
 	if (map[i][j] == '0' || map[i][j] == 'E' || map[i][j] == 'C')
 	{
@@ -47,7 +22,7 @@ char	make_water_flow_on_tile(char **map, int i, int j)
 	return (0);
 }
 
-char	spread_water_from_tile(char **map, int i, int j)
+static char	spread_water_from_tile(char **map, int i, int j)
 {
 	char	b_has_spread;
 
@@ -59,7 +34,7 @@ char	spread_water_from_tile(char **map, int i, int j)
 	return (b_has_spread);
 }
 
-char	flood_map(char **map)
+static char	flood_map(char **map)
 {
 	int		i;
 	int		j;
@@ -83,13 +58,13 @@ char	flood_map(char **map)
 	return (b_has_spread);
 }
 
-int	check_flooded_map(char **map)
+static int	check_flooded_map(char **map)
 {
 	return (count_char_in_map(map, 'C') + count_char_in_map(map, 'E'));
 }
 
 // this version of the flood check consider that you can walk on E
-void	flood_check(char **map)
+void	check_map_flood(char **map)
 {
 	char	**map_copy;
 	char	bool;
@@ -101,7 +76,7 @@ void	flood_check(char **map)
 	if (check_flooded_map(map_copy))
 	{
 		free_map(map_copy);
-		verif_map_error(11, map);
+		check_map_error(11, map);
 	}
 	free_map(map_copy);
 }

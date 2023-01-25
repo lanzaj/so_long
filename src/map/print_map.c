@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   print_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/24 15:05:56 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/25 16:22:39 by jlanza           ###   ########.fr       */
+/*   Created: 2023/01/24 22:21:30 by jlanza            #+#    #+#             */
+/*   Updated: 2023/01/25 15:46:02 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../so_long.h"
 
-int	main(int argc, char *argv[])
+void	print_map(char **map)
 {
-	char	**map;
+	int	i;
 
-	if (argc != 2)
-		parse_map_error(1);
-	map = import_map(argv[1]);
-	check_map(map);
-	print_map(map);
-	free_map(map);
-	return (0);
+	i = 0;
+	while (map[i])
+	{
+		ft_putendl_fd(map[i], 1);
+		i++;
+	}
 }

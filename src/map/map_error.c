@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_error.c                                      :+:      :+:    :+:   */
+/*   map_error.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/24 22:12:32 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/25 01:36:40 by jlanza           ###   ########.fr       */
+/*   Created: 2023/01/25 16:11:43 by jlanza            #+#    #+#             */
+/*   Updated: 2023/01/25 16:22:39 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../so_long.h"
 
-void	parse_error(int return_value)
+void	parse_map_error(int return_value)
 {
 	if (return_value > 0)
 		ft_putstr_fd("Error\n", 2);
@@ -27,7 +27,7 @@ void	parse_error(int return_value)
 	exit (return_value);
 }
 
-void	verif_map_error(int return_value, char **map)
+void	check_map_error(int return_value, char **map)
 {
 	if (return_value > 0)
 		ft_putstr_fd("Error\n", 2);

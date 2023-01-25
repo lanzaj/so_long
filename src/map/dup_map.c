@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_map.c                                        :+:      :+:    :+:   */
+/*   dup_map.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/24 22:21:30 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/25 02:15:32 by jlanza           ###   ########.fr       */
+/*   Created: 2023/01/25 16:28:22 by jlanza            #+#    #+#             */
+/*   Updated: 2023/01/25 16:30:24 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../so_long.h"
 
-void	print_map(char **map)
+char	**dup_map(char **map)
 {
-	int	i;
+	char	**map_copy;
+	int		i;
 
+	map_copy = ft_calloc(count_number_of_lines(map) + 1, sizeof(*map));
 	i = 0;
 	while (map[i])
 	{
-		ft_putendl_fd(map[i], 1);
+		map_copy[i] = ft_strdup(map[i]);
 		i++;
 	}
+	return (map_copy);
 }

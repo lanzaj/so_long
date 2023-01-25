@@ -6,11 +6,11 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 19:53:35 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/24 19:54:11 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/01/25 15:45:44 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../so_long.h"
 
 char	**free_map(char **tab)
 {
