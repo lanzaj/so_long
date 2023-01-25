@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/25 16:30:57 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/01/25 17:57:37 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,40 @@
 /*include for open*/
 # include <fcntl.h>
 
+/* include libft */
 # include "../libft/libft.h"
+
+/* include minilix */
+# include "../minilibx-linux/mlx.h"
+
+typedef struct s_data {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_data;
 
 typedef struct s_so_long
 {
 	t_list	*garbage;
 }				t_so_long;
 
-/*	ft_map	*/
+			/* COUNT IN MAP */
 int		count_number_of_lines(char **map);
 int		count_char_in_map(char **map, char c);
 
-/*	check	*/
+			/* CHECK */
 void	check_map(char **map);
 int		check_extension(char *path);
 void	check_if_enclosed_in_walls(char **map);
 void	check_map_flood(char **map);
 
-/*	map error	*/
+			/* MAP ERROR */
 void	parse_map_error(int return_value);
 void	check_map_error(int return_value, char **map);
 
+			/* DIVERS */
 char	**import_map(char *path);
 char	**dup_map(char **map);
 char	**free_map(char **tab);

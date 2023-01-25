@@ -6,7 +6,7 @@
 #    By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 15:24:20 by jlanza            #+#    #+#              #
-#    Updated: 2023/01/25 16:29:13 by jlanza           ###   ########.fr        #
+#    Updated: 2023/01/25 17:20:09 by jlanza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,10 +19,12 @@ SRC =	src/main.c \
 		src/map/check_map_flood.c \
 		src/map/check_if_enclosed_in_walls.c \
 		src/map/print_map.c \
-		src/map/ft_map.c \
+		src/map/count_in_map.c \
 		src/map/dup_map.c
 
-LIBFT = ./libft/libft.a
+LIBFT = libft/libft.a
+LIBMLX = minilibx-linux/libmlx.a
+LIBMLX_LINUX = minilibx-linux/libmlx_Linux.a
 OBJ = ${SRC:.c=.o}
 
 NAME = so_long
@@ -36,13 +38,15 @@ HEADER = src/so_long.h
 
 $(NAME): $(OBJ) $(HEADER)
 	$(MAKE) -C ./libft
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) libft/libft.a
+	$(MAKE) -C ./minilibx-linux
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(LIBMLX) $(LIBMLX_LINUX) -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
 
 all: $(NAME)
 
 clean:
 	$(RM) *.o */*.o */*/*.o
 	$(MAKE) fclean -C ./libft
+	$(MAKE) clean -C ./minilibx-linux
 
 fclean: clean
 	$(RM) $(NAME)
