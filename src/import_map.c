@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:27:52 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/24 16:50:15 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/01/25 00:06:45 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,25 +27,6 @@ static int	check_extension(char *path)
 	return (1);
 }
 
-static	char	**lst_to_tab(t_list *lst)
-{
-	int		i;
-	char	**map;
-	t_list	*current;
-
-	map = ft_calloc(ft_lstsize(lst) + 2, sizeof(*map));
-	current = lst;
-	i = 0;
-	while (current != NULL)
-	{
-		map[i] = ft_strdup(current->content);
-		current = current->next;
-		i++;
-	}
-	ft_lstclear(&lst, &free);
-	return (map);
-}
-
 t_list	*fd_to_lst(int fd)
 {
 	t_list	*lst;
@@ -59,6 +40,41 @@ t_list	*fd_to_lst(int fd)
 		line = get_next_line(fd);
 	}
 	return (lst);
+}
+
+void	trim_backslash_n(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\n')
+			str[i] = '\0';
+		i++;
+	}
+}
+
+static	char	**lst_to_tab(t_list *lst)
+{
+	int		i;
+	char	**map;
+	t_list	*current;
+
+	if (lst == NULL)
+		parse_error(4);
+	map = ft_calloc(ft_lstsize(lst) + 2, sizeof(*map));
+	current = lst;
+	i = 0;
+	while (current != NULL)
+	{
+		map[i] = ft_strdup(current->content);
+		trim_backslash_n(map[i]);
+		current = current->next;
+		i++;
+	}
+	ft_lstclear(&lst, &free);
+	return (map);
 }
 
 char	**fd_to_map(int fd)
@@ -78,10 +94,10 @@ char	**import_map(char *path)
 
 	map = NULL;
 	if (!check_extension(path))
-		ft_error(2);
+		parse_error(2);
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-		ft_error(3);
+		parse_error(3);
 	map = fd_to_map(fd);
 	return (map);
 }
