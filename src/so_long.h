@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/25 17:57:37 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/01/26 15:07:47 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,11 @@
 //# include <sys/types.h>
 //# include <sys/stat.h>
 
-/*include for open*/
+/* include for open */
 # include <fcntl.h>
+
+/* include math lib*/
+# include <math.h>
 
 /* include libft */
 # include "../libft/libft.h"
@@ -31,6 +34,8 @@ typedef struct s_data {
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+	int		width;
+	int		heigh;
 }				t_data;
 
 typedef struct s_so_long
