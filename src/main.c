@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:05:56 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/26 18:55:14 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/01/26 21:02:36 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,14 +130,14 @@ int	main(int argc, char *argv[])
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 500, 0);
 	mlx_put_image_to_window(mlx, mlx_win, tile, 500, 500);
-	int	t;
-	t = 0;
-	while (t <= 1000)
-	{
-		mlx_put_image_to_window(mlx, mlx_win, img.img, 0 + t, 0);
-		mlx_put_image_to_window(mlx, mlx_win, img.img, 0 + t, 0);
-		t = t + 12;
-	}
+	// int	t;
+	// t = 0;
+	// while (t <= 1000)
+	// {
+	// 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0 + t, 0);
+	// 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0 + t, 0);
+	// 	t = t + 12;
+	// }
 	mlx_loop(mlx);
 
 	print_map(map);
