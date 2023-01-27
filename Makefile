@@ -6,7 +6,7 @@
 #    By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 15:24:20 by jlanza            #+#    #+#              #
-#    Updated: 2023/01/25 17:20:09 by jlanza           ###   ########.fr        #
+#    Updated: 2023/01/27 13:05:43 by jlanza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ SRC =	src/main.c \
 		src/map/check_if_enclosed_in_walls.c \
 		src/map/print_map.c \
 		src/map/count_in_map.c \
-		src/map/dup_map.c
+		src/map/dup_map.c \
+		src/gui/my_mlx_function.c
 
 LIBFT = libft/libft.a
 LIBMLX = minilibx-linux/libmlx.a

@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/26 15:07:47 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/01/27 13:04:08 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # include "../minilibx-linux/mlx.h"
 
 typedef struct s_data {
+	void	*mlx;
+	void	*mlx_win;
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
@@ -57,10 +59,13 @@ void	check_map_flood(char **map);
 void	parse_map_error(int return_value);
 void	check_map_error(int return_value, char **map);
 
-			/* DIVERS */
+			/* Map */
 char	**import_map(char *path);
 char	**dup_map(char **map);
 char	**free_map(char **tab);
 void	print_map(char **map);
+
+			/* gui */
+void	my_mlx_background_put(t_data *data, int color);
 
 #endif

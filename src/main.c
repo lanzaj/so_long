@@ -6,141 +6,103 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:05:56 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/26 21:02:36 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/01/27 13:45:23 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void	setup_mlx(t_data *data)
 {
-	char	*dst;
+	data->mlx = mlx_init();
+	data->mlx_win = mlx_new_window(data->mlx, 1920, 1080, "so_long");
+	data->width = 1920;
+	data->heigh = 1080;
+	data->img = mlx_new_image(data->mlx, data->width, data->heigh);
+	data->addr = mlx_get_data_addr(data->img, &(data->bits_per_pixel),
+			&(data->line_length),
+			&(data->endian));
+	my_mlx_background_put(data, 0x00FF0000);
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	if (!(x < 0 || x >= data->width || y < 0 || y >= data->heigh))
-		*(unsigned int*)dst = color;
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
 }
 
-void	my_mlx_square_put(t_data *data, int x, int y, int color)
+int	game(void)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < 100)
-	{
-		j = 0;
-		while (j < 100)
-		{
-			my_mlx_pixel_put(data, x + i, y + j, color);
-			j++;
-		}
-		i++;
-	}
+	//write(1, "here\n", 5);
+	return (0);
 }
 
-void	my_mlx_circle_put(t_data *data, int x, int y, int color)
+int	close_window(t_data *data)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < 100)
-	{
-		j = 0;
-		while (j < 100)
-		{
-			if (sqrt(pow((x + i) - (50 + x), 2) + pow((y + j) - (50 + y), 2)) < 50)
-				my_mlx_pixel_put(data, x + i, y + j, color);
-			j++;
-		}
-		i++;
-	}
+	mlx_destroy_image(data->mlx, data->img);
+	mlx_destroy_window(data->mlx, data->mlx_win);
+	mlx_destroy_display(data->mlx);
+	exit(0);
 }
 
-void	my_mlx_triange_put(t_data *data, int x, int y, int color)
+int	key_press(int keycode, void *data)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < 100)
-	{
-		j = 0;
-		while (j < i / 2)
-		{
-			my_mlx_pixel_put(data, 50 - j + x, y + i, color);
-			my_mlx_pixel_put(data, 50 + j + x, y + i, color);
-			j++;
-		}
-		i++;
-	}
+	printf("%d\n", keycode);
+	if (keycode == 65307)
+		close_window(data);
+	return (0);
 }
 
-void	my_mlx_background_put(t_data *data, int color)
+int	game_init(t_data *data)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < data->width)
-	{
-		j = 0;
-		while (j < data->heigh)
-		{
-			my_mlx_pixel_put(data, i, j, color);
-			j++;
-		}
-		i++;
-	}
+	mlx_hook(data->mlx_win, 17, 1L << 0, close_window, data);
+	mlx_hook(data->mlx_win, 2, 1L << 0, key_press, data);
+	mlx_loop_hook(data->mlx, game, data);
+	mlx_loop(data->mlx);
+	return (0);
 }
 
 int	main(int argc, char *argv[])
 {
 	char	**map;
-	void	*mlx;
-	void	*mlx_win;
-	t_data	img;
-
+	t_data	data;
 
 	if (argc != 2)
 		parse_map_error(1);
 	map = import_map(argv[1]);
 	check_map(map);
- //////////////////////END OF CHECKING/////////////////////////////////////
-	mlx = mlx_init();
-	img.width = 1920;
-	img.heigh = 1080;
-	mlx_win = mlx_new_window(mlx, 1920, 1080, "so_long");
-	img.img = mlx_new_image(mlx, 1920, 1080);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-			&img.endian);
-
-	my_mlx_background_put(&img, 0x00FFFFFF);
-	my_mlx_circle_put(&img, 1000, 500, 0x00FF0000);
-	my_mlx_square_put(&img, 5, 5, 0x0000FF00);
-	my_mlx_triange_put(&img, 5, 5, 0x000000FF);
-	my_mlx_pixel_put(&img, 1919, 1079, 0x00FF0000);
-	my_mlx_pixel_put(&img, 0, 0, 0x00FF0000);
-
-	int	tile_width;
-	int	tile_height;
-	void	*tile;
-	tile = mlx_xpm_file_to_image(mlx, "./img/64_floor_1.xpm", &tile_width, &tile_height);
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 500, 0);
-	mlx_put_image_to_window(mlx, mlx_win, tile, 500, 500);
-	// int	t;
-	// t = 0;
-	// while (t <= 1000)
-	// {
-	// 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0 + t, 0);
-	// 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0 + t, 0);
-	// 	t = t + 12;
-	// }
-	mlx_loop(mlx);
-
-	print_map(map);
-	free_map(map);
-	return (0);
+	setup_mlx(&data);
+	game_init(&data);
+/* 1: Create every hook
+	2: Launch loop */
 }
+
+
+
+
+
+
+
+
+
+//  //////////////////////END OF CHECKING/////////////////////////////////////
+
+
+
+// 	data.addr = mlx_get_data_addr(data.img, &data.bits_per_pixel, &data.line_length,
+// 			&data.endian);
+
+// 	////////////////////////////////////////////////////////////////
+
+// 	int	tile_width;
+// 	int	tile_height;
+// void	*tile;
+// tile = mlx_xpm_file_to_image(data->mlx, "./img/64_floor_1.xpm", &tile_width, &tile_height);
+// mlx_put_image_to_window(data->mlx, data->mlx_win, tile, 0, 0);
+// 	mlx_put_image_to_window(mlx, mlx_win, img.img, 500, 0);
+// 	mlx_put_image_to_window(mlx, mlx_win, tile, 500, 500);
+
+
+// 	mlx_loop_hook(mlx, game, mlx_win);
+// 	mlx_loop(mlx);
+
+// 	print_map(map);
+// 	free_map(map);
+// 	return (0);
+// }
