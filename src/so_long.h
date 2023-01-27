@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/27 13:04:08 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/01/27 16:33:37 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,34 @@
 /* include minilix */
 # include "../minilibx-linux/mlx.h"
 
-typedef struct s_data {
-	void	*mlx;
-	void	*mlx_win;
-	void	*img;
-	char	*addr;
+typedef struct s_img {
+	void	*img_ptr;
+	void	*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
 	int		width;
 	int		heigh;
+}				t_img;
+
+typedef struct s_texture {
+	t_img	back_layer;
+	t_img	player;
+	t_img	front_layer;
+	t_img	floor;
+	t_img	wall_u;
+	t_img	wall_d;
+	t_img	wall_l;
+	t_img	wall_r;
+	t_img	exit_f;
+	t_img	exit_t;
+	t_img	coin;
+}				t_texture;
+
+typedef struct s_data {
+	void		*mlx;
+	void		*mlx_win;
+	t_texture	imgs;
 }				t_data;
 
 typedef struct s_so_long

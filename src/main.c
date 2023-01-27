@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:05:56 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/27 13:45:23 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/01/27 15:23:48 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	close_window(t_data *data)
 	mlx_destroy_image(data->mlx, data->img);
 	mlx_destroy_window(data->mlx, data->mlx_win);
 	mlx_destroy_display(data->mlx);
+	free(data->mlx);
 	exit(0);
 }
 
@@ -68,9 +69,9 @@ int	main(int argc, char *argv[])
 	map = import_map(argv[1]);
 	check_map(map);
 	setup_mlx(&data);
+	free_map(map);
 	game_init(&data);
-/* 1: Create every hook
-	2: Launch loop */
+	return (0);
 }
 
 
