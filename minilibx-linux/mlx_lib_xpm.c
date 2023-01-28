@@ -1,9 +1,9 @@
 /*
-** mlx_xpm.c for minilibX in 
-** 
+** mlx_xpm.c for minilibX in
+**
 ** Made by Charlie Root
 ** Login   <ol@epitech.net>
-** 
+**
 ** Started on  Fri Dec  8 11:07:24 2000 Charlie Root
 ** Last update Thu Oct  4 16:00:22 2001 Charlie Root
 */
@@ -14,7 +14,7 @@
 
 
 
-void		*mlx_int_xpm_f_image(t_xvar *xvar,int *width,int *height,
+void		*mlx_int_img_f_image(t_xvar *xvar,int *width,int *height,
 				     int (*xpm_func)(),void *param)
 {
   XImage	*img1;
@@ -86,11 +86,11 @@ int	mlx_int_egal_img(XImage *img1,XImage *img2)
 void	*mlx_xpm_file_to_image(t_xvar *xvar,char *filename,
 			       int *width,int *height)
 {
-  return (mlx_int_xpm_f_image(xvar,width,height,XpmReadFileToImage,filename));
+  return (mlx_int_img_f_image(xvar,width,height,XpmReadFileToImage,filename));
 }
 
 
 void	*mlx_xpm_to_image(t_xvar *xvar,char **data,int *width,int *height)
 {
-  return (mlx_int_xpm_f_image(xvar,width,height,XpmCreateImageFromData,(void *)data));
+  return (mlx_int_img_f_image(xvar,width,height,XpmCreateImageFromData,(void *)data));
 }

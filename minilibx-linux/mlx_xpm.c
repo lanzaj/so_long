@@ -1,9 +1,9 @@
 /*
- ** xpm-read.c for MinilibX in 
- ** 
+ ** xpm-read.c for MinilibX in
+ **
  ** Made by Charlie Root
  ** Login   <ol@epitech.net>
- ** 
+ **
  ** Started on  Tue Dec 11 15:25:27 2001 olivier crouzet
  ** Last update Sat Oct  1 14:56:13 2005 Olivier Crouzet
  */
@@ -76,7 +76,7 @@ char	*mlx_int_static_line(char **xpm_data,int *pos,int size)
 			len = len2;
 	}
 	strlcpy_is_not_posix(copy, str, len2);
-	
+
 	return (copy);
 }
 
@@ -88,7 +88,7 @@ int	mlx_int_get_col_name(char *str,int size)
 	result = 0;
 	while (size--)
 		result = (result<<8)+*(str++);
-	
+
 	return (result);
 }
 
@@ -115,10 +115,10 @@ int	mlx_int_get_text_rgb(char *name, char *end)
 }
 
 
-int	mlx_int_xpm_set_pixel(t_img *img, char *data, int opp, int col, int x)
+int	mlx_int_img_set_pixel(t_img *img, char *data, int opp, int col, int x)
 {
 	int	dec;
-	
+
 	dec = opp;
   	while (dec--)
     {
@@ -149,7 +149,7 @@ void	*mlx_int_parse_xpm(t_xvar *xvar,void *info,int info_size,char *(*f)())
 		int		i;
 		int		j;
 		t_img	*img;
-		t_xpm_col	*colors;
+		t_img_col	*colors;
 		int		*colors_direct;
 		int		width;
 		int		height;
@@ -250,12 +250,12 @@ void	*mlx_int_parse_xpm(t_xvar *xvar,void *info,int info_size,char *(*f)())
 						if (col==-1)
 								XPutPixel(clip_img, x, height-1-i, 0);
 						else
-								mlx_int_xpm_set_pixel(img, data, opp, col, x);
+								mlx_int_img_set_pixel(img, data, opp, col, x);
 						x ++;
 						*/
 						if (col==-1)
 							col = 0xFF000000;
-						mlx_int_xpm_set_pixel(img, data, opp, col, x);
+						mlx_int_img_set_pixel(img, data, opp, col, x);
 						++x;
 				}
 				data += img->size_line;

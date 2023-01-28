@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/28 17:35:09 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/01/28 22:59:20 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,32 +34,30 @@ typedef struct s_img {
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+	int		width;
+	int		height;
 }				t_img;
 
 typedef struct s_layer {
 	t_img	front;
 	t_img	back;
+	t_img	tmp;
+	t_img	render;
 }				t_layer;
 
-typedef struct s_xpm {
-	void	*xpm;
-	int		width;
-	int		heigh;
-}				t_xpm;
-
 typedef struct s_floor {
-	t_xpm	f;
+	t_img	f;
 }				t_floor;
 
 typedef struct s_wall {
-	t_xpm	up;
-	t_xpm	down;
-	t_xpm	left;
-	t_xpm	right;
+	t_img	up;
+	t_img	down;
+	t_img	left;
+	t_img	right;
 }				t_wall;
 
 typedef struct s_player {
-	t_xpm	player;
+	t_img	player;
 	int		x;
 	int		y;
 }				t_player;
@@ -69,8 +67,8 @@ typedef struct s_coin {
 }				t_coin;
 
 typedef struct s_exit {
-	t_xpm	open;
-	t_xpm	closed;
+	t_img	open;
+	t_img	closed;
 }				t_exit;
 
 
@@ -79,6 +77,8 @@ typedef struct s_data {
 	void		*win;
 	int			width;
 	int			heigh;
+	int			last_pixel_offset;
+	char		**map;
 	t_layer		layer;
 	t_floor		floor;
 	t_wall		wall;
@@ -86,11 +86,6 @@ typedef struct s_data {
 	t_coin		coin;
 	t_player	player;
 }				t_data;
-
-typedef struct s_so_long
-{
-	t_list	*garbage;
-}				t_so_long;
 
 			/* COUNT IN MAP */
 int		count_number_of_lines(char **map);
@@ -114,5 +109,7 @@ void	print_map(char **map);
 
 			/* gui */
 void	my_mlx_background_put(t_data *data, int color);
+void	my_mlx_put_img_to_tmp_layer(t_data *data, t_img *xpm, int x, int y);
+void	my_mlx_put_tmp_to_render(t_data *data);
 
 #endif
