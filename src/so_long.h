@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/27 16:33:37 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/01/28 17:35:09 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,33 +29,62 @@
 # include "../minilibx-linux/mlx.h"
 
 typedef struct s_img {
-	void	*img_ptr;
+	void	*img;
 	void	*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-	int		width;
-	int		heigh;
 }				t_img;
 
-typedef struct s_texture {
-	t_img	back_layer;
-	t_img	player;
-	t_img	front_layer;
-	t_img	floor;
-	t_img	wall_u;
-	t_img	wall_d;
-	t_img	wall_l;
-	t_img	wall_r;
-	t_img	exit_f;
-	t_img	exit_t;
-	t_img	coin;
-}				t_texture;
+typedef struct s_layer {
+	t_img	front;
+	t_img	back;
+}				t_layer;
+
+typedef struct s_xpm {
+	void	*xpm;
+	int		width;
+	int		heigh;
+}				t_xpm;
+
+typedef struct s_floor {
+	t_xpm	f;
+}				t_floor;
+
+typedef struct s_wall {
+	t_xpm	up;
+	t_xpm	down;
+	t_xpm	left;
+	t_xpm	right;
+}				t_wall;
+
+typedef struct s_player {
+	t_xpm	player;
+	int		x;
+	int		y;
+}				t_player;
+
+typedef struct s_coin {
+	t_img	c1;
+}				t_coin;
+
+typedef struct s_exit {
+	t_xpm	open;
+	t_xpm	closed;
+}				t_exit;
+
 
 typedef struct s_data {
 	void		*mlx;
-	void		*mlx_win;
-	t_texture	imgs;
+	void		*win;
+	int			width;
+	int			heigh;
+	t_layer		layer;
+	t_floor		floor;
+	t_wall		wall;
+	t_exit		exit;
+	t_coin		coin;
+	t_player	player;
 }				t_data;
 
 typedef struct s_so_long
