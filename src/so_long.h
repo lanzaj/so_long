@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/28 22:59:20 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/01/29 13:52:53 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@
 
 /* include minilix */
 # include "../minilibx-linux/mlx.h"
+
+typedef struct s_coord {
+	int	x;
+	int	y;
+}				t_coord;
 
 typedef struct s_img {
 	void	*img;
@@ -58,8 +63,7 @@ typedef struct s_wall {
 
 typedef struct s_player {
 	t_img	player;
-	int		x;
-	int		y;
+	t_coord	coord;
 }				t_player;
 
 typedef struct s_coin {
@@ -71,14 +75,27 @@ typedef struct s_exit {
 	t_img	closed;
 }				t_exit;
 
+typedef struct s_way {
+	char	up;
+	char	left;
+	char	right;
+	char	down;
+}				t_way;
+
+typedef struct s_map {
+	char	**ptr;
+	int		width;
+	int		height;
+}				t_map;
 
 typedef struct s_data {
 	void		*mlx;
 	void		*win;
 	int			width;
-	int			heigh;
+	int			height;
 	int			last_pixel_offset;
-	char		**map;
+	t_map		map;
+	t_way		way;
 	t_layer		layer;
 	t_floor		floor;
 	t_wall		wall;
@@ -86,6 +103,7 @@ typedef struct s_data {
 	t_coin		coin;
 	t_player	player;
 }				t_data;
+
 
 			/* COUNT IN MAP */
 int		count_number_of_lines(char **map);
@@ -111,5 +129,7 @@ void	print_map(char **map);
 void	my_mlx_background_put(t_data *data, int color);
 void	my_mlx_put_img_to_tmp_layer(t_data *data, t_img *xpm, int x, int y);
 void	my_mlx_put_tmp_to_render(t_data *data);
+
+void	pixel_put_tmp_layer(t_data *data, int x, int y, int color);
 
 #endif
