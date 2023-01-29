@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/29 13:52:53 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/01/29 19:41:11 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 
 /* include minilix */
 # include "../minilibx-linux/mlx.h"
+
+# define LOOP_SIZE 50
 
 typedef struct s_coord {
 	int	x;
@@ -57,13 +59,23 @@ typedef struct s_floor {
 typedef struct s_wall {
 	t_img	up;
 	t_img	down;
-	t_img	left;
-	t_img	right;
 }				t_wall;
 
+typedef struct s_sprite {
+	t_img	idle_0;
+	t_img	idle_1;
+	t_img	idle_2;
+	t_img	idle_3;
+	t_img	run_0;
+	t_img	run_1;
+	t_img	run_2;
+	t_img	run_3;
+}				t_sprite;
+
 typedef struct s_player {
-	t_img	player;
-	t_coord	coord;
+	t_sprite	l;
+	t_sprite	r;
+	t_coord		coord;
 }				t_player;
 
 typedef struct s_coin {
@@ -80,6 +92,7 @@ typedef struct s_way {
 	char	left;
 	char	right;
 	char	down;
+	char	dir;
 }				t_way;
 
 typedef struct s_map {
@@ -94,6 +107,7 @@ typedef struct s_data {
 	int			width;
 	int			height;
 	int			last_pixel_offset;
+	int			frame;
 	t_map		map;
 	t_way		way;
 	t_layer		layer;
@@ -103,6 +117,7 @@ typedef struct s_data {
 	t_coin		coin;
 	t_player	player;
 }				t_data;
+
 
 
 			/* COUNT IN MAP */
@@ -127,7 +142,7 @@ void	print_map(char **map);
 
 			/* gui */
 void	my_mlx_background_put(t_data *data, int color);
-void	my_mlx_put_img_to_tmp_layer(t_data *data, t_img *xpm, int x, int y);
+void	put_img_to_tmp(t_data *data, t_img *xpm, int x, int y);
 void	my_mlx_put_tmp_to_render(t_data *data);
 
 void	pixel_put_tmp_layer(t_data *data, int x, int y, int color);

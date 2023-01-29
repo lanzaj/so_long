@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 00:11:28 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/26 14:01:51 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/01/29 17:50:07 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	check_map_flood(char **map)
 	bool = 1;
 	while (bool)
 		bool = flood_map(map_copy);
-	print_map(map_copy);
 	if (check_flooded_map(map_copy))
 	{
 		free_map(map_copy);

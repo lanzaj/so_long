@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 11:47:16 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/29 03:12:02 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/01/29 18:08:45 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	get_color(t_img *xpm, int x, int y)
 			+ y * xpm->line_length)));
 }
 
-void	my_mlx_put_img_to_tmp_layer(t_data *data, t_img *xpm, int x, int y)
+void	put_img_to_tmp(t_data *data, t_img *xpm, int x, int y)
 {
 	int	i;
 	int	j;

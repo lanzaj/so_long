@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:05:56 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/29 13:50:39 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/01/29 19:58:24 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,22 @@ void	import_imgs(t_data *data)
 	new_layer(data, &(data->layer.render));
 	import_img(data, &(data->floor.f), "./img/64_floor_1.xpm");
 	import_img(data, &(data->wall.up), "./img/64_wall_up.xpm");
+	import_img(data, &(data->player.r.idle_0), "./img/64_knight_idle_r0.xpm");
+	import_img(data, &(data->player.r.idle_1), "./img/64_knight_idle_r1.xpm");
+	import_img(data, &(data->player.r.idle_2), "./img/64_knight_idle_r2.xpm");
+	import_img(data, &(data->player.r.idle_3), "./img/64_knight_idle_r3.xpm");
+	import_img(data, &(data->player.r.run_0), "./img/64_knight_run_r0.xpm");
+	import_img(data, &(data->player.r.run_1), "./img/64_knight_run_r1.xpm");
+	import_img(data, &(data->player.r.run_2), "./img/64_knight_run_r2.xpm");
+	import_img(data, &(data->player.r.run_3), "./img/64_knight_run_r3.xpm");
+	import_img(data, &(data->player.l.idle_0), "./img/64_knight_idle_l0.xpm");
+	import_img(data, &(data->player.l.idle_1), "./img/64_knight_idle_l1.xpm");
+	import_img(data, &(data->player.l.idle_2), "./img/64_knight_idle_l2.xpm");
+	import_img(data, &(data->player.l.idle_3), "./img/64_knight_idle_l3.xpm");
+	import_img(data, &(data->player.l.run_0), "./img/64_knight_run_l0.xpm");
+	import_img(data, &(data->player.l.run_1), "./img/64_knight_run_l1.xpm");
+	import_img(data, &(data->player.l.run_2), "./img/64_knight_run_l2.xpm");
+	import_img(data, &(data->player.l.run_3), "./img/64_knight_run_l3.xpm");
 }
 
 void	setup_mlx(t_data *data)
@@ -60,11 +76,12 @@ void	setup_mlx(t_data *data)
 	data->last_pixel_offset = (480 * data->layer.render.line_length
 			+ 736 * (data->layer.render.bits_per_pixel / 8)) - 2945;
 	my_mlx_background_put(data, 0x00191919);
-	printf("%d\n", data->last_pixel_offset);
 	data->way.up = 0;
 	data->way.down = 0;
 	data->way.left = 0;
 	data->way.right = 0;
+	data->way.dir = 1;
+	data->frame = 0;
 	data->map.width = ft_strlen((data->map.ptr)[0]);
 	data->map.height = count_number_of_lines(data->map.ptr);
 }
@@ -87,11 +104,15 @@ void	update_x_y(t_way *way, int *x, int *y)
 			*x += -14;
 	if (!(way->left) && way->right && !(way->up || way ->down))
 			*x += -20;
+	if (!(way->left) && way->right)
+		way->dir = 1;
+	if (way->left && !(way->right))
+		way->dir = 0;
 }
 
 void	draw_floor(t_data *data, t_coord player, t_coord tile)
 {
-	my_mlx_put_img_to_tmp_layer(data, &(data->floor.f),
+	put_img_to_tmp(data, &(data->floor.f),
 		player.x / 10 + (tile.x * 64), player.y / 10 + (tile.y * 64));
 }
 
@@ -99,12 +120,12 @@ void	draw_wall(t_data *data, t_coord player, t_coord tile)
 {
 	if (tile.y + 1 > 0 && tile.y + 1 < data->map.height
 		&& data->map.ptr[tile.y + 1][tile.x] == '0')
-		my_mlx_put_img_to_tmp_layer(data, &(data->wall.up),
+		put_img_to_tmp(data, &(data->wall.up),
 			player.x / 10 + (tile.x * 64),
 			(player.y) / 10 - 16 + (tile.y * 64));
 	if (tile.y - 1 > 0 && tile.y - 1 < data->map.height
 		&& data->map.ptr[tile.y - 1][tile.x] == '0')
-		my_mlx_put_img_to_tmp_layer(data, &(data->wall.up),
+		put_img_to_tmp(data, &(data->wall.up),
 			player.x / 10 + (tile.x * 64),
 			(player.y) / 10 - 16 + (tile.y * 64));
 }
@@ -120,7 +141,7 @@ void	draw_map(t_data *data, t_coord player)
 	{
 		tile.x = 0;
 		while (tile.x < data->map.width)
-		{//12 * 64 - 0 > 736
+		{
 			if ((tile.x * 64) + player.x / 10 < data->width + 16
 				&& (tile.y * 64) + player.y / 10 < data->height + 16
 				&& tile.x * 64 + player.x / 10 > -80
@@ -137,19 +158,61 @@ void	draw_map(t_data *data, t_coord player)
 	}
 }
 
+char	is_moving(t_way way)
+{
+	return ((way.up && !(way.down)) || (!(way.up) && way.down)
+		|| (way.right && !(way.left)) || (!(way.right) && way.left));
+}
+
+void	put_player_dir(t_data *d, t_sprite p, int frame)
+{
+	if (is_moving(d->way))
+	{
+		if (frame < LOOP_SIZE / 4)
+			put_img_to_tmp(d, &(p.run_0), d->width / 2 - 32, d->height / 2 - 80);
+		else if (frame < LOOP_SIZE / 2)
+			put_img_to_tmp(d, &(p.run_1), d->width / 2 - 32, d->height / 2 - 80);
+		else if (frame < LOOP_SIZE * 3 / 4)
+			put_img_to_tmp(d, &(p.run_2), d->width / 2 - 32, d->height / 2 - 80);
+		else
+			put_img_to_tmp(d, &(p.run_3), d->width / 2 - 32, d->height / 2 - 80);
+	}
+	else
+	{
+		if (frame < LOOP_SIZE / 4)
+			put_img_to_tmp(d, &(p.idle_0), d->width / 2 - 32, d->height / 2 - 80);
+		else if (frame < LOOP_SIZE / 2)
+			put_img_to_tmp(d, &(p.idle_1), d->width / 2 - 32, d->height / 2 - 80);
+		else if (frame < LOOP_SIZE * 3 / 4)
+			put_img_to_tmp(d, &(p.idle_2), d->width / 2 - 32, d->height / 2 - 80);
+		else
+			put_img_to_tmp(d, &(p.idle_3), d->width / 2 - 32, d->height / 2 - 80);
+	}
+}
+
+void	put_player(t_data *d, t_player p, int frame)
+{
+	if (d->way.dir)
+		put_player_dir(d, p.r, frame);
+	else
+		put_player_dir(d, p.l, frame);
+}
+
 int	game(t_data *data)
 {
 	static t_coord	player = {0, 0};
 
-	pixel_put_tmp_layer(data, 735, 479, 0x00FFFFFF);
+	data->frame++;
+	if ((data->frame) > LOOP_SIZE)
+		data->frame = 0;
+	data->frame++;
 	ft_memcpy(data->layer.tmp.addr, data->layer.back.addr,
 		data->last_pixel_offset);
-	//my_mlx_put_img_to_tmp_layer(data, &(data->layer.back), 0, 0);
 	draw_map(data, player);
+	put_player(data, data->player, data->frame);
 
 	ft_memcpy(data->layer.render.addr, data->layer.tmp.addr,
 		data->last_pixel_offset);
-	//my_mlx_put_tmp_to_render(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->layer.render.img, 0, 0);
 	update_x_y(&(data->way), &(player.x), &(player.y));
 	return (0);
@@ -163,6 +226,22 @@ int	close_window(t_data *data)
 	mlx_destroy_image(data->mlx, data->layer.render.img);
 	mlx_destroy_image(data->mlx, data->floor.f.img);
 	mlx_destroy_image(data->mlx, data->wall.up.img);
+	mlx_destroy_image(data->mlx, data->player.r.idle_0.img);
+	mlx_destroy_image(data->mlx, data->player.r.idle_1.img);
+	mlx_destroy_image(data->mlx, data->player.r.idle_2.img);
+	mlx_destroy_image(data->mlx, data->player.r.idle_3.img);
+	mlx_destroy_image(data->mlx, data->player.r.run_0.img);
+	mlx_destroy_image(data->mlx, data->player.r.run_1.img);
+	mlx_destroy_image(data->mlx, data->player.r.run_2.img);
+	mlx_destroy_image(data->mlx, data->player.r.run_3.img);
+	mlx_destroy_image(data->mlx, data->player.l.idle_0.img);
+	mlx_destroy_image(data->mlx, data->player.l.idle_1.img);
+	mlx_destroy_image(data->mlx, data->player.l.idle_2.img);
+	mlx_destroy_image(data->mlx, data->player.l.idle_3.img);
+	mlx_destroy_image(data->mlx, data->player.l.run_0.img);
+	mlx_destroy_image(data->mlx, data->player.l.run_1.img);
+	mlx_destroy_image(data->mlx, data->player.l.run_2.img);
+	mlx_destroy_image(data->mlx, data->player.l.run_3.img);
 	mlx_destroy_window(data->mlx, data->win);
 	mlx_destroy_display(data->mlx);
 	free(data->mlx);
@@ -175,7 +254,6 @@ int	key_press(int keycode, void *data)
 	t_data	*d;
 
 	d = (t_data *)data;
-	//printf("%d\n", keycode);
 	if (keycode == 65307)
 		close_window(data);
 	if (keycode == 119)
@@ -194,7 +272,6 @@ int	key_release(int keycode, void *data)
 	t_data	*d;
 
 	d = (t_data *)data;
-	printf("%d\n", keycode);
 	if (keycode == 65307)
 		close_window(data);
 	if (keycode == 119)
@@ -230,14 +307,6 @@ int	main(int argc, char *argv[])
 	game_init(&data);
 	return (0);
 }
-
-
-
-
-
-
-
-
 
 //  //////////////////////END OF CHECKING/////////////////////////////////////
 
