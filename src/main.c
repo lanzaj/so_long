@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:05:56 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/30 18:17:08 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/01/30 18:47:07 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	import_img(t_data *data, t_img *xpm, char *path)
 
 void	import_imgs(t_data *data)
 {
-	big_new_layer(data, &(data->layer.front));
-	big_new_layer(data, &(data->layer.back));
+	//big_new_layer(data, &(data->layer.front));
+	//big_new_layer(data, &(data->layer.back));
 	new_layer(data, &(data->layer.tmp));
 	new_layer(data, &(data->layer.render));
 	import_img(data, &(data->floor.f), "./img/64_floor_1.xpm");
@@ -172,27 +172,22 @@ void	update_x_y(t_way *way, int *x, int *y)
 		way->dir = 0;
 }
 
-void	draw_floor(t_data *data, t_coord player, t_coord tile)
+void	draw_floor(t_data *data, t_coord tile)
 {
-	put_img_to_tmp(data, &(data->floor.f),
-		player.x / 10 + (tile.x * 64), player.y / 10 + (tile.y * 64));
+	put_img_to_tmp(data, &(data->floor.f), (tile.x * 16), (tile.y * 16));
 }
 
-void	draw_wall(t_data *data, t_coord player, t_coord tile)
+void	draw_wall(t_data *data, t_coord tile)
 {
 	if (tile.y + 1 > 0 && tile.y + 1 < data->map.height
 		&& data->map.ptr[tile.y + 1][tile.x] == '0')
-		put_img_to_tmp(data, &(data->wall.up),
-			player.x / 10 + (tile.x * 64),
-			(player.y) / 10 - 16 + (tile.y * 64));
+		put_img_to_tmp(data, &(data->wall.up), (tile.x * 64), (tile.y * 64));
 	if (tile.y - 1 > 0 && tile.y - 1 < data->map.height
 		&& data->map.ptr[tile.y - 1][tile.x] == '0')
-		put_img_to_tmp(data, &(data->wall.up),
-			player.x / 10 + (tile.x * 64),
-			(player.y) / 10 - 16 + (tile.y * 64));
+		put_img_to_tmp(data, &(data->wall.up), (tile.x * 64), (tile.y * 64));
 }
 
-void	draw_map(t_data *data, t_coord player)
+void	generate_minimap(t_data *data)
 {
 	char	**map;
 	t_coord	tile;
@@ -204,15 +199,15 @@ void	draw_map(t_data *data, t_coord player)
 		tile.x = 0;
 		while (tile.x < data->map.width)
 		{
-			if ((tile.x * 64) + player.x / 10 < data->width + 16
-				&& (tile.y * 64) + player.y / 10 < data->height + 16
-				&& tile.x * 64 + player.x / 10 > -80
-				&& tile.y * 64 + player.y / 10 > -80)
+			if ((tile.x * 16) < data->width + 16
+				&& (tile.y * 16) < data->height + 16
+				&& tile.x * 16 > -80
+				&& tile.y * 16 > -80)
 			{
 				if (map[tile.y][tile.x] == '0' || map[tile.y][tile.x] == 'P')
-					draw_floor(data, player, tile);
+					draw_floor(data, tile);
 				if (map[tile.y][tile.x] == '1')
-					draw_wall(data, player, tile);
+					draw_wall(data, tile);
 			}
 			tile.x++;
 		}
@@ -294,11 +289,11 @@ int	game(t_data *data)
 	//put_img_to_tmp(data, &(data->layer.front), (data->coord.x) / 10, (data->coord.y) / 10 + 480);
 	//put_img_to_tmp(data, &(data->layer.front), (data->coord.x) / 10 + 736, (data->coord.y) / 10 + 480);
 	put_player(data, data->player, data->frame);
-
 	//ft_memcpy(data->layer.render.addr, data->layer.tmp.addr,
 	//	data->last_pixel_offset);
 	mlx_put_image_to_window(data->mlx, data->win, data->layer.tmp.img, 0, 0);
 	update_x_y(&(data->way), &(data->coord.x), &(data->coord.y));
+	//ft_printf("%d %d\n", data->coord.x, data->coord.y);
 	return (0);
 }
 
