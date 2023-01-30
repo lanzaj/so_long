@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/29 19:41:11 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/01/30 02:37:22 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ typedef struct s_sprite {
 typedef struct s_player {
 	t_sprite	l;
 	t_sprite	r;
-	t_coord		coord;
+	t_coord		sprite;
 }				t_player;
 
 typedef struct s_coin {
@@ -109,6 +109,7 @@ typedef struct s_data {
 	int			last_pixel_offset;
 	int			frame;
 	t_map		map;
+	t_coord		coord;
 	t_way		way;
 	t_layer		layer;
 	t_floor		floor;

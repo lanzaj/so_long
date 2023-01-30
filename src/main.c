@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:05:56 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/29 19:58:24 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/01/30 03:05:16 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,30 @@ void	import_imgs(t_data *data)
 	import_img(data, &(data->player.l.run_3), "./img/64_knight_run_l3.xpm");
 }
 
+void	get_starting_pos(t_data *data)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < data->map.height)
+	{
+		j = 0;
+		while (j < data->map.width)
+		{
+			if (data->map.ptr[i][j] == 'P')
+			{
+				data->coord.x = -10 * (j * 64 - data->player.sprite.x);
+				data->coord.y = -10 * (i * 64 - data->player.sprite.y - 64);
+				printf("%d, %d\n", data->coord.x, data->coord.y);
+				return ;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
 void	setup_mlx(t_data *data)
 {
 	data->mlx = mlx_init();
@@ -84,6 +108,9 @@ void	setup_mlx(t_data *data)
 	data->frame = 0;
 	data->map.width = ft_strlen((data->map.ptr)[0]);
 	data->map.height = count_number_of_lines(data->map.ptr);
+	data->player.sprite.x = data->width / 2 - 32;
+	data->player.sprite.y = data->height / 2 - 80;
+	get_starting_pos(data);
 }
 
 void	update_x_y(t_way *way, int *x, int *y)
@@ -108,6 +135,7 @@ void	update_x_y(t_way *way, int *x, int *y)
 		way->dir = 1;
 	if (way->left && !(way->right))
 		way->dir = 0;
+	printf("x = %d, y = %d\n", *x, *y);
 }
 
 void	draw_floor(t_data *data, t_coord player, t_coord tile)
@@ -164,57 +192,55 @@ char	is_moving(t_way way)
 		|| (way.right && !(way.left)) || (!(way.right) && way.left));
 }
 
-void	put_player_dir(t_data *d, t_sprite p, int frame)
+void	put_player_dir(t_data *d, t_coord coord, t_sprite p, int frame)
 {
 	if (is_moving(d->way))
 	{
 		if (frame < LOOP_SIZE / 4)
-			put_img_to_tmp(d, &(p.run_0), d->width / 2 - 32, d->height / 2 - 80);
+			put_img_to_tmp(d, &(p.run_0), coord.x, coord.y);
 		else if (frame < LOOP_SIZE / 2)
-			put_img_to_tmp(d, &(p.run_1), d->width / 2 - 32, d->height / 2 - 80);
+			put_img_to_tmp(d, &(p.run_1), coord.x, coord.y);
 		else if (frame < LOOP_SIZE * 3 / 4)
-			put_img_to_tmp(d, &(p.run_2), d->width / 2 - 32, d->height / 2 - 80);
+			put_img_to_tmp(d, &(p.run_2), coord.x, coord.y);
 		else
-			put_img_to_tmp(d, &(p.run_3), d->width / 2 - 32, d->height / 2 - 80);
+			put_img_to_tmp(d, &(p.run_3), coord.x, coord.y);
 	}
 	else
 	{
 		if (frame < LOOP_SIZE / 4)
-			put_img_to_tmp(d, &(p.idle_0), d->width / 2 - 32, d->height / 2 - 80);
+			put_img_to_tmp(d, &(p.idle_0), coord.x, coord.y);
 		else if (frame < LOOP_SIZE / 2)
-			put_img_to_tmp(d, &(p.idle_1), d->width / 2 - 32, d->height / 2 - 80);
+			put_img_to_tmp(d, &(p.idle_1), coord.x, coord.y);
 		else if (frame < LOOP_SIZE * 3 / 4)
-			put_img_to_tmp(d, &(p.idle_2), d->width / 2 - 32, d->height / 2 - 80);
+			put_img_to_tmp(d, &(p.idle_2), coord.x, coord.y);
 		else
-			put_img_to_tmp(d, &(p.idle_3), d->width / 2 - 32, d->height / 2 - 80);
+			put_img_to_tmp(d, &(p.idle_3), coord.x, coord.y);
 	}
 }
 
 void	put_player(t_data *d, t_player p, int frame)
 {
 	if (d->way.dir)
-		put_player_dir(d, p.r, frame);
+		put_player_dir(d, p.sprite, p.r, frame);
 	else
-		put_player_dir(d, p.l, frame);
+		put_player_dir(d, p.sprite, p.l, frame);
 }
 
 int	game(t_data *data)
 {
-	static t_coord	player = {0, 0};
-
 	data->frame++;
 	if ((data->frame) > LOOP_SIZE)
 		data->frame = 0;
 	data->frame++;
 	ft_memcpy(data->layer.tmp.addr, data->layer.back.addr,
 		data->last_pixel_offset);
-	draw_map(data, player);
+	draw_map(data, data->coord);
 	put_player(data, data->player, data->frame);
 
 	ft_memcpy(data->layer.render.addr, data->layer.tmp.addr,
 		data->last_pixel_offset);
 	mlx_put_image_to_window(data->mlx, data->win, data->layer.render.img, 0, 0);
-	update_x_y(&(data->way), &(player.x), &(player.y));
+	update_x_y(&(data->way), &(data->coord.x), &(data->coord.y));
 	return (0);
 }
 
@@ -256,13 +282,13 @@ int	key_press(int keycode, void *data)
 	d = (t_data *)data;
 	if (keycode == 65307)
 		close_window(data);
-	if (keycode == 119)
+	if (keycode == 119 || keycode == 65362)
 		d->way.up = 1;
-	if (keycode == 97)
+	if (keycode == 97 || keycode == 65361)
 		d->way.left = 1;
-	if (keycode == 115)
+	if (keycode == 115 || keycode == 65364)
 		d->way.down = 1;
-	if (keycode == 100)
+	if (keycode == 100 || keycode == 65363)
 		d->way.right = 1;
 	return (0);
 }
@@ -274,13 +300,13 @@ int	key_release(int keycode, void *data)
 	d = (t_data *)data;
 	if (keycode == 65307)
 		close_window(data);
-	if (keycode == 119)
+	if (keycode == 119 || keycode == 65362)
 		d->way.up = 0;
-	if (keycode == 97)
+	if (keycode == 97 || keycode == 65361)
 		d->way.left = 0;
-	if (keycode == 115)
+	if (keycode == 115 || keycode == 65364)
 		d->way.down = 0;
-	if (keycode == 100)
+	if (keycode == 100 || keycode == 65363)
 		d->way.right = 0;
 	return (0);
 }
