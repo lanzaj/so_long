@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/30 17:14:00 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/01/30 22:25:35 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_img {
 typedef struct s_layer {
 	t_img	front;
 	t_img	back;
+	t_img	test;
 	t_img	tmp;
 	t_img	render;
 }				t_layer;
