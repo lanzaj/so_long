@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:05:56 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/30 03:05:16 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/01/30 18:17:08 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	import_imgs(t_data *data)
 	import_img(data, &(data->player.l.run_1), "./img/64_knight_run_l1.xpm");
 	import_img(data, &(data->player.l.run_2), "./img/64_knight_run_l2.xpm");
 	import_img(data, &(data->player.l.run_3), "./img/64_knight_run_l3.xpm");
+	import_img(data, &(data->layer.front), "./img/test3.xpm");
 }
 
 void	get_starting_pos(t_data *data)
@@ -79,8 +80,8 @@ void	get_starting_pos(t_data *data)
 		{
 			if (data->map.ptr[i][j] == 'P')
 			{
-				data->coord.x = -10 * (j * 64 - data->player.sprite.x);
-				data->coord.y = -10 * (i * 64 - data->player.sprite.y - 64);
+				data->coord.x = 0; //-10 * (j * 64 - data->player.sprite.x);
+				data->coord.y = 0; //-10 * (i * 64 - data->player.sprite.y - 64);
 				printf("%d, %d\n", data->coord.x, data->coord.y);
 				return ;
 			}
@@ -113,29 +114,62 @@ void	setup_mlx(t_data *data)
 	get_starting_pos(data);
 }
 
+// void	update_x_y(t_way *way, int *x, int *y)
+// {
+// 	if (way->up && !(way->down))
+// 	{
+// 		if (way->left || way->right)
+// 			*y += +14;
+// 		else
+// 			*y += +20;
+// 	}
+// 	if (!(way->up) && way->down)
+// 	{
+// 		if (way->left || way->right)
+// 			*y += -14;
+// 		else
+// 			*y += -20;
+// 	}
+// 	if (way->left && !(way->right))
+// 	{
+// 		if (way->up || way ->down)
+// 			*x += +14;
+// 		else
+// 			*x += +20;
+// 		way->dir = 0;
+// 	}
+// 	if (!(way->left) && way->right)
+// 	{
+// 		if (way->up || way ->down)
+// 			*x += -14;
+// 		else
+// 			*x += -20;
+// 		way->dir = 1;
+// 	}
+// }
+
 void	update_x_y(t_way *way, int *x, int *y)
 {
 	if (way->up && !(way->down) && (way->left || way->right))
-			*y += +14;
-	if (way->up && !(way->down) && !(way->left || way->right))
-			*y += +20;
-	if (!(way->up) && way->down && (way->left || way->right))
 			*y += -14;
-	if (!(way->up) && way->down && !(way->left || way->right))
+	if (way->up && !(way->down) && !(way->left || way->right))
 			*y += -20;
+	if (!(way->up) && way->down && (way->left || way->right))
+			*y += +14;
+	if (!(way->up) && way->down && !(way->left || way->right))
+			*y += +20;
 	if (way->left && !(way->right) && (way->up || way ->down))
-			*x += +14;
-	if (way->left && !(way->right) && !(way->up || way ->down))
-			*x += +20;
-	if (!(way->left) && way->right && (way->up || way ->down))
 			*x += -14;
-	if (!(way->left) && way->right && !(way->up || way ->down))
+	if (way->left && !(way->right) && !(way->up || way ->down))
 			*x += -20;
+	if (!(way->left) && way->right && (way->up || way ->down))
+			*x += +14;
+	if (!(way->left) && way->right && !(way->up || way ->down))
+			*x += +20;
 	if (!(way->left) && way->right)
 		way->dir = 1;
 	if (way->left && !(way->right))
 		way->dir = 0;
-	printf("x = %d, y = %d\n", *x, *y);
 }
 
 void	draw_floor(t_data *data, t_coord player, t_coord tile)
@@ -186,6 +220,24 @@ void	draw_map(t_data *data, t_coord player)
 	}
 }
 
+void	draw_mini_map(t_data *data, t_img *xpm, t_coord player)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < data->layer.tmp.height)
+	{
+		x = 0;
+		while (x < data->layer.tmp.width)
+		{
+			pixel_put_tmp_layer(data, x, y, get_color(xpm, (x + player.x / 10) / 4, (y + player.y / 10) / 4));
+			x++;
+		}
+		y++;
+	}
+}
+
 char	is_moving(t_way way)
 {
 	return ((way.up && !(way.down)) || (!(way.up) && way.down)
@@ -232,14 +284,20 @@ int	game(t_data *data)
 	if ((data->frame) > LOOP_SIZE)
 		data->frame = 0;
 	data->frame++;
-	ft_memcpy(data->layer.tmp.addr, data->layer.back.addr,
-		data->last_pixel_offset);
-	draw_map(data, data->coord);
+	//ft_memcpy(data->layer.tmp.addr, data->layer.back.addr,
+	//	data->last_pixel_offset);
+	//draw_map(data, data->coord);
+	draw_mini_map(data, &(data->layer.front), data->coord);
+	//put_img_to_tmp(data, &(data->layer.front), data->coord.x / 10, data->coord.y / 10);
+	//put_16x16img_to_64x64tmp(data, &(data->layer.front), data->coord.x / 10, data->coord.y / 10);
+	//put_img_to_tmp(data, &(data->layer.front), (data->coord.x) / 10 + 736, data->coord.y / 10);
+	//put_img_to_tmp(data, &(data->layer.front), (data->coord.x) / 10, (data->coord.y) / 10 + 480);
+	//put_img_to_tmp(data, &(data->layer.front), (data->coord.x) / 10 + 736, (data->coord.y) / 10 + 480);
 	put_player(data, data->player, data->frame);
 
-	ft_memcpy(data->layer.render.addr, data->layer.tmp.addr,
-		data->last_pixel_offset);
-	mlx_put_image_to_window(data->mlx, data->win, data->layer.render.img, 0, 0);
+	//ft_memcpy(data->layer.render.addr, data->layer.tmp.addr,
+	//	data->last_pixel_offset);
+	mlx_put_image_to_window(data->mlx, data->win, data->layer.tmp.img, 0, 0);
 	update_x_y(&(data->way), &(data->coord.x), &(data->coord.y));
 	return (0);
 }

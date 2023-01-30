@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/30 02:37:22 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/01/30 17:14:00 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,10 +142,13 @@ char	**free_map(char **tab);
 void	print_map(char **map);
 
 			/* gui */
+int		get_color(t_img *xpm, int x, int y);
+void	pixel_put_tmp_layer(t_data *data, int x, int y, int color);
 void	my_mlx_background_put(t_data *data, int color);
 void	put_img_to_tmp(t_data *data, t_img *xpm, int x, int y);
 void	my_mlx_put_tmp_to_render(t_data *data);
 
 void	pixel_put_tmp_layer(t_data *data, int x, int y, int color);
+void	put_16x16img_to_64x64tmp(t_data *data, t_img *xpm, int x, int y);
 
 #endif
