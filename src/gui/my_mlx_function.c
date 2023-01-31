@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 11:47:16 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/30 20:20:59 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/01/31 01:25:42 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,41 @@ void	my_mlx_background_put(t_data *data, int color)
 	}
 }
 
+void	put_img_to_back(t_data *data, t_img *xpm, int x, int y)
+{
+	int	i;
+	int	j;
 
+	i = y;
+	while (i < xpm->height + y)
+	{
+		j = x;
+		while (j < xpm->width + x)
+		{
+			pixel_put_back_layer(data, j, i, get_color(xpm, j - x, i - y));
+			j++;
+		}
+		i++;
+	}
+}
+
+void	put_img_to_front(t_data *data, t_img *xpm, int x, int y)
+{
+	int	i;
+	int	j;
+
+	i = y;
+	while (i < xpm->height + y)
+	{
+		j = x;
+		while (j < xpm->width + x)
+		{
+			pixel_put_front_layer(data, j, i, get_color(xpm, j - x, i - y));
+			j++;
+		}
+		i++;
+	}
+}
 
 void	put_img_to_tmp(t_data *data, t_img *xpm, int x, int y)
 {
@@ -113,24 +147,6 @@ void	put_img_to_tmp(t_data *data, t_img *xpm, int x, int y)
 		while (j < xpm->width + x)
 		{
 			pixel_put_tmp_layer(data, j, i, get_color(xpm, j - x, i - y));
-			j++;
-		}
-		i++;
-	}
-}
-
-void	put_16x16img_to_64x64tmp(t_data *data, t_img *xpm, int x, int y)
-{
-	int	i;
-	int	j;
-
-	i = y;
-	while (i < xpm->height + y)
-	{
-		j = x;
-		while (j < xpm->width + x)
-		{
-			pixel_put_tmp_layer(data, j, i, get_color(xpm, (j - x) / 4, (i - y)/4));
 			j++;
 		}
 		i++;

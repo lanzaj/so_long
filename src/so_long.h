@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/30 22:25:35 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/01/31 01:26:13 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,9 +147,10 @@ int		get_color(t_img *xpm, int x, int y);
 void	pixel_put_tmp_layer(t_data *data, int x, int y, int color);
 void	my_mlx_background_put(t_data *data, int color);
 void	put_img_to_tmp(t_data *data, t_img *xpm, int x, int y);
+void	put_img_to_back(t_data *data, t_img *xpm, int x, int y);
+void	put_img_to_front(t_data *data, t_img *xpm, int x, int y);
 void	my_mlx_put_tmp_to_render(t_data *data);
 
 void	pixel_put_tmp_layer(t_data *data, int x, int y, int color);
-void	put_16x16img_to_64x64tmp(t_data *data, t_img *xpm, int x, int y);
 
 #endif

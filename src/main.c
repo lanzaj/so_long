@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:05:56 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/30 23:35:03 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/01/31 01:51:30 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	import_img(t_data *data, t_img *xpm, char *path)
 
 void	import_imgs(t_data *data)
 {
-	big_new_layer(data, &(data->layer.front));
-	big_new_layer(data, &(data->layer.back));
+	new_layer(data, &(data->layer.front));
+	new_layer(data, &(data->layer.back));
 	new_layer(data, &(data->layer.tmp));
 	new_layer(data, &(data->layer.render));
 	import_img(data, &(data->floor.f), "./img/floor_1.xpm");
@@ -80,8 +80,8 @@ void	get_starting_pos(t_data *data)
 		{
 			if (data->map.ptr[i][j] == 'P')
 			{
-				data->coord.x = -10 * (j * 64 - data->player.sprite.x);
-				data->coord.y = -10 * (i * 64 - data->player.sprite.y - 64);
+				data->coord.x = 10 * (j * 64 - data->player.sprite.x) + 640;
+				data->coord.y = 10 * (i * 64 - data->player.sprite.y);
 				return ;
 			}
 			j++;
@@ -124,43 +124,70 @@ void	get_starting_pos(t_data *data)
 // 	}
 // }
 
-void	update_x_y(t_way *way, int *x, int *y)
+// void	update_x_y(t_data *data, t_way *way, t_coord *coord)
+// {
+// 	if (way->up && !(way->down) && (way->left || way->right))
+// 			coord->y += -14;
+// 	if (way->up && !(way->down) && !(way->left || way->right))
+// 			coord->y += -20;
+// 	if (!(way->up) && way->down && (way->left || way->right))
+// 			coord->y += +14;
+// 	if (!(way->up) && way->down && !(way->left || way->right))
+// 			coord->y += +20;
+// 	if (way->left && !(way->right) && (way->up || way ->down))
+// 			coord->x += -14;
+// 	if (way->left && !(way->right) && !(way->up || way ->down))
+// 			coord->x += -20;
+// 	if (!(way->left) && way->right && (way->up || way ->down))
+// 			coord->x += +14;
+// 	if (!(way->left) && way->right && !(way->up || way ->down))
+// 			coord->x += +20;
+// 	if (!(way->left) && way->right)
+// 		way->dir = 1;
+// 	if (way->left && !(way->right))
+// 		way->dir = 0;
+// }
+
+void	update_x_y(t_data *data, t_way *way, t_coord *coord)
 {
-	if (way->up && !(way->down) && (way->left || way->right))
-			*y += -14;
-	if (way->up && !(way->down) && !(way->left || way->right))
-			*y += -20;
-	if (!(way->up) && way->down && (way->left || way->right))
-			*y += +14;
-	if (!(way->up) && way->down && !(way->left || way->right))
-			*y += +20;
-	if (way->left && !(way->right) && (way->up || way ->down))
-			*x += -14;
-	if (way->left && !(way->right) && !(way->up || way ->down))
-			*x += -20;
-	if (!(way->left) && way->right && (way->up || way ->down))
-			*x += +14;
-	if (!(way->left) && way->right && !(way->up || way ->down))
-			*x += +20;
-	if (!(way->left) && way->right)
-		way->dir = 1;
+	int	move;
+
+	(void)data;
+	if (way->up != way->down && way->right != way->left)
+		move = 14;
+	else if (way->up != way->down || way->right != way->left)
+		move = 20;
+	else
+		move = 0;
+	if (way->up && !(way->down))
+			coord->y += -move;
+	if (!(way->up) && way->down)
+			coord->y += move;
 	if (way->left && !(way->right))
+	{
+		coord->x += -move;
 		way->dir = 0;
+	}
+	if (!(way->left) && way->right)
+	{
+		coord->x += move;
+		way->dir = 1;
+	}
 }
 
-void	draw_floor(t_data *data, t_coord tile)
+void	draw_floor(t_data *data, int x, int y)
 {
-	put_img_to_tmp(data, &(data->floor.f), (tile.x * 16), (tile.y * 16));
+	put_img_to_back(data, &(data->floor.f), (x + 1) * 16, (y + 1) * 16);
 }
 
-void	draw_wall(t_data *data, t_coord tile)
+void	draw_wall(t_data *data, int x, int y)
 {
-	if (tile.y + 1 > 0 && tile.y + 1 < data->map.height
-		&& (ft_strchr("0PEC", data->map.ptr[tile.y + 1][tile.x])))
-		put_img_to_tmp(data, &(data->wall.up), (tile.x * 16), (tile.y * 16));
-	if (tile.y - 1 > 0 && tile.y - 1 < data->map.height
-		&& (ft_strchr("0PEC", data->map.ptr[tile.y - 1][tile.x])))
-		put_img_to_tmp(data, &(data->wall.up), (tile.x * 16), (tile.y * 16));
+	if (y + 1 > 0 && y + 1 < data->map.height
+		&& (ft_strchr("0PEC", data->map.ptr[y + 1][x])))
+		put_img_to_back(data, &(data->wall.up), (x + 1) * 16, (y + 1) * 16);
+	if (y - 1 > 0 && y - 1 < data->map.height
+		&& (ft_strchr("0PEC", data->map.ptr[y - 1][x])))
+		put_img_to_back(data, &(data->wall.up), (x + 1) * 16, (y + 1) * 16);
 }
 
 void	generate_minimap(t_data *data)
@@ -181,9 +208,9 @@ void	generate_minimap(t_data *data)
 				&& tile.y * 16 > -80)
 			{
 				if (ft_strchr("0PEC", map[tile.y][tile.x]))
-					draw_floor(data, tile);
+					draw_floor(data, tile.x, tile.y);
 				if (map[tile.y][tile.x] == '1')
-					draw_wall(data, tile);
+					draw_wall(data, tile.x, tile.y);
 			}
 			tile.x++;
 		}
@@ -202,22 +229,18 @@ void	draw_mini_map(t_data *data, t_img *xpm, t_coord player)
 		x = 0;
 		while (x < data->layer.tmp.width)
 		{
-			pixel_put_tmp_layer(data, x, y, get_color(xpm, (x + player.x / 10) / 4, (y + player.y / 10) / 4));
+			pixel_put_tmp_layer(data, x, y,
+				get_color(xpm, (x + player.x / 10) / 4,
+					(y + player.y / 10) / 4));
 			x++;
 		}
 		y++;
 	}
 }
 
-char	is_moving(t_way way)
+void	put_player(t_data *d, t_coord coord, t_sprite p, int frame)
 {
-	return ((way.up && !(way.down)) || (!(way.up) && way.down)
-		|| (way.right && !(way.left)) || (!(way.right) && way.left));
-}
-
-void	put_player_dir(t_data *d, t_coord coord, t_sprite p, int frame)
-{
-	if (is_moving(d->way))
+	if (d->way.up != d->way.down || d->way.right != d->way.left)
 	{
 		if (frame < LOOP_SIZE / 4)
 			put_img_to_tmp(d, &(p.run_0), coord.x, coord.y);
@@ -241,14 +264,6 @@ void	put_player_dir(t_data *d, t_coord coord, t_sprite p, int frame)
 	}
 }
 
-void	put_player(t_data *d, t_player p, int frame)
-{
-	if (d->way.dir)
-		put_player_dir(d, p.sprite, p.r, frame);
-	else
-		put_player_dir(d, p.sprite, p.l, frame);
-}
-
 int	game(t_data *data)
 {
 	data->frame++;
@@ -258,15 +273,20 @@ int	game(t_data *data)
 	//ft_memcpy(data->layer.tmp.addr, data->layer.back.addr,
 	//	data->last_pixel_offset);
 	//draw_map(data, data->coord);
+	//draw_mini_map(data, &(data->layer.test), data->coord);
+	draw_mini_map(data, &(data->layer.back), data->coord);
+	//draw_mini_map(data, &(data->layer.back), data->coord);
+	//generate_minimap(data);
+	//my_mlx_put_tmp_to_render(data);
 
-	draw_mini_map(data, &(data->layer.test), data->coord);
-	my_mlx_put_tmp_to_render(data);
-	//put_16x16img_to_64x64tmp(data, &(data->layer.front), data->coord.x / 10, data->coord.y / 10);
-	put_player(data, data->player, data->frame);
+	if (data->way.dir)
+		put_player(data, data->player.sprite, data->player.r, data->frame);
+	else
+		put_player(data, data->player.sprite, data->player.l, data->frame);
 	//ft_memcpy(data->layer.render.addr, data->layer.tmp.addr,
 	//	data->last_pixel_offset);
 	mlx_put_image_to_window(data->mlx, data->win, data->layer.tmp.img, 0, 0);
-	update_x_y(&(data->way), &(data->coord.x), &(data->coord.y));
+	update_x_y(data, &(data->way), &(data->coord));
 	//ft_printf("%d %d\n", data->coord.x, data->coord.y);
 	return (0);
 }
