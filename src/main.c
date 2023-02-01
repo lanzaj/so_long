@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:05:56 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/01 12:49:44 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/01 15:58:08 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,11 @@
 // LISTE DE TRUCS A FAIRE :
 // - Fonction random
 // - importer et afficher les variantes
-// - debugger hit box
 // - ajouter collectible
 // - ajouter sortie
 // - optimiser affichage layer_front
 // - ajouter enemies
 // - ajouter UI
-// - message d'erreur si la map est trop grande
 
 void	new_layer(t_data *data, t_img *layer)
 {
@@ -155,16 +153,18 @@ void	update_x_y(t_data *data, t_way *way, t_coord *coord)
 			&(data->map), coord->x, coord->y - move - 200) != '1')
 			coord->y += -move;
 	if (!(way->up) && way->down && get_type_tile(data,
-			&(data->map), coord->x, coord->y + move) != '1')
+			&(data->map), coord->x, coord->y + move + 8) != '1')
 			coord->y += move;
 	if (way->left && !(way->right) && get_type_tile(data,
-			&(data->map), coord->x - move, coord->y) != '1')
+			&(data->map), coord->x - move, coord->y) != '1'
+		&& get_type_tile(data, &(data->map), coord->x - move, coord->y - 200) != '1')
 	{
 		coord->x += -move;
 		way->dir = 0;
 	}
 	if (!(way->left) && way->right && get_type_tile(data,
-			&(data->map), coord->x + move, coord->y) != '1')
+			&(data->map), coord->x + move, coord->y) != '1'
+		&& get_type_tile(data, &(data->map), coord->x + move, coord->y - 200) != '1')
 	{
 		coord->x += move;
 		way->dir = 1;
@@ -277,7 +277,7 @@ void	update_map_x_y(t_data *data)
 		data->map.tile_coord.x = (data->coord.x / 10
 				+ data->width / 2) / 64 - 1;
 		data->number_of_mouvements++;
-		printf("number of mouvements: %d\n", data->number_of_mouvements);
+		ft_printf("number of mouvements: %d\n", data->number_of_mouvements);
 	}
 	if (data->map.tile_coord.y != (data->coord.y / 10
 			+ 30 + data->height / 2) / 64 - 1)
@@ -285,7 +285,7 @@ void	update_map_x_y(t_data *data)
 		data->map.tile_coord.y = (data->coord.y / 10
 				+ 30 + data->height / 2) / 64 - 1;
 		data->number_of_mouvements++;
-		printf("number of mouvements: %d\n", data->number_of_mouvements);
+		ft_printf("number of mouvements: %d\n", data->number_of_mouvements);
 	}
 }
 
@@ -311,7 +311,8 @@ int	game(t_data *data)
 	else
 		put_player(data, data->player.coord, data->player.l, data->frame);
 
-	draw_mini_map(data, &(data->layer.front), data->coord);
+	//draw_mini_map(data, &(data->layer.front), data->coord);
+
 	//put_img_to_tmp(data, &(data->layer.back), 1, 1);
 
 	// point qui affiche le centre du perso pixel_put_tmp_layer(data, data->player.coord.x + 32, data->player.coord.y + 112, 0x00FF0000);

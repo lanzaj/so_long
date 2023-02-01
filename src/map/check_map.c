@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 19:55:57 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/25 16:24:54 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/01 15:49:27 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,16 @@ static void	check_start_exit_and_collectible(char **map)
 		check_map_error(9, map);
 }
 
+static void	check_size(char **map)
+{
+	if ((count_number_of_lines(map) > 31) || (ft_strlen(map[0]) > 45))
+		check_map_error(12, map);
+}
+
 void	check_map(char **map)
 {
 	check_if_rectangular(map);
+	check_size(map);
 	check_if_enclosed_in_walls(map);
 	check_charset(map);
 	check_start_exit_and_collectible(map);
