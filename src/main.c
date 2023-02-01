@@ -6,11 +6,22 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:05:56 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/01 05:05:04 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/01 12:49:44 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+// LISTE DE TRUCS A FAIRE :
+// - Fonction random
+// - importer et afficher les variantes
+// - debugger hit box
+// - ajouter collectible
+// - ajouter sortie
+// - optimiser affichage layer_front
+// - ajouter enemies
+// - ajouter UI
+// - message d'erreur si la map est trop grande
 
 void	new_layer(t_data *data, t_img *layer)
 {
