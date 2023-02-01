@@ -6,7 +6,7 @@
 #    By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 15:24:20 by jlanza            #+#    #+#              #
-#    Updated: 2023/01/30 22:12:52 by jlanza           ###   ########.fr        #
+#    Updated: 2023/01/31 22:32:07 by jlanza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ SRC =	src/main.c \
 		src/map/print_map.c \
 		src/map/count_in_map.c \
 		src/map/dup_map.c \
-		src/gui/my_mlx_function.c
+		src/gui/my_mlx_function.c \
+		src/gui/draw_wall.c
 
 LIBFT = libft/libft.a
 LIBMLX = minilibx-linux/libmlx.a

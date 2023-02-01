@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/31 01:26:13 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/01 05:03:33 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@
 /* include minilix */
 # include "../minilibx-linux/mlx.h"
 
-# define LOOP_SIZE 50
+# define MINI_LOOP 30
+# define LONG_LOOP 40
 
 typedef struct s_coord {
 	int	x;
@@ -59,7 +60,27 @@ typedef struct s_floor {
 
 typedef struct s_wall {
 	t_img	up;
-	t_img	down;
+	t_img	top_up;
+	t_img	top_right;
+	t_img	top_left;
+	t_img	side_left;
+	t_img	side_down_l;
+	t_img	side_down_r;
+	t_img	side_top_l;
+	t_img	side_top_r;
+	t_img	side_right;
+	t_img	corner_rl;
+	t_img	corner_right;
+	t_img	corner_left;
+	t_img	solo_front;
+	t_img	solo_top;
+	t_img	solo_corner;
+	t_img	bottom;
+	t_img	column_top;
+	t_img	column_mid;
+	t_img	column_base;
+	t_img	front_l;
+	t_img	front_r;
 }				t_wall;
 
 typedef struct s_sprite {
@@ -76,7 +97,7 @@ typedef struct s_sprite {
 typedef struct s_player {
 	t_sprite	l;
 	t_sprite	r;
-	t_coord		sprite;
+	t_coord		coord;
 }				t_player;
 
 typedef struct s_coin {
@@ -100,6 +121,7 @@ typedef struct s_map {
 	char	**ptr;
 	int		width;
 	int		height;
+	t_coord	tile_coord;
 }				t_map;
 
 typedef struct s_data {
@@ -109,6 +131,8 @@ typedef struct s_data {
 	int			height;
 	int			last_pixel_offset;
 	int			frame;
+	int			long_frame;
+	int			number_of_mouvements;
 	t_map		map;
 	t_coord		coord;
 	t_way		way;
@@ -142,15 +166,22 @@ char	**dup_map(char **map);
 char	**free_map(char **tab);
 void	print_map(char **map);
 
-			/* gui */
+			/* GUI */
 int		get_color(t_img *xpm, int x, int y);
 void	pixel_put_tmp_layer(t_data *data, int x, int y, int color);
-void	my_mlx_background_put(t_data *data, int color);
+void	background_put_tmp(t_data *data, int color);
+void	background_put_back(t_data *data, int color);
+void	background_put_front(t_data *data, int color);
 void	put_img_to_tmp(t_data *data, t_img *xpm, int x, int y);
 void	put_img_to_back(t_data *data, t_img *xpm, int x, int y);
 void	put_img_to_front(t_data *data, t_img *xpm, int x, int y);
 void	my_mlx_put_tmp_to_render(t_data *data);
 
+			/* Draw wall */
+void	draw_wall(t_data *data, int x, int y);
+void	draw_floor(t_data *data, int x, int y);
+
 void	pixel_put_tmp_layer(t_data *data, int x, int y, int color);
+void	pixel_put_back_layer(t_data *data, int x, int y, int color);
 
 #endif
