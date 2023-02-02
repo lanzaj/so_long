@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:05:56 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/02 19:36:09 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/02 22:19:57 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	new_layer(t_data *data, t_img *layer)
 			&(layer->line_length),
 			&(layer->endian));
 }
-
+ok
 void	big_new_layer(t_data *data, t_img *layer)
 {
 	layer->width = 1024;
