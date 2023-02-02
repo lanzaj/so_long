@@ -6,25 +6,24 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:05:56 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/01 15:58:08 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/02 11:55:14 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
 // LISTE DE TRUCS A FAIRE :
-// - Fonction random
+// - improve top wall texture
 // - importer et afficher les variantes
 // - ajouter collectible
 // - ajouter sortie
-// - optimiser affichage layer_front
 // - ajouter enemies
 // - ajouter UI
 
 void	new_layer(t_data *data, t_img *layer)
 {
 	layer->width = data->width;
-	layer->height = layer->width;
+	layer->height = data->height;
 	layer->img = mlx_new_image(data->mlx, layer->width, layer->height);
 	layer->addr = mlx_get_data_addr(layer->img, &(layer->bits_per_pixel),
 			&(layer->line_length),
@@ -94,7 +93,6 @@ void	import_imgs(t_data *data)
 	import_img(data, &(data->player.l.run_1), "./img/64_knight_run_l1.xpm");
 	import_img(data, &(data->player.l.run_2), "./img/64_knight_run_l2.xpm");
 	import_img(data, &(data->player.l.run_3), "./img/64_knight_run_l3.xpm");
-	import_img(data, &(data->layer.test), "./img/test3.xpm");
 }
 
 void	get_starting_pos(t_data *data)
@@ -225,6 +223,26 @@ void	draw_mini_map(t_data *data, t_img *xpm, t_coord player)
 	}
 }
 
+void	draw_mini_map_tlayer(t_data *data, t_img *xpm, t_coord player)
+{
+	int	x;
+	int	y;
+
+	y = data->layer.tmp.height / 2 + 8;
+	while (y < data->layer.tmp.height / 2 + 32)
+	{
+		x = data->layer.tmp.width / 2 - 30;
+		while (x < data->layer.tmp.width / 2 + 30)
+		{
+			pixel_put_tmp_layer(data, x, y,
+				get_color(xpm, (x + player.x / 10) / 4,
+					(y + player.y / 10) / 4));
+			x++;
+		}
+		y++;
+	}
+}
+
 void	put_player(t_data *d, t_coord coord, t_sprite p, int frame)
 {
 	if (d->way.up != d->way.down || d->way.right != d->way.left)
@@ -304,14 +322,16 @@ int	game(t_data *data)
 
 	//generate_minimap(data);
 	//my_mlx_put_tmp_to_render(data);
+
 	draw_mini_map(data, &(data->layer.back), data->coord);
+	draw_mini_map(data, &(data->layer.front), data->coord);
 
 	if (data->way.dir)
 		put_player(data, data->player.coord, data->player.r, data->frame);
 	else
 		put_player(data, data->player.coord, data->player.l, data->frame);
 
-	//draw_mini_map(data, &(data->layer.front), data->coord);
+	draw_mini_map_tlayer(data, &(data->layer.front), data->coord);
 
 	//put_img_to_tmp(data, &(data->layer.back), 1, 1);
 
@@ -337,7 +357,6 @@ int	close_window(t_data *data)
 	mlx_destroy_image(data->mlx, data->layer.render.img);
 	mlx_destroy_image(data->mlx, data->layer.front.img);
 	mlx_destroy_image(data->mlx, data->layer.back.img);
-	mlx_destroy_image(data->mlx, data->layer.test.img);
 	mlx_destroy_image(data->mlx, data->floor.f.img);
 	mlx_destroy_image(data->mlx, data->wall.up.img);
 	mlx_destroy_image(data->mlx, data->wall.side_left.img);
@@ -450,7 +469,6 @@ void	setup_mlx(t_data *data)
 			+ 30 + data->height / 2) / 64 - 1;
 	generate_minimap(data);
 	background_put_tmp(data, 0x00232323);
-	//background_put_front(data, 0);
 }
 
 int	game_init(t_data *data)

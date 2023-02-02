@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/01 05:03:33 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/02 10:19:57 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ typedef struct s_img {
 typedef struct s_layer {
 	t_img	front;
 	t_img	back;
-	t_img	test;
 	t_img	tmp;
 	t_img	render;
 }				t_layer;
@@ -183,5 +182,8 @@ void	draw_floor(t_data *data, int x, int y);
 
 void	pixel_put_tmp_layer(t_data *data, int x, int y, int color);
 void	pixel_put_back_layer(t_data *data, int x, int y, int color);
+
+int		get_random(void);
+int		get_n_random(int n);
 
 #endif

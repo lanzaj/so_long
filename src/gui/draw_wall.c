@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 22:32:15 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/01 05:41:46 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/02 11:50:39 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,13 @@ void	draw_column(t_data *data, int x, int y)
 			(x + 1) * 16, (y + 1) * 16);
 		put_img_to_front(data, &(data->wall.column_top),
 			(x + 1) * 16, (y) * 16);
+		put_img_to_back(data, &(data->wall.column_top),
+			(x + 1) * 16, (y) * 16);
 	}
 	else
 	{
 		put_img_to_front(data, &(data->wall.solo_top), (x + 1) * 16, (y) * 16);
+		put_img_to_back(data, &(data->wall.solo_top), (x + 1) * 16, (y) * 16);
 		put_img_to_back(data, &(data->wall.solo_front),
 			(x + 1) * 16, (y + 1) * 16);
 	}
@@ -97,13 +100,15 @@ void	draw_lower_wall_corner_left_continuing_down(t_data *data, int x, int y)
 {
 	if (is_right_corner(data, x, y))
 	{
-		put_img_to_front(data, &(data->wall.solo_top), (x + 1) * 16, (y) * 16);
+		put_img_to_front(data, &(data->wall.solo_corner), (x + 1) * 16, (y) * 16);
+		put_img_to_back(data, &(data->wall.solo_corner), (x + 1) * 16, (y) * 16);
 		put_img_to_back(data, &(data->wall.corner_rl),
 			(x + 1) * 16, (y + 1) * 16);
 	}
 	else
 	{
 		put_img_to_front(data, &(data->wall.top_left), (x + 1) * 16, (y) * 16);
+		put_img_to_back(data, &(data->wall.top_left), (x + 1) * 16, (y) * 16);
 		put_img_to_back(data, &(data->wall.corner_left),
 			(x + 1) * 16, (y + 1) * 16);
 	}
@@ -128,6 +133,7 @@ void	draw_upper_wall_corner_left_front(t_data *data, int x, int y)
 void	draw_lower_wall_corner_right_continuing_down(t_data *data, int x, int y)
 {
 	put_img_to_front(data, &(data->wall.top_right), (x + 1) * 16, (y) * 16);
+	put_img_to_back(data, &(data->wall.top_right), (x + 1) * 16, (y) * 16);
 	put_img_to_back(data, &(data->wall.corner_right),
 		(x + 1) * 16, (y + 1) * 16);
 }
@@ -141,26 +147,31 @@ void	draw_upper_wall_corner_right_front(t_data *data, int x, int y)
 
 void	draw_lower_wall_right_corner(t_data *data, int x, int y)
 {
-	put_img_to_front(data, &(data->wall.top_right), (x + 1) * 16, (y) * 16);
-	put_img_to_back(data, &(data->wall.front_r),
-		(x + 1) * 16, (y + 1) * 16);
+	// if (!is_left_corner(data, x, y))
+	// {
+		put_img_to_front(data, &(data->wall.top_right), (x + 1) * 16, (y) * 16);
+		put_img_to_back(data, &(data->wall.top_right), (x + 1) * 16, (y) * 16);
+		put_img_to_back(data, &(data->wall.front_r),
+			(x + 1) * 16, (y + 1) * 16);
+	// }
 }
 
 void	draw_lower_wall_left_corner(t_data *data, int x, int y)
 {
-	if (is_right_corner(data, x, y))
-	{
-		put_img_to_front(data, &(data->wall.solo_corner),
-			(x + 1) * 16, (y) * 16);
-		put_img_to_back(data, &(data->wall.corner_rl),
-			(x + 1) * 16, (y + 1) * 16);
-	}
-	else
-	{
+	// if (is_right_corner(data, x, y))
+	// {
+	// 	put_img_to_front(data, &(data->wall.solo_corner),
+	// 		(x + 1) * 16, (y) * 16);
+	// 	put_img_to_back(data, &(data->wall.corner_rl),
+	// 		(x + 1) * 16, (y + 1) * 16);
+	// }
+	// else
+	// {
 		put_img_to_front(data, &(data->wall.top_left), (x + 1) * 16, (y) * 16);
+		put_img_to_back(data, &(data->wall.top_left), (x + 1) * 16, (y) * 16);
 		put_img_to_back(data, &(data->wall.front_l),
 			(x + 1) * 16, (y + 1) * 16);
-	}
+	// }
 }
 
 void	draw_left_wall(t_data *data, int x, int y)
@@ -202,6 +213,7 @@ void	draw_random_upper_wall(t_data *data, int x, int y)
 void	draw_random_lower_wall(t_data *data, int x, int y)
 {
 	put_img_to_back(data, &(data->wall.up), (x + 1) * 16, (y + 1) * 16);
+	put_img_to_back(data, &(data->wall.top_up), (x + 1) * 16, (y) * 16);
 	put_img_to_front(data, &(data->wall.top_up), (x + 1) * 16, (y) * 16);
 }
 
