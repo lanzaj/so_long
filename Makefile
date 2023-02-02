@@ -6,7 +6,7 @@
 #    By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 15:24:20 by jlanza            #+#    #+#              #
-#    Updated: 2023/02/02 10:11:56 by jlanza           ###   ########.fr        #
+#    Updated: 2023/02/02 17:03:51 by jlanza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,10 +36,10 @@ CC = cc
 RM = rm -f
 HEADER = src/so_long.h
 
-.c.o: $(SRCS)
+%.o: %.c $(HEADER)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-$(NAME): $(OBJ) $(HEADER)
+$(NAME): $(OBJ)
 	$(MAKE) -C ./libft
 	$(MAKE) -C ./minilibx-linux
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(LIBMLX) $(LIBMLX_LINUX) -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)

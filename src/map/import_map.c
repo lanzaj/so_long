@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:27:52 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/25 16:22:39 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/02 18:27:03 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,6 @@ char	**import_map(char *path)
 	if (fd < 0)
 		parse_map_error(3);
 	map = fd_to_map(fd);
+	close(fd);
 	return (map);
 }

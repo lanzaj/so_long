@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/02 10:19:57 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/02 19:14:29 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,14 @@
 /* include minilix */
 # include "../minilibx-linux/mlx.h"
 
+# define RES_X 1080
+# define RES_Y 720
+
 # define MINI_LOOP 30
 # define LONG_LOOP 40
+
+# define SPEED_CARD 80
+# define SPEED_DIAG 52
 
 typedef struct s_coord {
 	int	x;
@@ -54,11 +60,29 @@ typedef struct s_layer {
 }				t_layer;
 
 typedef struct s_floor {
-	t_img	f;
+	t_img	f1;
+	t_img	f2;
+	t_img	f3;
+	t_img	f4;
+	t_img	f5;
+	t_img	f6;
+	t_img	f7;
+	t_img	f8;
 }				t_floor;
 
 typedef struct s_wall {
-	t_img	up;
+	t_img	mid;
+	t_img	mid1;
+	t_img	mid2;
+	t_img	mid3;
+	t_img	mid4;
+	t_img	mid5;
+	t_img	mid51;
+	t_img	mid52;
+	t_img	mid6;
+	t_img	mid61;
+	t_img	mid7;
+	t_img	mid8;
 	t_img	top_up;
 	t_img	top_right;
 	t_img	top_left;

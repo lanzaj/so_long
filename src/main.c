@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:05:56 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/02 11:55:14 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/02 19:36:09 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,26 @@ void	import_imgs(t_data *data)
 	new_layer(data, &(data->layer.back));
 	new_layer(data, &(data->layer.tmp));
 	new_layer(data, &(data->layer.render));
-	import_img(data, &(data->floor.f), "./img/floor_1.xpm");
-	import_img(data, &(data->wall.up), "./img/wall_mid.xpm");
+	import_img(data, &(data->floor.f1), "./img/floor_1.xpm");
+	import_img(data, &(data->floor.f2), "./img/floor_2.xpm");
+	import_img(data, &(data->floor.f3), "./img/floor_3.xpm");
+	import_img(data, &(data->floor.f4), "./img/floor_4.xpm");
+	import_img(data, &(data->floor.f5), "./img/floor_5.xpm");
+	import_img(data, &(data->floor.f6), "./img/floor_6.xpm");
+	import_img(data, &(data->floor.f7), "./img/floor_7.xpm");
+	import_img(data, &(data->floor.f8), "./img/floor_8.xpm");
+	import_img(data, &(data->wall.mid), "./img/wall_mid.xpm");
+	import_img(data, &(data->wall.mid1), "./img/wall_mid_1.xpm");
+	import_img(data, &(data->wall.mid2), "./img/wall_mid_2.xpm");
+	import_img(data, &(data->wall.mid3), "./img/wall_mid_3.xpm");
+	import_img(data, &(data->wall.mid4), "./img/wall_mid_4.xpm");
+	import_img(data, &(data->wall.mid5), "./img/wall_mid_5.xpm");
+	import_img(data, &(data->wall.mid51), "./img/wall_mid_51.xpm");
+	import_img(data, &(data->wall.mid52), "./img/wall_mid_52.xpm");
+	import_img(data, &(data->wall.mid6), "./img/wall_mid_6.xpm");
+	import_img(data, &(data->wall.mid61), "./img/wall_mid_61.xpm");
+	import_img(data, &(data->wall.mid7), "./img/wall_mid_7.xpm");
+	import_img(data, &(data->wall.mid8), "./img/wall_mid_8.xpm");
 	import_img(data, &(data->wall.side_left), "./img/wall_side_mid_left.xpm");
 	import_img(data, &(data->wall.side_right), "./img/wall_side_mid_right.xpm");
 	import_img(data, &(data->wall.side_down_l), "./img/wall_side_l.xpm");
@@ -144,9 +162,9 @@ void	update_x_y(t_data *data, t_way *way, t_coord *coord)
 
 	move = 0;
 	if (way->up != way->down && way->right != way->left)
-		move = 28;
+		move = SPEED_DIAG;
 	else if (way->up != way->down || way->right != way->left)
-		move = 40;
+		move = SPEED_CARD;
 	if (way->up && !(way->down) && get_type_tile(data,
 			&(data->map), coord->x, coord->y - move - 200) != '1')
 			coord->y += -move;
@@ -167,11 +185,6 @@ void	update_x_y(t_data *data, t_way *way, t_coord *coord)
 		coord->x += move;
 		way->dir = 1;
 	}
-}
-
-void	draw_floor(t_data *data, int x, int y)
-{
-	put_img_to_back(data, &(data->floor.f), (x + 1) * 16, (y + 1) * 16);
 }
 
 void	generate_minimap(t_data *data)
@@ -324,7 +337,7 @@ int	game(t_data *data)
 	//my_mlx_put_tmp_to_render(data);
 
 	draw_mini_map(data, &(data->layer.back), data->coord);
-	draw_mini_map(data, &(data->layer.front), data->coord);
+	//draw_mini_map(data, &(data->layer.front), data->coord);
 
 	if (data->way.dir)
 		put_player(data, data->player.coord, data->player.r, data->frame);
@@ -357,8 +370,26 @@ int	close_window(t_data *data)
 	mlx_destroy_image(data->mlx, data->layer.render.img);
 	mlx_destroy_image(data->mlx, data->layer.front.img);
 	mlx_destroy_image(data->mlx, data->layer.back.img);
-	mlx_destroy_image(data->mlx, data->floor.f.img);
-	mlx_destroy_image(data->mlx, data->wall.up.img);
+	mlx_destroy_image(data->mlx, data->floor.f1.img);
+	mlx_destroy_image(data->mlx, data->floor.f2.img);
+	mlx_destroy_image(data->mlx, data->floor.f3.img);
+	mlx_destroy_image(data->mlx, data->floor.f4.img);
+	mlx_destroy_image(data->mlx, data->floor.f5.img);
+	mlx_destroy_image(data->mlx, data->floor.f6.img);
+	mlx_destroy_image(data->mlx, data->floor.f7.img);
+	mlx_destroy_image(data->mlx, data->floor.f8.img);
+	mlx_destroy_image(data->mlx, data->wall.mid.img);
+	mlx_destroy_image(data->mlx, data->wall.mid1.img);
+	mlx_destroy_image(data->mlx, data->wall.mid2.img);
+	mlx_destroy_image(data->mlx, data->wall.mid3.img);
+	mlx_destroy_image(data->mlx, data->wall.mid4.img);
+	mlx_destroy_image(data->mlx, data->wall.mid5.img);
+	mlx_destroy_image(data->mlx, data->wall.mid51.img);
+	mlx_destroy_image(data->mlx, data->wall.mid52.img);
+	mlx_destroy_image(data->mlx, data->wall.mid6.img);
+	mlx_destroy_image(data->mlx, data->wall.mid61.img);
+	mlx_destroy_image(data->mlx, data->wall.mid7.img);
+	mlx_destroy_image(data->mlx, data->wall.mid8.img);
 	mlx_destroy_image(data->mlx, data->wall.side_left.img);
 	mlx_destroy_image(data->mlx, data->wall.side_right.img);
 	mlx_destroy_image(data->mlx, data->wall.side_down_l.img);
@@ -442,9 +473,9 @@ int	key_release(int keycode, void *data)
 void	setup_mlx(t_data *data)
 {
 	data->mlx = mlx_init();
-	data->width = 736;
-	data->height = 480;
-	data->win = mlx_new_window(data->mlx, 736, 480, "so_long");
+	data->width = RES_X;//736;
+	data->height = RES_Y;//480;
+	data->win = mlx_new_window(data->mlx, RES_X, RES_Y, "so_long");
 	import_imgs(data);
 	data->last_pixel_offset = (480 * data->layer.render.line_length
 			+ 736 * (data->layer.render.bits_per_pixel / 8)) - 2945;
