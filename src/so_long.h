@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/03 01:21:31 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/03 02:04:12 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,13 @@ typedef struct s_floor {
 	t_img	f6;
 	t_img	f7;
 	t_img	f8;
+	t_img	start;
 }				t_floor;
 
 typedef struct s_wall {
 	t_img	mid;
 	t_img	mid1;
 	t_img	mid3;
-	t_img	mid5;
-	t_img	mid51;
-	t_img	mid52;
 	t_img	mid6;
 	t_img	mid61;
 	t_img	mid7;

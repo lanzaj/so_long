@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:05:56 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/03 01:18:01 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/03 02:05:07 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,10 @@ void	import_imgs(t_data *data)
 	import_img(data, &(data->floor.f6), "./img/floor_6.xpm");
 	import_img(data, &(data->floor.f7), "./img/floor_7.xpm");
 	import_img(data, &(data->floor.f8), "./img/floor_8.xpm");
+	import_img(data, &(data->floor.start), "./img/start.xpm");
 	import_img(data, &(data->wall.mid), "./img/wall_mid.xpm");
 	import_img(data, &(data->wall.mid1), "./img/wall_mid_1.xpm");
 	import_img(data, &(data->wall.mid3), "./img/wall_mid_3.xpm");
-	import_img(data, &(data->wall.mid5), "./img/wall_mid_5.xpm");
-	import_img(data, &(data->wall.mid51), "./img/wall_mid_51.xpm");
-	import_img(data, &(data->wall.mid52), "./img/wall_mid_52.xpm");
 	import_img(data, &(data->wall.mid6), "./img/wall_mid_6.xpm");
 	import_img(data, &(data->wall.mid61), "./img/wall_mid_61.xpm");
 	import_img(data, &(data->wall.mid7), "./img/wall_mid_7.xpm");
@@ -209,10 +207,13 @@ void	generate_minimap(t_data *data)
 				&& tile.x * 16 > -80
 				&& tile.y * 16 > -80)
 			{
-				if (ft_strchr("0PEC", map[tile.y][tile.x]))
+				if (ft_strchr("0EC", map[tile.y][tile.x]))
 					draw_floor(data, tile.x, tile.y);
 				if (map[tile.y][tile.x] == '1')
 					draw_wall(data, tile.x, tile.y);
+				if (ft_strchr("P", map[tile.y][tile.x]))
+					put_img_to_back(data, &(data->floor.start),
+						(tile.x + 1) * 16, (tile.y + 1) * 16);
 			}
 			tile.x++;
 		}
@@ -359,12 +360,10 @@ int	close_window(t_data *data)
 	mlx_destroy_image(data->mlx, data->floor.f6.img);
 	mlx_destroy_image(data->mlx, data->floor.f7.img);
 	mlx_destroy_image(data->mlx, data->floor.f8.img);
+	mlx_destroy_image(data->mlx, data->floor.start.img);
 	mlx_destroy_image(data->mlx, data->wall.mid.img);
 	mlx_destroy_image(data->mlx, data->wall.mid1.img);
 	mlx_destroy_image(data->mlx, data->wall.mid3.img);
-	mlx_destroy_image(data->mlx, data->wall.mid5.img);
-	mlx_destroy_image(data->mlx, data->wall.mid51.img);
-	mlx_destroy_image(data->mlx, data->wall.mid52.img);
 	mlx_destroy_image(data->mlx, data->wall.mid6.img);
 	mlx_destroy_image(data->mlx, data->wall.mid61.img);
 	mlx_destroy_image(data->mlx, data->wall.mid7.img);

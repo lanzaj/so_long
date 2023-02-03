@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 22:26:54 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/03 01:18:23 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/03 02:00:10 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,19 +235,11 @@ void	draw_random_upper_wall(t_data *data, int x, int y)
 
 	put_img_to_back(data, &(data->wall.top_up), (x + 1) * 16, (y) * 16);
 	random_number = get_random();
-	if (random_number < 3)
+	if (random_number < 5)
 		put_img_to_back(data, &(data->wall.mid1), (x + 1) * 16, (y + 1) * 16);
-	else if (random_number < 9)
+	else if (random_number < 10)
 		put_img_to_back(data, &(data->wall.mid3), (x + 1) * 16, (y + 1) * 16);
 	else if (random_number < 15 && is_tile_in_charset(data, "0", x, y + 1))
-	{
-		put_img_to_back(data, &(data->wall.mid5), (x + 1) * 16, (y + 1) * 16);
-		put_img_to_back(data, &(data->wall.mid51), (x + 1) * 16, (y) * 16);
-		put_img_to_front(data, &(data->wall.mid51), (x + 1) * 16, (y) * 16);
-		put_img_to_back(data, &(data->wall.mid52), (x + 1) * 16, (y + 2) * 16);
-		data->map.ptr[y + 1][x] = 'c';
-	}
-	else if (random_number < 17 && is_tile_in_charset(data, "0", x, y + 1))
 	{
 		put_img_to_back(data, &(data->wall.mid6), (x + 1) * 16, (y + 1) * 16);
 		put_img_to_back(data, &(data->wall.mid61), (x + 1) * 16, (y + 2) * 16);
@@ -261,20 +253,17 @@ void	draw_random_lower_wall(t_data *data, int x, int y)
 {
 	int	random_number;
 
+	random_number = get_random();
 	put_img_to_back(data, &(data->wall.top_up), (x + 1) * 16, (y) * 16);
 	put_img_to_front(data, &(data->wall.top_up), (x + 1) * 16, (y) * 16);
 	if (is_tile_in_charset(data, "0", x, y + 1))
 		draw_random_upper_wall(data, x, y);
+	else if (random_number < 4)
+		put_img_to_back(data, &(data->wall.mid7), (x + 1) * 16, (y + 1) * 16);
+	else if (random_number < 8)
+		put_img_to_back(data, &(data->wall.mid8), (x + 1) * 16, (y + 1) * 16);
 	else
-	{
-		random_number = get_random();
-		if (random_number < 2)
-			put_img_to_back(data, &(data->wall.mid7), (x + 1) * 16, (y + 1) * 16);
-		else if (random_number < 4)
-			put_img_to_back(data, &(data->wall.mid8), (x + 1) * 16, (y + 1) * 16);
-		else
-			put_img_to_back(data, &(data->wall.mid), (x + 1) * 16, (y + 1) * 16);
-	}
+		put_img_to_back(data, &(data->wall.mid), (x + 1) * 16, (y + 1) * 16);
 }
 
 void	draw_upper_wall(t_data *data, int x, int y)
