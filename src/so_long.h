@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/02 19:14:29 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/03 01:21:31 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@
 # define MINI_LOOP 30
 # define LONG_LOOP 40
 
-# define SPEED_CARD 80
-# define SPEED_DIAG 52
+# define SPEED_CARDINAL 80
+# define SPEED_DIAGONAL 52
 
 typedef struct s_coord {
 	int	x;
@@ -73,9 +73,7 @@ typedef struct s_floor {
 typedef struct s_wall {
 	t_img	mid;
 	t_img	mid1;
-	t_img	mid2;
 	t_img	mid3;
-	t_img	mid4;
 	t_img	mid5;
 	t_img	mid51;
 	t_img	mid52;
@@ -166,8 +164,6 @@ typedef struct s_data {
 	t_coin		coin;
 	t_player	player;
 }				t_data;
-
-
 
 			/* COUNT IN MAP */
 int		count_number_of_lines(char **map);

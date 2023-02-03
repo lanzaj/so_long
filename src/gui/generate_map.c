@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_wall.c                                        :+:      :+:    :+:   */
+/*   generate_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/02 18:44:53 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/02 20:54:44 by jlanza           ###   ########.fr       */
+/*   Created: 2023/02/02 22:26:54 by jlanza            #+#    #+#             */
+/*   Updated: 2023/02/03 01:18:23 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ void	draw_floor(t_data *data, int x, int y)
 		put_img_to_back(data, &(data->floor.f2), (x + 1) * 16, (y + 1) * 16);
 	else if (random_number < 70)
 		put_img_to_back(data, &(data->floor.f3), (x + 1) * 16, (y + 1) * 16);
-	else if (random_number < 90)
+	else if (random_number < 93)
 		put_img_to_back(data, &(data->floor.f4), (x + 1) * 16, (y + 1) * 16);
-	else if (random_number < 92 && is_tile_in_charset(data, "1", x - 1, y))
+	else if (random_number < 94 && is_tile_in_charset(data, "1", x - 1, y))
 		put_img_to_back(data, &(data->floor.f5), (x + 1) * 16, (y + 1) * 16);
-	else if (random_number < 94 && is_tile_in_charset(data, "1", x + 1, y))
+	else if (random_number < 95 && is_tile_in_charset(data, "1", x + 1, y))
 		put_img_to_back(data, &(data->floor.f6), (x + 1) * 16, (y + 1) * 16);
-	else if (random_number < 96 && is_tile_in_charset(data, "1", x, y - 1))
+	else if (random_number < 97 && is_tile_in_charset(data, "1", x, y - 1))
 		put_img_to_back(data, &(data->floor.f7), (x + 1) * 16, (y + 1) * 16);
 	else if (random_number < 98 && is_tile_in_charset(data, "1", x, y - 1))
 		put_img_to_back(data, &(data->floor.f8), (x + 1) * 16, (y + 1) * 16);
@@ -97,8 +97,8 @@ void	draw_column(t_data *data, int x, int y)
 {
 	if (is_tile_in_charset(data, "0cPEC", x + 1, y)
 		&& is_tile_in_charset(data, "0cPEC", x - 1, y)
-		&& is_tile_in_charset(data, "0", x, y + 1)
-		&& is_tile_in_charset(data, "0", x, y - 1))
+		&& is_tile_in_charset(data, "0c", x, y + 1)
+		&& is_tile_in_charset(data, "0c", x, y - 1))
 	{
 		draw_floor(data, x, y);
 		put_img_to_back(data, &(data->floor.f1), (x + 1) * 16, (y + 2) * 16);
@@ -235,17 +235,11 @@ void	draw_random_upper_wall(t_data *data, int x, int y)
 
 	put_img_to_back(data, &(data->wall.top_up), (x + 1) * 16, (y) * 16);
 	random_number = get_random();
-	if (random_number < 65)
-		put_img_to_back(data, &(data->wall.mid), (x + 1) * 16, (y + 1) * 16);
-	else if (random_number < 70)
+	if (random_number < 3)
 		put_img_to_back(data, &(data->wall.mid1), (x + 1) * 16, (y + 1) * 16);
-	else if (random_number < 75)
-		put_img_to_back(data, &(data->wall.mid2), (x + 1) * 16, (y + 1) * 16);
-	else if (random_number < 80)
+	else if (random_number < 9)
 		put_img_to_back(data, &(data->wall.mid3), (x + 1) * 16, (y + 1) * 16);
-	else if (random_number < 85)
-		put_img_to_back(data, &(data->wall.mid4), (x + 1) * 16, (y + 1) * 16);
-	else if (random_number < 95 && is_tile_in_charset(data, "0", x, y + 1))
+	else if (random_number < 15 && is_tile_in_charset(data, "0", x, y + 1))
 	{
 		put_img_to_back(data, &(data->wall.mid5), (x + 1) * 16, (y + 1) * 16);
 		put_img_to_back(data, &(data->wall.mid51), (x + 1) * 16, (y) * 16);
@@ -253,7 +247,7 @@ void	draw_random_upper_wall(t_data *data, int x, int y)
 		put_img_to_back(data, &(data->wall.mid52), (x + 1) * 16, (y + 2) * 16);
 		data->map.ptr[y + 1][x] = 'c';
 	}
-	else if (random_number < 100 && is_tile_in_charset(data, "0", x, y + 1))
+	else if (random_number < 17 && is_tile_in_charset(data, "0", x, y + 1))
 	{
 		put_img_to_back(data, &(data->wall.mid6), (x + 1) * 16, (y + 1) * 16);
 		put_img_to_back(data, &(data->wall.mid61), (x + 1) * 16, (y + 2) * 16);
@@ -269,13 +263,18 @@ void	draw_random_lower_wall(t_data *data, int x, int y)
 
 	put_img_to_back(data, &(data->wall.top_up), (x + 1) * 16, (y) * 16);
 	put_img_to_front(data, &(data->wall.top_up), (x + 1) * 16, (y) * 16);
-	random_number = get_random();
-	if (random_number < 2)
-		put_img_to_back(data, &(data->wall.mid7), (x + 1) * 16, (y + 1) * 16);
-	else if (random_number < 4)
-		put_img_to_back(data, &(data->wall.mid8), (x + 1) * 16, (y + 1) * 16);
+	if (is_tile_in_charset(data, "0", x, y + 1))
+		draw_random_upper_wall(data, x, y);
 	else
-		put_img_to_back(data, &(data->wall.mid), (x + 1) * 16, (y + 1) * 16);
+	{
+		random_number = get_random();
+		if (random_number < 2)
+			put_img_to_back(data, &(data->wall.mid7), (x + 1) * 16, (y + 1) * 16);
+		else if (random_number < 4)
+			put_img_to_back(data, &(data->wall.mid8), (x + 1) * 16, (y + 1) * 16);
+		else
+			put_img_to_back(data, &(data->wall.mid), (x + 1) * 16, (y + 1) * 16);
+	}
 }
 
 void	draw_upper_wall(t_data *data, int x, int y)

@@ -6,15 +6,14 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:05:56 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/02 22:22:27 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/03 01:18:01 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
 // LISTE DE TRUCS A FAIRE :
-// - improve top wall texture
-// - importer et afficher les variantes
+// - (improve top wall texture)
 // - ajouter collectible
 // - ajouter sortie
 // - ajouter enemies
@@ -32,8 +31,8 @@ void	new_layer(t_data *data, t_img *layer)
 
 void	big_new_layer(t_data *data, t_img *layer)
 {
-	layer->width = 1024;
-	layer->height = 1024;
+	layer->width = 2048;
+	layer->height = 2048;
 	layer->img = mlx_new_image(data->mlx, layer->width, layer->height);
 	layer->addr = mlx_get_data_addr(layer->img, &(layer->bits_per_pixel),
 			&(layer->line_length),
@@ -64,9 +63,7 @@ void	import_imgs(t_data *data)
 	import_img(data, &(data->floor.f8), "./img/floor_8.xpm");
 	import_img(data, &(data->wall.mid), "./img/wall_mid.xpm");
 	import_img(data, &(data->wall.mid1), "./img/wall_mid_1.xpm");
-	import_img(data, &(data->wall.mid2), "./img/wall_mid_2.xpm");
 	import_img(data, &(data->wall.mid3), "./img/wall_mid_3.xpm");
-	import_img(data, &(data->wall.mid4), "./img/wall_mid_4.xpm");
 	import_img(data, &(data->wall.mid5), "./img/wall_mid_5.xpm");
 	import_img(data, &(data->wall.mid51), "./img/wall_mid_51.xpm");
 	import_img(data, &(data->wall.mid52), "./img/wall_mid_52.xpm");
@@ -156,35 +153,42 @@ char	get_type_tile(t_data *data, t_map *map, int x, int y)
 	return (map->ptr[map_y][map_x]);
 }
 
-void	update_x_y(t_data *data, t_way *way, t_coord *coord)
+void	update_x_y_part2(t_data *data, t_way *way, t_coord *coord, int move)
 {
-	int	move;
-
-	move = 0;
-	if (way->up != way->down && way->right != way->left)
-		move = SPEED_DIAG;
-	else if (way->up != way->down || way->right != way->left)
-		move = SPEED_CARD;
-	if (way->up && !(way->down) && get_type_tile(data,
-			&(data->map), coord->x, coord->y - move - 200) != '1')
-			coord->y += -move;
-	if (!(way->up) && way->down && get_type_tile(data,
-			&(data->map), coord->x, coord->y + move + 8) != '1')
-			coord->y += move;
 	if (way->left && !(way->right) && get_type_tile(data,
 			&(data->map), coord->x - move, coord->y) != '1'
-		&& get_type_tile(data, &(data->map), coord->x - move, coord->y - 200) != '1')
+		&& get_type_tile(data, &(data->map),
+			coord->x - move, coord->y - 200) != '1')
 	{
 		coord->x += -move;
 		way->dir = 0;
 	}
 	if (!(way->left) && way->right && get_type_tile(data,
 			&(data->map), coord->x + move, coord->y) != '1'
-		&& get_type_tile(data, &(data->map), coord->x + move, coord->y - 200) != '1')
+		&& get_type_tile(data, &(data->map),
+			coord->x + move, coord->y - 200) != '1')
 	{
 		coord->x += move;
 		way->dir = 1;
 	}
+}
+
+void	update_x_y(t_data *data, t_way *way, t_coord *coord)
+{
+	int	move;
+
+	move = 0;
+	if (way->up != way->down && way->right != way->left)
+		move = SPEED_DIAGONAL;
+	else if (way->up != way->down || way->right != way->left)
+		move = SPEED_CARDINAL;
+	if (way->up && !(way->down) && get_type_tile(data,
+			&(data->map), coord->x, coord->y - move - 200) != '1')
+			coord->y += -move;
+	if (!(way->up) && way->down && get_type_tile(data,
+			&(data->map), coord->x, coord->y + move + 8) != '1')
+			coord->y += move;
+	update_x_y_part2(data, way, coord, move);
 }
 
 void	generate_minimap(t_data *data)
@@ -328,36 +332,13 @@ int	game(t_data *data)
 	data->long_frame++;
 	if ((data->long_frame) > LONG_LOOP)
 		data->long_frame = 0;
-	//ft_memcpy(data->layer.tmp.addr, data->layer.back.addr,
-	//	data->last_pixel_offset);
-	//draw_map(data, data->coord);
-	//draw_mini_map(data, &(data->layer.test), data->coord);
-
-	//generate_minimap(data);
-	//my_mlx_put_tmp_to_render(data);
-
 	draw_mini_map(data, &(data->layer.back), data->coord);
-	//draw_mini_map(data, &(data->layer.front), data->coord);
-
 	if (data->way.dir)
 		put_player(data, data->player.coord, data->player.r, data->frame);
 	else
 		put_player(data, data->player.coord, data->player.l, data->frame);
-
 	draw_mini_map_tlayer(data, &(data->layer.front), data->coord);
-
-	//put_img_to_tmp(data, &(data->layer.back), 1, 1);
-
-	// point qui affiche le centre du perso pixel_put_tmp_layer(data, data->player.coord.x + 32, data->player.coord.y + 112, 0x00FF0000);
-
-	//ft_memcpy(data->layer.render.addr, data->layer.tmp.addr,
-	//	data->last_pixel_offset);
-
-//data->coord.x = 10 * (); starting formula
-//data->coord.y = 10 * (i * 64 - data->player.sprite.y);
-
 	mlx_put_image_to_window(data->mlx, data->win, data->layer.tmp.img, 0, 0);
-	//get_type_tile(data, &(data->map), data->coord.x, data->coord.y);
 	update_x_y(data, &(data->way), &(data->coord));
 	update_map_x_y(data);
 	//ft_printf("%d %d\n", data->coord.x, data->coord.y);
@@ -380,9 +361,7 @@ int	close_window(t_data *data)
 	mlx_destroy_image(data->mlx, data->floor.f8.img);
 	mlx_destroy_image(data->mlx, data->wall.mid.img);
 	mlx_destroy_image(data->mlx, data->wall.mid1.img);
-	mlx_destroy_image(data->mlx, data->wall.mid2.img);
 	mlx_destroy_image(data->mlx, data->wall.mid3.img);
-	mlx_destroy_image(data->mlx, data->wall.mid4.img);
 	mlx_destroy_image(data->mlx, data->wall.mid5.img);
 	mlx_destroy_image(data->mlx, data->wall.mid51.img);
 	mlx_destroy_image(data->mlx, data->wall.mid52.img);
@@ -473,8 +452,8 @@ int	key_release(int keycode, void *data)
 void	setup_mlx(t_data *data)
 {
 	data->mlx = mlx_init();
-	data->width = RES_X;//736;
-	data->height = RES_Y;//480;
+	data->width = RES_X;
+	data->height = RES_Y;
 	data->win = mlx_new_window(data->mlx, RES_X, RES_Y, "so_long");
 	import_imgs(data);
 	data->last_pixel_offset = (480 * data->layer.render.line_length
@@ -489,6 +468,7 @@ void	setup_mlx(t_data *data)
 	data->number_of_mouvements = 0;
 	data->map.width = ft_strlen((data->map.ptr)[0]);
 	data->map.height = count_number_of_lines(data->map.ptr);
+	ft_printf("strlen : %d \n lines:%d", data->map.width, data->map.height);
 	data->player.coord.x = data->width / 2 - 31;
 	data->player.coord.y = data->height / 2 - 80;
 	data->coord.x = 0;

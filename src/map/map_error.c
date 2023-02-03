@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 16:11:43 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/01 15:46:55 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/03 00:03:51 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	check_map_error(int return_value, char **map)
 	if (return_value == 11)
 		ft_putendl_fd("Map without valid path to finish", 2);
 	if (return_value == 12)
-		ft_putendl_fd("Map is too big (31x45 max)", 2);
+		ft_putendl_fd("Map is too big", 2);
 	free_map(map);
 	exit (return_value);
 }
