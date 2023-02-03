@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:05:56 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/03 02:05:07 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/03 20:00:30 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 // LISTE DE TRUCS A FAIRE :
 // - (improve top wall texture)
-// - ajouter collectible
-// - ajouter sortie
+// - normer
 // - ajouter enemies
 // - ajouter UI
 
@@ -31,8 +30,8 @@ void	new_layer(t_data *data, t_img *layer)
 
 void	big_new_layer(t_data *data, t_img *layer)
 {
-	layer->width = 2048;
-	layer->height = 2048;
+	layer->width = 1024;
+	layer->height = 1024;
 	layer->img = mlx_new_image(data->mlx, layer->width, layer->height);
 	layer->addr = mlx_get_data_addr(layer->img, &(layer->bits_per_pixel),
 			&(layer->line_length),
@@ -106,6 +105,11 @@ void	import_imgs(t_data *data)
 	import_img(data, &(data->player.l.run_1), "./img/64_knight_run_l1.xpm");
 	import_img(data, &(data->player.l.run_2), "./img/64_knight_run_l2.xpm");
 	import_img(data, &(data->player.l.run_3), "./img/64_knight_run_l3.xpm");
+	import_img(data, &(data->coin.c0), "./img/coin_f0.xpm");
+	import_img(data, &(data->coin.c1), "./img/coin_f1.xpm");
+	import_img(data, &(data->coin.c2), "./img/coin_f2.xpm");
+	import_img(data, &(data->coin.c3), "./img/coin_f3.xpm");
+	import_img(data, &(data->exit.exit_layer), "./img/exit_ladder.xpm");
 }
 
 void	get_starting_pos(t_data *data)
@@ -131,7 +135,7 @@ void	get_starting_pos(t_data *data)
 	}
 }
 
-char	get_type_tile(t_data *data, t_map *map, int x, int y)
+char	get_type_tile_player(t_data *data, t_map *map, int x, int y)
 {
 	int	map_x;
 	int	map_xr;
@@ -151,19 +155,67 @@ char	get_type_tile(t_data *data, t_map *map, int x, int y)
 	return (map->ptr[map_y][map_x]);
 }
 
+int	from_player_x_to_map_tile_x(t_data *data, int	x)
+{
+	return ((x / 10 + data->width / 2) / 64 - 1);
+}
+
+int	from_player_y_to_map_tile_y(t_data *data, int	y)
+{
+	return ((y / 10 + 30 + data->height / 2) / 64 - 1);
+}
+
+char	from_player_pos_to_map_char(t_data *data, int x, int y)
+{
+	int	map_x;
+	int	map_y;
+
+	map_x = from_player_x_to_map_tile_x(data, x);
+	map_y = from_player_y_to_map_tile_y(data, y);
+	return (data->map.ptr[map_y][map_x]);
+}
+
+char	get_type_tile_under_player(t_data *data, t_map *map, int x, int y)
+{
+	int	map_x;
+	int	map_y;
+
+	map_x = (x / 10 + data->width / 2) / 64 - 1;
+	map_y = (y / 10 + 30 + data->height / 2) / 64 - 1;
+	if (map_x < 0 || map_x >= map->width)
+		return ('1');
+	if (map_y < 0 || map_y >= map->height)
+		return ('1');
+	return (map->ptr[map_y][map_x]);
+}
+
+char	get_type_tile(t_map *map, int x, int y)
+{
+	int	map_x;
+	int	map_y;
+
+	map_x = (x / 10) / 64 - 1;
+	map_y = (y / 10) / 64 - 1;
+	if (map_x < 0 || map_x >= map->width)
+		return ('1');
+	if (map_y < 0 || map_y >= map->height)
+		return ('1');
+	return (map->ptr[map_y][map_x]);
+}
+
 void	update_x_y_part2(t_data *data, t_way *way, t_coord *coord, int move)
 {
-	if (way->left && !(way->right) && get_type_tile(data,
+	if (way->left && !(way->right) && get_type_tile_player(data,
 			&(data->map), coord->x - move, coord->y) != '1'
-		&& get_type_tile(data, &(data->map),
+		&& get_type_tile_player(data, &(data->map),
 			coord->x - move, coord->y - 200) != '1')
 	{
 		coord->x += -move;
 		way->dir = 0;
 	}
-	if (!(way->left) && way->right && get_type_tile(data,
+	if (!(way->left) && way->right && get_type_tile_player(data,
 			&(data->map), coord->x + move, coord->y) != '1'
-		&& get_type_tile(data, &(data->map),
+		&& get_type_tile_player(data, &(data->map),
 			coord->x + move, coord->y - 200) != '1')
 	{
 		coord->x += move;
@@ -180,10 +232,10 @@ void	update_x_y(t_data *data, t_way *way, t_coord *coord)
 		move = SPEED_DIAGONAL;
 	else if (way->up != way->down || way->right != way->left)
 		move = SPEED_CARDINAL;
-	if (way->up && !(way->down) && get_type_tile(data,
+	if (way->up && !(way->down) && get_type_tile_player(data,
 			&(data->map), coord->x, coord->y - move - 200) != '1')
 			coord->y += -move;
-	if (!(way->up) && way->down && get_type_tile(data,
+	if (!(way->up) && way->down && get_type_tile_player(data,
 			&(data->map), coord->x, coord->y + move + 8) != '1')
 			coord->y += move;
 	update_x_y_part2(data, way, coord, move);
@@ -202,11 +254,11 @@ void	generate_minimap(t_data *data)
 		tile.x = 0;
 		while (tile.x < data->map.width)
 		{
-			if ((tile.x * 16) < data->width + 16
-				&& (tile.y * 16) < data->height + 16
-				&& tile.x * 16 > -80
-				&& tile.y * 16 > -80)
-			{
+			// if ((tile.x * 16) < data->layer.back.width + 16
+			// 	&& (tile.y * 16) < data->layer.back.height + 16
+			// 	&& tile.x * 16 > -80
+			// 	&& tile.y * 16 > -80) QUE FAIT CE CODE !???
+			//{
 				if (ft_strchr("0EC", map[tile.y][tile.x]))
 					draw_floor(data, tile.x, tile.y);
 				if (map[tile.y][tile.x] == '1')
@@ -214,7 +266,7 @@ void	generate_minimap(t_data *data)
 				if (ft_strchr("P", map[tile.y][tile.x]))
 					put_img_to_back(data, &(data->floor.start),
 						(tile.x + 1) * 16, (tile.y + 1) * 16);
-			}
+			//}
 			tile.x++;
 		}
 		tile.y++;
@@ -293,15 +345,52 @@ void	square_put_tmp(t_data *data, int x, int y, int color)
 	int	j;
 
 	i = 0;
-	while (i < 5)
+	while (i < 64)
 	{
 		j = 0;
-		while (j < 5)
+		while (j < 64)
 		{
 			pixel_put_tmp_layer(data, x + j, y + i, color);
 			j++;
 		}
 		i++;
+	}
+}
+void	put_coin_frame(t_data *data, t_coord coord, int i, int j)
+{
+	if (data->frame < MINI_LOOP / 4)
+		put_img_to_tmp(data, &(data->coin.c0),
+			(i - coord.x) / 10, (j - coord.y) / 10);
+	else if (data->frame < MINI_LOOP / 2)
+		put_img_to_tmp(data, &(data->coin.c1),
+			(i - coord.x) / 10, (j - coord.y) / 10);
+	else if (data->frame < MINI_LOOP * 3 / 4)
+		put_img_to_tmp(data, &(data->coin.c2),
+			(i - coord.x) / 10, (j - coord.y) / 10);
+	else
+		put_img_to_tmp(data, &(data->coin.c3),
+			(i - coord.x) / 10, (j - coord.y) / 10);
+}
+
+void	put_coins(t_data *data, t_coord coord)
+{
+	int	i;
+	int	j;
+
+
+	j = coord.y / 640 * 640;
+	while (j < coord.y + data->height * 10)
+	{
+		i = coord.x / 640 * 640;
+		while (i < coord.x + data->width * 10)
+		{
+			if (get_type_tile(&(data->map), i, j) == 'C')
+			{
+				put_coin_frame(data, coord, i, j);
+			}
+			i += 640;
+		}
+		j += 640;
 	}
 }
 
@@ -325,6 +414,46 @@ void	update_map_x_y(t_data *data)
 	}
 }
 
+void	draw_exit(t_data *data, int x, int y)
+{
+	put_img_to_back(data, &(data->exit.exit_layer), (x + 1) * 16, (y) * 16);
+}
+
+void	put_exit_to_map(t_data *data)
+{
+	char	**map;
+	t_coord	tile;
+
+	map = data->map.ptr;
+	tile.y = 0;
+	while (tile.y < data->map.height)
+	{
+		tile.x = 0;
+		while (tile.x < data->map.width)
+		{
+			if (ft_strchr("E", map[tile.y][tile.x]))
+				draw_exit(data, tile.x, tile.y);
+			tile.x++;
+		}
+		tile.y++;
+	}
+}
+
+void	event_player(t_data *data, int x, int y)
+{
+	if ('C' == get_type_tile_under_player(data, &(data->map), x, y))
+	{
+		data->nbr_of_collectible--;
+		data->map.ptr[from_player_y_to_map_tile_y(data, y)]
+		[from_player_x_to_map_tile_x(data, x)] = '0';
+		if (data->nbr_of_collectible == 0)
+			put_exit_to_map(data);
+	}
+	if ('E' == get_type_tile_under_player(data, &(data->map), x, y)
+		&& !data->nbr_of_collectible)
+		close_window(data);
+}
+
 int	game(t_data *data)
 {
 	data->frame++;
@@ -334,6 +463,7 @@ int	game(t_data *data)
 	if ((data->long_frame) > LONG_LOOP)
 		data->long_frame = 0;
 	draw_mini_map(data, &(data->layer.back), data->coord);
+	put_coins(data, data->coord);
 	if (data->way.dir)
 		put_player(data, data->player.coord, data->player.r, data->frame);
 	else
@@ -342,7 +472,7 @@ int	game(t_data *data)
 	mlx_put_image_to_window(data->mlx, data->win, data->layer.tmp.img, 0, 0);
 	update_x_y(data, &(data->way), &(data->coord));
 	update_map_x_y(data);
-	//ft_printf("%d %d\n", data->coord.x, data->coord.y);
+	event_player(data, data->coord.x, data->coord.y);
 	return (0);
 }
 
@@ -405,6 +535,11 @@ int	close_window(t_data *data)
 	mlx_destroy_image(data->mlx, data->player.l.run_1.img);
 	mlx_destroy_image(data->mlx, data->player.l.run_2.img);
 	mlx_destroy_image(data->mlx, data->player.l.run_3.img);
+	mlx_destroy_image(data->mlx, data->coin.c0.img);
+	mlx_destroy_image(data->mlx, data->coin.c1.img);
+	mlx_destroy_image(data->mlx, data->coin.c2.img);
+	mlx_destroy_image(data->mlx, data->coin.c3.img);
+	mlx_destroy_image(data->mlx, data->exit.exit_layer.img);
 	mlx_destroy_window(data->mlx, data->win);
 	mlx_destroy_display(data->mlx);
 	free(data->mlx);
@@ -467,11 +602,12 @@ void	setup_mlx(t_data *data)
 	data->number_of_mouvements = 0;
 	data->map.width = ft_strlen((data->map.ptr)[0]);
 	data->map.height = count_number_of_lines(data->map.ptr);
-	ft_printf("strlen : %d \n lines:%d", data->map.width, data->map.height);
 	data->player.coord.x = data->width / 2 - 31;
 	data->player.coord.y = data->height / 2 - 80;
 	data->coord.x = 0;
 	data->coord.y = 0;
+	data->nbr_of_collectible = 0;
+	data->nbr_of_collectible = count_char_in_map(data->map.ptr, 'C');
 	get_starting_pos(data);
 	data->map.tile_coord.x = (data->coord.x / 10
 			+ data->width / 2) / 64 - 1;

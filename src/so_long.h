@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/03 02:04:12 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/03 19:51:21 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,12 +120,14 @@ typedef struct s_player {
 }				t_player;
 
 typedef struct s_coin {
+	t_img	c0;
 	t_img	c1;
+	t_img	c2;
+	t_img	c3;
 }				t_coin;
 
 typedef struct s_exit {
-	t_img	open;
-	t_img	closed;
+	t_img	exit_layer;
 }				t_exit;
 
 typedef struct s_way {
@@ -152,6 +154,7 @@ typedef struct s_data {
 	int			frame;
 	int			long_frame;
 	int			number_of_mouvements;
+	int			nbr_of_collectible;
 	t_map		map;
 	t_coord		coord;
 	t_way		way;
@@ -203,5 +206,7 @@ void	pixel_put_back_layer(t_data *data, int x, int y, int color);
 
 int		get_random(void);
 int		get_n_random(int n);
+
+int		close_window(t_data *data);
 
 #endif
