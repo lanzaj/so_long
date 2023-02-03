@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 11:47:16 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/31 09:44:52 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/04 00:34:57 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,24 @@ void	my_mlx_put_tmp_to_render(t_data *data)
 		{
 			pixel_put_render_layer(data, j, i,
 				get_color(&(data->layer.tmp), j, i));
+			j++;
+		}
+		i++;
+	}
+}
+
+void	square_put_tmp(t_data *data, int x, int y, int color)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < 64)
+	{
+		j = 0;
+		while (j < 64)
+		{
+			pixel_put_tmp_layer(data, x + j, y + i, color);
 			j++;
 		}
 		i++;

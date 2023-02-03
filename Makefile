@@ -6,7 +6,7 @@
 #    By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 15:24:20 by jlanza            #+#    #+#              #
-#    Updated: 2023/02/02 22:27:05 by jlanza           ###   ########.fr        #
+#    Updated: 2023/02/04 00:38:44 by jlanza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,25 @@ SRC =	src/main.c \
 		src/map/dup_map.c \
 		src/gui/my_mlx_function.c \
 		src/gui/generate_map.c \
-		src/gui/get_random.c
+		src/gui/get_random.c \
+		src/gui/init_layer.c \
+		src/gui/import_images.c \
+		src/gui/close_windows.c \
+		src/gui/generate_minimap.c \
+		src/gui/draw_mini_map.c \
+		src/gui/put_player.c \
+		src/gui/put_coin.c \
+		src/gui/put_exit.c \
+		src/game/key_event.c \
+		src/game/game_init.c \
+		src/game/game_loop.c \
+		src/game/update_x_y.c \
+		src/game/init_data.c \
+		src/game/from_player_pos_to_map_char.c \
+		src/game/get_type_tile.c \
+		src/game/get_starting_pos.c \
+		src/game/update_map_x_y.c \
+		src/game/event_player.c
 
 LIBFT = libft/libft.a
 LIBMLX = minilibx-linux/libmlx.a

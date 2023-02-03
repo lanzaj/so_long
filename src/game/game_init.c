@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   game_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/24 15:05:56 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/04 00:37:49 by jlanza           ###   ########.fr       */
+/*   Created: 2023/02/03 22:23:03 by jlanza            #+#    #+#             */
+/*   Updated: 2023/02/03 22:26:55 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../so_long.h"
 
-// LISTE DE TRUCS A FAIRE :
-// - (improve top wall texture)
-// - normer
-// - ajouter enemies
-// - ajouter UI
-
-int	main(int argc, char *argv[])
+int	game_init(t_data *data)
 {
-	t_data	data;
-
-	if (argc != 2)
-		parse_map_error(1);
-	data.map.ptr = import_map(argv[1]);
-	check_map(data.map.ptr);
-	init_data(&data);
-	game_init(&data);
+	mlx_hook(data->win, 17, 1L << 0, close_window, data);
+	mlx_hook(data->win, 2, 1L << 0, key_press, data);
+	mlx_hook(data->win, 3, 1L << 1, key_release, data);
+	mlx_loop_hook(data->mlx, game_loop, data);
+	mlx_loop(data->mlx);
 	return (0);
 }
