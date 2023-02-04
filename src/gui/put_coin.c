@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 00:33:02 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/04 00:33:42 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/04 00:45:00 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	put_coins(t_data *data, t_coord coord)
 {
 	int	i;
 	int	j;
-
 
 	j = coord.y / 640 * 640;
 	while (j < coord.y + data->height * 10)

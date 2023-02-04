@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 22:29:38 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/03 22:40:40 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/04 00:50:56 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ static int	close_window_part2(t_data *data)
 int	close_window(t_data *data)
 {
 	mlx_destroy_image(data->mlx, data->layer.tmp.img);
-	mlx_destroy_image(data->mlx, data->layer.render.img);
 	mlx_destroy_image(data->mlx, data->layer.front.img);
 	mlx_destroy_image(data->mlx, data->layer.back.img);
 	mlx_destroy_image(data->mlx, data->floor.f1.img);

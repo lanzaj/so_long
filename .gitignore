@@ -83,3 +83,9 @@ tags
 
 # MAP FILE
 #*.ber
+
+# Script shell
+*.sh
+
+# exe
+so_long

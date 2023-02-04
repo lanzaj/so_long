@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setup_mlx.c                                        :+:      :+:    :+:   */
+/*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 22:42:56 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/03 22:46:20 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/04 00:50:48 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	init_data(t_data *data)
 	data->height = RES_Y;
 	data->win = mlx_new_window(data->mlx, RES_X, RES_Y, "so_long");
 	import_imgs(data);
-	data->last_pixel_offset = (480 * data->layer.render.line_length
-			+ 736 * (data->layer.render.bits_per_pixel / 8)) - 2945;
+	data->last_pixel_offset = (480 * data->layer.tmp.line_length
+			+ 736 * (data->layer.tmp.bits_per_pixel / 8)) - 2945;
 	data->way.up = 0;
 	data->way.down = 0;
 	data->way.left = 0;

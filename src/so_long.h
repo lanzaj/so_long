@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/04 00:38:22 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/04 01:41:21 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ typedef struct s_layer {
 	t_img	front;
 	t_img	back;
 	t_img	tmp;
-	t_img	render;
 }				t_layer;
 
 typedef struct s_floor {
@@ -167,74 +166,102 @@ typedef struct s_data {
 }				t_data;
 
 			/* COUNT IN MAP */
-int		count_number_of_lines(char **map);
-int		count_char_in_map(char **map, char c);
+int				count_number_of_lines(char **map);
+int				count_char_in_map(char **map, char c);
 
 			/* CHECK */
-void	check_map(char **map);
-int		check_extension(char *path);
-void	check_if_enclosed_in_walls(char **map);
-void	check_map_flood(char **map);
+void			check_map(char **map);
+int				check_extension(char *path);
+void			check_if_enclosed_in_walls(char **map);
+void			check_map_flood(char **map);
 
 			/* MAP ERROR */
-void	parse_map_error(int return_value);
-void	check_map_error(int return_value, char **map);
+void			parse_map_error(int return_value);
+void			check_map_error(int return_value, char **map);
 
 			/* Map */
-char	**import_map(char *path);
-char	**dup_map(char **map);
-char	**free_map(char **tab);
-void	print_map(char **map);
+char			**import_map(char *path);
+char			**dup_map(char **map);
+char			**free_map(char **tab);
+void			print_map(char **map);
 
 			/* GUI */
-void	new_layer(t_data *data, t_img *layer);
-void	big_new_layer(t_data *data, t_img *layer);
-void	import_imgs(t_data *data);
+void			new_layer(t_data *data, t_img *layer);
+void			big_new_layer(t_data *data, t_img *layer);
+void			import_imgs(t_data *data);
 
-int		get_color(t_img *xpm, int x, int y);
-void	pixel_put_tmp_layer(t_data *data, int x, int y, int color);
-void	background_put_tmp(t_data *data, int color);
-void	background_put_back(t_data *data, int color);
-void	background_put_front(t_data *data, int color);
-void	put_img_to_tmp(t_data *data, t_img *xpm, int x, int y);
-void	put_img_to_back(t_data *data, t_img *xpm, int x, int y);
-void	put_img_to_front(t_data *data, t_img *xpm, int x, int y);
-void	my_mlx_put_tmp_to_render(t_data *data);
-void	draw_mini_map(t_data *data, t_img *xpm, t_coord player);
-void	draw_mini_map_tlayer(t_data *data, t_img *xpm, t_coord player);
-void	put_player(t_data *d, t_coord coord, t_sprite p, int frame);
-void	put_coins(t_data *data, t_coord coord);
-void	put_exit_to_map(t_data *data);
+int				get_color(t_img *xpm, int x, int y);
+void			pixel_put_tmp_layer(t_data *data, int x, int y, int color);
+void			background_put_tmp(t_data *data, int color);
+void			background_put_back(t_data *data, int color);
+void			put_img_to_tmp(t_data *data, t_img *xpm, int x, int y);
+void			put_img_to_back(t_data *data, t_img *xpm, int x, int y);
+void			put_img_to_front(t_data *data, t_img *xpm, int x, int y);
+void			draw_mini_map(t_data *data, t_img *xpm, t_coord player);
+void			draw_mini_map_tlayer(t_data *data, t_img *xpm, t_coord player);
+void			put_player(t_data *d, t_coord coord, t_sprite p, int frame);
+void			put_coins(t_data *data, t_coord coord);
+void			put_exit_to_map(t_data *data);
+
+void			pixel_put_front_layer(t_data *data, int x, int y, int color);
+void			pixel_put_back_layer(t_data *data, int x, int y, int color);
+void			pixel_put_tmp_layer(t_data *data, int x, int y, int color);
+
+unsigned char	get_t(int trgb);
+int				get_color(t_img *xpm, int x, int y);
 
 			/* Generating map */
-void	generate_minimap(t_data *data);
-void	draw_wall(t_data *data, int x, int y);
-void	draw_floor(t_data *data, int x, int y);
+void			generate_minimap(t_data *data);
+void			draw_wall(t_data *data, int x, int y);
+void			draw_floor(t_data *data, int x, int y);
+void			draw_upper_wall_corner_left_front(t_data *data, int x, int y);
+void			draw_upper_wall_corner_right_front(t_data *data, int x, int y);
+void			draw_random_upper_wall(t_data *data, int x, int y);
+void			draw_lower_wall_corner_left_continuing_down(t_data *data,
+					int x, int y);
+void			draw_lower_wall_corner_right_continuing_down(t_data *data,
+					int x, int y);
+void			draw_lower_wall_right_corner(t_data *data, int x, int y);
+void			draw_lower_wall_left_corner(t_data *data, int x, int y);
+void			draw_random_lower_wall(t_data *data, int x, int y);
+void			draw_column(t_data *data, int x, int y);
+void			draw_left_wall(t_data *data, int x, int y);
+void			draw_right_wall(t_data *data, int x, int y);
+int				is_tile_in_charset(t_data *data, char *charset, int x, int y);
+void			pixel_put_tmp_layer(t_data *data, int x, int y, int color);
+void			pixel_put_back_layer(t_data *data, int x, int y, int color);
+int				is_left_wall(t_data *data, int x, int y);
+int				is_right_wall(t_data *data, int x, int y);
+int				is_upper_wall(t_data *data, int x, int y);
+int				is_lower_wall(t_data *data, int x, int y);
+int				is_side_wall(t_data *data, int x, int y);
+int				is_column(t_data *data, int x, int y);
+int				is_left_corner(t_data *data, int x, int y);
+int				is_right_corner(t_data *data, int x, int y);
+int				is_wall_continuing_down(t_data *data, int x, int y);
 
-void	pixel_put_tmp_layer(t_data *data, int x, int y, int color);
-void	pixel_put_back_layer(t_data *data, int x, int y, int color);
+int				get_random(void);
+int				get_n_random(int n);
 
-int		get_random(void);
-int		get_n_random(int n);
-
-int		close_window(t_data *data);
+int				close_window(t_data *data);
 
 			/* Game */
-void	init_mlx(t_data *data);
-int		game_init(t_data *data);
-void	init_data(t_data *data);
-void	get_starting_pos(t_data *data);
-int		game_loop(t_data *data);
-int		key_press(int keycode, void *data);
-int		key_release(int keycode, void *data);
-void	update_x_y(t_data *data, t_way *way, t_coord *coord);
-void	update_map_x_y(t_data *data);
-void	event_player(t_data *data, int x, int y);
-int		from_player_x_to_map_tile_x(t_data *data, int x);
-int		from_player_y_to_map_tile_y(t_data *data, int y);
-char	from_player_pos_to_map_char(t_data *data, int x, int y);
-char	get_type_tile_player(t_data *data, t_map *map, int x, int y);
-char	get_type_tile_under_player(t_data *data, t_map *map, int x, int y);
-char	get_type_tile(t_map *map, int x, int y);
+void			init_mlx(t_data *data);
+int				game_init(t_data *data);
+void			init_data(t_data *data);
+void			get_starting_pos(t_data *data);
+int				game_loop(t_data *data);
+int				key_press(int keycode, void *data);
+int				key_release(int keycode, void *data);
+void			update_x_y(t_data *data, t_way *way, t_coord *coord);
+void			update_map_x_y(t_data *data);
+void			event_player(t_data *data, int x, int y);
+int				from_player_x_to_map_tile_x(t_data *data, int x);
+int				from_player_y_to_map_tile_y(t_data *data, int y);
+char			from_player_pos_to_map_char(t_data *data, int x, int y);
+char			get_type_tile_player(t_data *data, t_map *map, int x, int y);
+char			get_type_tile_under_player(t_data *data,
+					t_map *map, int x, int y);
+char			get_type_tile(t_map *map, int x, int y);
 
 #endif

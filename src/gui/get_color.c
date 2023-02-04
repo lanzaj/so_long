@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_mlx_function.c                                  :+:      :+:    :+:   */
+/*   get_color.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/27 11:47:16 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/04 01:06:55 by jlanza           ###   ########.fr       */
+/*   Created: 2023/02/04 00:57:34 by jlanza            #+#    #+#             */
+/*   Updated: 2023/02/04 00:58:01 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-void	square_put_tmp(t_data *data, int x, int y, int color)
+unsigned char	get_t(int trgb)
 {
-	int	i;
-	int	j;
+	return (((unsigned char *)&trgb)[3]);
+}
 
-	i = 0;
-	while (i < 64)
-	{
-		j = 0;
-		while (j < 64)
-		{
-			pixel_put_tmp_layer(data, x + j, y + i, color);
-			j++;
-		}
-		i++;
-	}
+int	get_color(t_img *xpm, int x, int y)
+{
+	if (x < 0 || x >= xpm->width || y < 0 || y >= xpm->height)
+		return (-1);
+	return (*(int *)(xpm->addr + (x * (xpm->bits_per_pixel / 8)
+			+ y * xpm->line_length)));
 }

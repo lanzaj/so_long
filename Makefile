@@ -6,7 +6,7 @@
 #    By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 15:24:20 by jlanza            #+#    #+#              #
-#    Updated: 2023/02/04 00:38:44 by jlanza           ###   ########.fr        #
+#    Updated: 2023/02/04 01:43:18 by jlanza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,16 +22,27 @@ SRC =	src/main.c \
 		src/map/count_in_map.c \
 		src/map/dup_map.c \
 		src/gui/my_mlx_function.c \
-		src/gui/generate_map.c \
 		src/gui/get_random.c \
 		src/gui/init_layer.c \
 		src/gui/import_images.c \
 		src/gui/close_windows.c \
-		src/gui/generate_minimap.c \
 		src/gui/draw_mini_map.c \
 		src/gui/put_player.c \
 		src/gui/put_coin.c \
 		src/gui/put_exit.c \
+		src/gui/pixel_put.c \
+		src/gui/get_color.c \
+		src/gui/put_background.c \
+		src/gui/put_img_to_layer.c \
+		src/generate_map/draw_wall.c \
+		src/generate_map/draw_floor.c \
+		src/generate_map/is_tile_in_charset.c \
+		src/generate_map/is_wall.c \
+		src/generate_map/is_wall2.c \
+		src/generate_map/draw_upper_wall.c \
+		src/generate_map/draw_lower_wall.c \
+		src/generate_map/draw_right_left_column_wall.c \
+		src/generate_map/generate_minimap.c \
 		src/game/key_event.c \
 		src/game/game_init.c \
 		src/game/game_loop.c \
