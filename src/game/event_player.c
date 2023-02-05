@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 00:37:26 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/04 00:37:53 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/05 19:42:44 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,7 @@ void	event_player(t_data *data, int x, int y)
 	}
 	if ('E' == get_type_tile_under_player(data, &(data->map), x, y)
 		&& !data->nbr_of_collectible)
-		close_window(data);
+		data->end.won = 1;
+	if ('M' == get_type_tile_under_player(data, &(data->map), x, y))
+		data->end.lost = 1;
 }

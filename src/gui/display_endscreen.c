@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_mlx_function.c                                  :+:      :+:    :+:   */
+/*   display_endscreen.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/27 11:47:16 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/04 19:13:31 by jlanza           ###   ########.fr       */
+/*   Created: 2023/02/05 18:41:16 by jlanza            #+#    #+#             */
+/*   Updated: 2023/02/05 19:43:58 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-void	square_put_tmp(t_data *data, int x, int y, int color)
+void	display_endscreen(t_data *data)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < 28)
+	if (data->end.won)
 	{
-		j = 0;
-		while (j < 28)
-		{
-			pixel_put_tmp_layer(data, x + j, y + i, color);
-			j++;
-		}
-		i++;
+		if (data->long_frame < LONG_LOOP / 2)
+			put_img_to_tmp(data, &(data->end.win), 0, 0);
+		else
+			put_img_to_tmp(data, &(data->end.win2), 0, 0);
 	}
+	else
+	{
+		if (data->long_frame < LONG_LOOP / 2)
+			put_img_to_tmp(data, &(data->end.lose), 0, 0);
+		else
+			put_img_to_tmp(data, &(data->end.lose2), 0, 0);
+	}
+	mlx_put_image_to_window(data->mlx, data->win,
+		data->layer.tmp.img, 0, 0);
 }

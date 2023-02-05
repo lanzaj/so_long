@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/04 01:41:21 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/05 19:21:36 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@
 /* include minilix */
 # include "../minilibx-linux/mlx.h"
 
-# define RES_X 1080
+# include <limits.h>
+
+# define RES_X 1280
 # define RES_Y 720
 
 # define MINI_LOOP 30
@@ -101,6 +103,14 @@ typedef struct s_wall {
 	t_img	front_r;
 }				t_wall;
 
+typedef struct s_way {
+	char	up;
+	char	left;
+	char	right;
+	char	down;
+	char	dir;
+}				t_way;
+
 typedef struct s_sprite {
 	t_img	idle_0;
 	t_img	idle_1;
@@ -118,6 +128,13 @@ typedef struct s_player {
 	t_coord		coord;
 }				t_player;
 
+typedef struct s_monster {
+	t_sprite	l;
+	t_sprite	r;
+	t_coord		coord;
+	int			dir;
+}				t_monster;
+
 typedef struct s_coin {
 	t_img	c0;
 	t_img	c1;
@@ -129,13 +146,19 @@ typedef struct s_exit {
 	t_img	exit_layer;
 }				t_exit;
 
-typedef struct s_way {
-	char	up;
-	char	left;
-	char	right;
-	char	down;
-	char	dir;
-}				t_way;
+typedef struct s_digit {
+	t_img	d_0;
+	t_img	d_1;
+	t_img	d_2;
+	t_img	d_3;
+	t_img	d_4;
+	t_img	d_5;
+	t_img	d_6;
+	t_img	d_7;
+	t_img	d_8;
+	t_img	d_9;
+}				t_digit;
+
 
 typedef struct s_map {
 	char	**ptr;
@@ -143,6 +166,15 @@ typedef struct s_map {
 	int		height;
 	t_coord	tile_coord;
 }				t_map;
+
+typedef struct s_end {
+	t_img	win;
+	t_img	win2;
+	t_img	lose;
+	t_img	lose2;
+	int		won;
+	int		lost;
+}				t_end;
 
 typedef struct s_data {
 	void		*mlx;
@@ -154,6 +186,7 @@ typedef struct s_data {
 	int			long_frame;
 	int			number_of_mouvements;
 	int			nbr_of_collectible;
+	t_end		end;
 	t_map		map;
 	t_coord		coord;
 	t_way		way;
@@ -162,7 +195,11 @@ typedef struct s_data {
 	t_wall		wall;
 	t_exit		exit;
 	t_coin		coin;
+	t_digit		digit;
 	t_player	player;
+	t_monster	demon;
+	t_monster	orc;
+	t_monster	undead;
 }				t_data;
 
 			/* COUNT IN MAP */
@@ -185,7 +222,7 @@ char			**dup_map(char **map);
 char			**free_map(char **tab);
 void			print_map(char **map);
 
-			/* GUI */
+			/* graphic */
 void			new_layer(t_data *data, t_img *layer);
 void			big_new_layer(t_data *data, t_img *layer);
 void			import_imgs(t_data *data);
@@ -194,6 +231,7 @@ int				get_color(t_img *xpm, int x, int y);
 void			pixel_put_tmp_layer(t_data *data, int x, int y, int color);
 void			background_put_tmp(t_data *data, int color);
 void			background_put_back(t_data *data, int color);
+void			banner_put_tmp(t_data *data, int color);
 void			put_img_to_tmp(t_data *data, t_img *xpm, int x, int y);
 void			put_img_to_back(t_data *data, t_img *xpm, int x, int y);
 void			put_img_to_front(t_data *data, t_img *xpm, int x, int y);
@@ -202,6 +240,8 @@ void			draw_mini_map_tlayer(t_data *data, t_img *xpm, t_coord player);
 void			put_player(t_data *d, t_coord coord, t_sprite p, int frame);
 void			put_coins(t_data *data, t_coord coord);
 void			put_exit_to_map(t_data *data);
+void			put_nbr_of_mouvement(t_data *data, int n);
+void			put_monsters(t_data *data);
 
 void			pixel_put_front_layer(t_data *data, int x, int y, int color);
 void			pixel_put_back_layer(t_data *data, int x, int y, int color);
@@ -209,6 +249,8 @@ void			pixel_put_tmp_layer(t_data *data, int x, int y, int color);
 
 unsigned char	get_t(int trgb);
 int				get_color(t_img *xpm, int x, int y);
+void			square_put_tmp(t_data *data, int x, int y, int color);
+void			display_endscreen(t_data *data);
 
 			/* Generating map */
 void			generate_minimap(t_data *data);
@@ -239,6 +281,7 @@ int				is_column(t_data *data, int x, int y);
 int				is_left_corner(t_data *data, int x, int y);
 int				is_right_corner(t_data *data, int x, int y);
 int				is_wall_continuing_down(t_data *data, int x, int y);
+void			place_monsters(t_data *data);
 
 int				get_random(void);
 int				get_n_random(int n);

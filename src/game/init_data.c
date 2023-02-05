@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 22:42:56 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/04 00:50:48 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/05 18:59:48 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,18 @@ static void	init_data_part2(t_data *data)
 			+ 30 + data->height / 2) / 64 - 1;
 	generate_minimap(data);
 	background_put_tmp(data, 0x00232323);
+	data->demon.coord.x = INT_MIN;
+	data->demon.coord.y = INT_MIN;
+	data->orc.coord.x = INT_MIN;
+	data->orc.coord.y = INT_MIN;
+	data->undead.coord.x = INT_MIN;
+	data->undead.coord.y = INT_MIN;
+	data->demon.dir = 0;
+	data->orc.dir = 0;
+	data->undead.dir = 0;
+	place_monsters(data);
+	data->end.won = 0;
+	data->end.lost = 0;
 }
 
 void	init_data(t_data *data)

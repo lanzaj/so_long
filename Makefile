@@ -6,7 +6,7 @@
 #    By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 15:24:20 by jlanza            #+#    #+#              #
-#    Updated: 2023/02/04 01:43:18 by jlanza           ###   ########.fr        #
+#    Updated: 2023/02/05 19:00:29 by jlanza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,9 @@ SRC =	src/main.c \
 		src/gui/get_color.c \
 		src/gui/put_background.c \
 		src/gui/put_img_to_layer.c \
+		src/gui/put_nbr_of_mouvement.c \
+		src/gui/put_monsters.c \
+		src/gui/display_endscreen.c \
 		src/generate_map/draw_wall.c \
 		src/generate_map/draw_floor.c \
 		src/generate_map/is_tile_in_charset.c \
@@ -52,7 +55,8 @@ SRC =	src/main.c \
 		src/game/get_type_tile.c \
 		src/game/get_starting_pos.c \
 		src/game/update_map_x_y.c \
-		src/game/event_player.c
+		src/game/event_player.c \
+		src/game/place_monsters.c
 
 LIBFT = libft/libft.a
 LIBMLX = minilibx-linux/libmlx.a

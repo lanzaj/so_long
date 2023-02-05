@@ -6,17 +6,14 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:05:56 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/04 00:37:49 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/05 01:46:48 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
 // LISTE DE TRUCS A FAIRE :
-// - (improve top wall texture)
-// - normer
 // - ajouter enemies
-// - ajouter UI
 
 int	main(int argc, char *argv[])
 {

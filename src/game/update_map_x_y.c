@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 00:27:01 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/04 00:28:03 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/04 19:29:01 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,5 @@ void	update_map_x_y(t_data *data)
 		data->number_of_mouvements++;
 		ft_printf("number of mouvements: %d\n", data->number_of_mouvements);
 	}
+	put_nbr_of_mouvement(data, data->number_of_mouvements);
 }
