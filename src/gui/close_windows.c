@@ -6,11 +6,67 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 22:29:38 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/05 19:32:03 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/06 00:17:20 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
+
+static int	close_window_part5(t_data *data)
+{
+	mlx_destroy_image(data->mlx, data->orc.r.run_2.img);
+	mlx_destroy_image(data->mlx, data->orc.r.run_3.img);
+	mlx_destroy_image(data->mlx, data->orc.l.idle_0.img);
+	mlx_destroy_image(data->mlx, data->orc.l.idle_1.img);
+	mlx_destroy_image(data->mlx, data->orc.l.idle_2.img);
+	mlx_destroy_image(data->mlx, data->orc.l.idle_3.img);
+	mlx_destroy_image(data->mlx, data->orc.l.run_0.img);
+	mlx_destroy_image(data->mlx, data->orc.l.run_1.img);
+	mlx_destroy_image(data->mlx, data->orc.l.run_2.img);
+	mlx_destroy_image(data->mlx, data->orc.l.run_3.img);
+	mlx_destroy_image(data->mlx, data->undead.r.idle_0.img);
+	mlx_destroy_image(data->mlx, data->undead.r.idle_1.img);
+	mlx_destroy_image(data->mlx, data->undead.r.idle_2.img);
+	mlx_destroy_image(data->mlx, data->undead.r.idle_3.img);
+	mlx_destroy_image(data->mlx, data->undead.r.run_0.img);
+	mlx_destroy_image(data->mlx, data->undead.r.run_1.img);
+	mlx_destroy_image(data->mlx, data->undead.r.run_2.img);
+	mlx_destroy_image(data->mlx, data->undead.r.run_3.img);
+	mlx_destroy_image(data->mlx, data->undead.l.idle_0.img);
+	mlx_destroy_image(data->mlx, data->undead.l.idle_1.img);
+	mlx_destroy_image(data->mlx, data->undead.l.idle_2.img);
+	mlx_destroy_image(data->mlx, data->undead.l.idle_3.img);
+	mlx_destroy_image(data->mlx, data->undead.l.run_0.img);
+	close_window_part6(data);
+}
+
+static int	close_window_part4(t_data *data)
+{
+	mlx_destroy_image(data->mlx, data->digit.d_9.img);
+	mlx_destroy_image(data->mlx, data->demon.r.idle_0.img);
+	mlx_destroy_image(data->mlx, data->demon.r.idle_1.img);
+	mlx_destroy_image(data->mlx, data->demon.r.idle_2.img);
+	mlx_destroy_image(data->mlx, data->demon.r.idle_3.img);
+	mlx_destroy_image(data->mlx, data->demon.r.run_0.img);
+	mlx_destroy_image(data->mlx, data->demon.r.run_1.img);
+	mlx_destroy_image(data->mlx, data->demon.r.run_2.img);
+	mlx_destroy_image(data->mlx, data->demon.r.run_3.img);
+	mlx_destroy_image(data->mlx, data->demon.l.idle_0.img);
+	mlx_destroy_image(data->mlx, data->demon.l.idle_1.img);
+	mlx_destroy_image(data->mlx, data->demon.l.idle_2.img);
+	mlx_destroy_image(data->mlx, data->demon.l.idle_3.img);
+	mlx_destroy_image(data->mlx, data->demon.l.run_0.img);
+	mlx_destroy_image(data->mlx, data->demon.l.run_1.img);
+	mlx_destroy_image(data->mlx, data->demon.l.run_2.img);
+	mlx_destroy_image(data->mlx, data->demon.l.run_3.img);
+	mlx_destroy_image(data->mlx, data->orc.r.idle_0.img);
+	mlx_destroy_image(data->mlx, data->orc.r.idle_1.img);
+	mlx_destroy_image(data->mlx, data->orc.r.idle_2.img);
+	mlx_destroy_image(data->mlx, data->orc.r.idle_3.img);
+	mlx_destroy_image(data->mlx, data->orc.r.run_0.img);
+	mlx_destroy_image(data->mlx, data->orc.r.run_1.img);
+	close_window_part4(data);
+}
 
 static int	close_window_part3(t_data *data)
 {
@@ -37,64 +93,7 @@ static int	close_window_part3(t_data *data)
 	mlx_destroy_image(data->mlx, data->digit.d_6.img);
 	mlx_destroy_image(data->mlx, data->digit.d_7.img);
 	mlx_destroy_image(data->mlx, data->digit.d_8.img);
-	mlx_destroy_image(data->mlx, data->digit.d_9.img);
-	mlx_destroy_image(data->mlx, data->demon.r.idle_0.img);
-	mlx_destroy_image(data->mlx, data->demon.r.idle_1.img);
-	mlx_destroy_image(data->mlx, data->demon.r.idle_2.img);
-	mlx_destroy_image(data->mlx, data->demon.r.idle_3.img);
-	mlx_destroy_image(data->mlx, data->demon.r.run_0.img);
-	mlx_destroy_image(data->mlx, data->demon.r.run_1.img);
-	mlx_destroy_image(data->mlx, data->demon.r.run_2.img);
-	mlx_destroy_image(data->mlx, data->demon.r.run_3.img);
-	mlx_destroy_image(data->mlx, data->demon.l.idle_0.img);
-	mlx_destroy_image(data->mlx, data->demon.l.idle_1.img);
-	mlx_destroy_image(data->mlx, data->demon.l.idle_2.img);
-	mlx_destroy_image(data->mlx, data->demon.l.idle_3.img);
-	mlx_destroy_image(data->mlx, data->demon.l.run_0.img);
-	mlx_destroy_image(data->mlx, data->demon.l.run_1.img);
-	mlx_destroy_image(data->mlx, data->demon.l.run_2.img);
-	mlx_destroy_image(data->mlx, data->demon.l.run_3.img);
-	mlx_destroy_image(data->mlx, data->orc.r.idle_0.img);
-	mlx_destroy_image(data->mlx, data->orc.r.idle_1.img);
-	mlx_destroy_image(data->mlx, data->orc.r.idle_2.img);
-	mlx_destroy_image(data->mlx, data->orc.r.idle_3.img);
-	mlx_destroy_image(data->mlx, data->orc.r.run_0.img);
-	mlx_destroy_image(data->mlx, data->orc.r.run_1.img);
-	mlx_destroy_image(data->mlx, data->orc.r.run_2.img);
-	mlx_destroy_image(data->mlx, data->orc.r.run_3.img);
-	mlx_destroy_image(data->mlx, data->orc.l.idle_0.img);
-	mlx_destroy_image(data->mlx, data->orc.l.idle_1.img);
-	mlx_destroy_image(data->mlx, data->orc.l.idle_2.img);
-	mlx_destroy_image(data->mlx, data->orc.l.idle_3.img);
-	mlx_destroy_image(data->mlx, data->orc.l.run_0.img);
-	mlx_destroy_image(data->mlx, data->orc.l.run_1.img);
-	mlx_destroy_image(data->mlx, data->orc.l.run_2.img);
-	mlx_destroy_image(data->mlx, data->orc.l.run_3.img);
-	mlx_destroy_image(data->mlx, data->undead.r.idle_0.img);
-	mlx_destroy_image(data->mlx, data->undead.r.idle_1.img);
-	mlx_destroy_image(data->mlx, data->undead.r.idle_2.img);
-	mlx_destroy_image(data->mlx, data->undead.r.idle_3.img);
-	mlx_destroy_image(data->mlx, data->undead.r.run_0.img);
-	mlx_destroy_image(data->mlx, data->undead.r.run_1.img);
-	mlx_destroy_image(data->mlx, data->undead.r.run_2.img);
-	mlx_destroy_image(data->mlx, data->undead.r.run_3.img);
-	mlx_destroy_image(data->mlx, data->undead.l.idle_0.img);
-	mlx_destroy_image(data->mlx, data->undead.l.idle_1.img);
-	mlx_destroy_image(data->mlx, data->undead.l.idle_2.img);
-	mlx_destroy_image(data->mlx, data->undead.l.idle_3.img);
-	mlx_destroy_image(data->mlx, data->undead.l.run_0.img);
-	mlx_destroy_image(data->mlx, data->undead.l.run_1.img);
-	mlx_destroy_image(data->mlx, data->undead.l.run_2.img);
-	mlx_destroy_image(data->mlx, data->undead.l.run_3.img);
-	mlx_destroy_image(data->mlx, data->end.win.img);
-	mlx_destroy_image(data->mlx, data->end.win2.img);
-	mlx_destroy_image(data->mlx, data->end.lose.img);
-	mlx_destroy_image(data->mlx, data->end.lose2.img);
-	mlx_destroy_window(data->mlx, data->win);
-	mlx_destroy_display(data->mlx);
-	free(data->mlx);
-	free_map(data->map.ptr);
-	exit(0);
+	close_window_part4(data);
 }
 
 static int	close_window_part2(t_data *data)

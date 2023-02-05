@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 00:37:26 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/05 19:42:44 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/05 20:21:36 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,16 @@ void	event_player(t_data *data, int x, int y)
 		data->end.won = 1;
 	if ('M' == get_type_tile_under_player(data, &(data->map), x, y))
 		data->end.lost = 1;
+	if (data->coord.x + (data->width / 2 - 32) * 10 > data->demon.coord.x)
+		data->demon.dir = 1;
+	else
+		data->demon.dir = 0;
+	if (data->coord.x + (data->width / 2 - 32) * 10 > data->undead.coord.x)
+		data->undead.dir = 1;
+	else
+		data->undead.dir = 0;
+	if (data->coord.x + (data->width / 2 - 32) * 10 > data->orc.coord.x)
+		data->orc.dir = 1;
+	else
+		data->orc.dir = 0;
 }

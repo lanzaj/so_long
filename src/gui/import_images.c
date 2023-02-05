@@ -6,66 +6,14 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:26:40 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/05 19:07:57 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/06 00:07:56 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-static void	import_img(t_data *data, t_img *xpm, char *path)
+static void	import_imgs_part5(t_data *data)
 {
-	xpm->img = mlx_xpm_file_to_image(data->mlx,
-			path, &(xpm->width), &(xpm->height));
-	xpm->addr = mlx_get_data_addr(xpm->img, &(xpm->bits_per_pixel),
-			&(xpm->line_length), &(xpm->endian));
-}
-
-static void	import_imgs_part3(t_data *data)
-{
-	import_img(data, &(data->player.r.run_3), "./img/64_knight_run_r3.xpm");
-	import_img(data, &(data->player.l.idle_0), "./img/64_knight_idle_l0.xpm");
-	import_img(data, &(data->player.l.idle_1), "./img/64_knight_idle_l1.xpm");
-	import_img(data, &(data->player.l.idle_2), "./img/64_knight_idle_l2.xpm");
-	import_img(data, &(data->player.l.idle_3), "./img/64_knight_idle_l3.xpm");
-	import_img(data, &(data->player.l.run_0), "./img/64_knight_run_l0.xpm");
-	import_img(data, &(data->player.l.run_1), "./img/64_knight_run_l1.xpm");
-	import_img(data, &(data->player.l.run_2), "./img/64_knight_run_l2.xpm");
-	import_img(data, &(data->player.l.run_3), "./img/64_knight_run_l3.xpm");
-	import_img(data, &(data->coin.c0), "./img/coin_f0.xpm");
-	import_img(data, &(data->coin.c1), "./img/coin_f1.xpm");
-	import_img(data, &(data->coin.c2), "./img/coin_f2.xpm");
-	import_img(data, &(data->coin.c3), "./img/coin_f3.xpm");
-	import_img(data, &(data->exit.exit_layer), "./img/exit_ladder.xpm");
-	import_img(data, &(data->digit.d_0), "./img/0.xpm");
-	import_img(data, &(data->digit.d_1), "./img/1.xpm");
-	import_img(data, &(data->digit.d_2), "./img/2.xpm");
-	import_img(data, &(data->digit.d_3), "./img/3.xpm");
-	import_img(data, &(data->digit.d_4), "./img/4.xpm");
-	import_img(data, &(data->digit.d_5), "./img/5.xpm");
-	import_img(data, &(data->digit.d_6), "./img/6.xpm");
-	import_img(data, &(data->digit.d_7), "./img/7.xpm");
-	import_img(data, &(data->digit.d_8), "./img/8.xpm");
-	import_img(data, &(data->digit.d_9), "./img/9.xpm");
-	import_img(data, &(data->demon.r.idle_0), "./img/demon_idle_r0.xpm");
-	import_img(data, &(data->demon.r.idle_1), "./img/demon_idle_r1.xpm");
-	import_img(data, &(data->demon.r.idle_2), "./img/demon_idle_r2.xpm");
-	import_img(data, &(data->demon.r.idle_3), "./img/demon_idle_r3.xpm");
-	import_img(data, &(data->demon.l.idle_0), "./img/demon_idle_l0.xpm");
-	import_img(data, &(data->demon.l.idle_1), "./img/demon_idle_l1.xpm");
-	import_img(data, &(data->demon.l.idle_2), "./img/demon_idle_l2.xpm");
-	import_img(data, &(data->demon.l.idle_3), "./img/demon_idle_l3.xpm");
-	import_img(data, &(data->demon.r.run_0), "./img/demon_run_r0.xpm");
-	import_img(data, &(data->demon.r.run_1), "./img/demon_run_r1.xpm");
-	import_img(data, &(data->demon.r.run_2), "./img/demon_run_r2.xpm");
-	import_img(data, &(data->demon.r.run_3), "./img/demon_run_r3.xpm");
-	import_img(data, &(data->demon.l.run_0), "./img/demon_run_l0.xpm");
-	import_img(data, &(data->demon.l.run_1), "./img/demon_run_l1.xpm");
-	import_img(data, &(data->demon.l.run_2), "./img/demon_run_l2.xpm");
-	import_img(data, &(data->demon.l.run_3), "./img/demon_run_l3.xpm");
-	import_img(data, &(data->orc.r.idle_0), "./img/orc_idle_r0.xpm");
-	import_img(data, &(data->orc.r.idle_1), "./img/orc_idle_r1.xpm");
-	import_img(data, &(data->orc.r.idle_2), "./img/orc_idle_r2.xpm");
-	import_img(data, &(data->orc.r.idle_3), "./img/orc_idle_r3.xpm");
 	import_img(data, &(data->orc.l.idle_0), "./img/orc_idle_l0.xpm");
 	import_img(data, &(data->orc.l.idle_1), "./img/orc_idle_l1.xpm");
 	import_img(data, &(data->orc.l.idle_2), "./img/orc_idle_l2.xpm");
@@ -90,14 +38,62 @@ static void	import_imgs_part3(t_data *data)
 	import_img(data, &(data->undead.r.run_1), "./img/undead_run_r1.xpm");
 	import_img(data, &(data->undead.r.run_2), "./img/undead_run_r2.xpm");
 	import_img(data, &(data->undead.r.run_3), "./img/undead_run_r3.xpm");
-	import_img(data, &(data->undead.l.run_0), "./img/undead_run_l0.xpm");
-	import_img(data, &(data->undead.l.run_1), "./img/undead_run_l1.xpm");
-	import_img(data, &(data->undead.l.run_2), "./img/undead_run_l2.xpm");
-	import_img(data, &(data->undead.l.run_3), "./img/undead_run_l3.xpm");
-	import_img(data, &(data->end.lose), "./img/loose.xpm");
-	import_img(data, &(data->end.lose2), "./img/loose2.xpm");
-	import_img(data, &(data->end.win), "./img/win.xpm");
-	import_img(data, &(data->end.win2), "./img/win2.xpm");
+	import_imgs_part6(data);
+}
+
+static void	import_imgs_part4(t_data *data)
+{
+	import_img(data, &(data->digit.d_7), "./img/7.xpm");
+	import_img(data, &(data->digit.d_8), "./img/8.xpm");
+	import_img(data, &(data->digit.d_9), "./img/9.xpm");
+	import_img(data, &(data->demon.r.idle_0), "./img/demon_idle_r0.xpm");
+	import_img(data, &(data->demon.r.idle_1), "./img/demon_idle_r1.xpm");
+	import_img(data, &(data->demon.r.idle_2), "./img/demon_idle_r2.xpm");
+	import_img(data, &(data->demon.r.idle_3), "./img/demon_idle_r3.xpm");
+	import_img(data, &(data->demon.l.idle_0), "./img/demon_idle_l0.xpm");
+	import_img(data, &(data->demon.l.idle_1), "./img/demon_idle_l1.xpm");
+	import_img(data, &(data->demon.l.idle_2), "./img/demon_idle_l2.xpm");
+	import_img(data, &(data->demon.l.idle_3), "./img/demon_idle_l3.xpm");
+	import_img(data, &(data->demon.r.run_0), "./img/demon_run_r0.xpm");
+	import_img(data, &(data->demon.r.run_1), "./img/demon_run_r1.xpm");
+	import_img(data, &(data->demon.r.run_2), "./img/demon_run_r2.xpm");
+	import_img(data, &(data->demon.r.run_3), "./img/demon_run_r3.xpm");
+	import_img(data, &(data->demon.l.run_0), "./img/demon_run_l0.xpm");
+	import_img(data, &(data->demon.l.run_1), "./img/demon_run_l1.xpm");
+	import_img(data, &(data->demon.l.run_2), "./img/demon_run_l2.xpm");
+	import_img(data, &(data->demon.l.run_3), "./img/demon_run_l3.xpm");
+	import_img(data, &(data->orc.r.idle_0), "./img/orc_idle_r0.xpm");
+	import_img(data, &(data->orc.r.idle_1), "./img/orc_idle_r1.xpm");
+	import_img(data, &(data->orc.r.idle_2), "./img/orc_idle_r2.xpm");
+	import_img(data, &(data->orc.r.idle_3), "./img/orc_idle_r3.xpm");
+	import_imgs_part5(data);
+}
+
+static void	import_imgs_part3(t_data *data)
+{
+	import_img(data, &(data->player.r.run_2), "./img/64_knight_run_r2.xpm");
+	import_img(data, &(data->player.r.run_3), "./img/64_knight_run_r3.xpm");
+	import_img(data, &(data->player.l.idle_0), "./img/64_knight_idle_l0.xpm");
+	import_img(data, &(data->player.l.idle_1), "./img/64_knight_idle_l1.xpm");
+	import_img(data, &(data->player.l.idle_2), "./img/64_knight_idle_l2.xpm");
+	import_img(data, &(data->player.l.idle_3), "./img/64_knight_idle_l3.xpm");
+	import_img(data, &(data->player.l.run_0), "./img/64_knight_run_l0.xpm");
+	import_img(data, &(data->player.l.run_1), "./img/64_knight_run_l1.xpm");
+	import_img(data, &(data->player.l.run_2), "./img/64_knight_run_l2.xpm");
+	import_img(data, &(data->player.l.run_3), "./img/64_knight_run_l3.xpm");
+	import_img(data, &(data->coin.c0), "./img/coin_f0.xpm");
+	import_img(data, &(data->coin.c1), "./img/coin_f1.xpm");
+	import_img(data, &(data->coin.c2), "./img/coin_f2.xpm");
+	import_img(data, &(data->coin.c3), "./img/coin_f3.xpm");
+	import_img(data, &(data->exit.exit_layer), "./img/exit_ladder.xpm");
+	import_img(data, &(data->digit.d_0), "./img/0.xpm");
+	import_img(data, &(data->digit.d_1), "./img/1.xpm");
+	import_img(data, &(data->digit.d_2), "./img/2.xpm");
+	import_img(data, &(data->digit.d_3), "./img/3.xpm");
+	import_img(data, &(data->digit.d_4), "./img/4.xpm");
+	import_img(data, &(data->digit.d_5), "./img/5.xpm");
+	import_img(data, &(data->digit.d_6), "./img/6.xpm");
+	import_imgs_part4(data);
 }
 
 static void	import_imgs_part2(t_data *data)
@@ -125,7 +121,6 @@ static void	import_imgs_part2(t_data *data)
 	import_img(data, &(data->player.r.idle_3), "./img/64_knight_idle_r3.xpm");
 	import_img(data, &(data->player.r.run_0), "./img/64_knight_run_r0.xpm");
 	import_img(data, &(data->player.r.run_1), "./img/64_knight_run_r1.xpm");
-	import_img(data, &(data->player.r.run_2), "./img/64_knight_run_r2.xpm");
 	import_imgs_part3(data);
 }
 

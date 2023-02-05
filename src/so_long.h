@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/05 19:21:36 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/06 00:18:35 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,6 @@ typedef struct s_digit {
 	t_img	d_9;
 }				t_digit;
 
-
 typedef struct s_map {
 	char	**ptr;
 	int		width;
@@ -226,6 +225,8 @@ void			print_map(char **map);
 void			new_layer(t_data *data, t_img *layer);
 void			big_new_layer(t_data *data, t_img *layer);
 void			import_imgs(t_data *data);
+void			import_img(t_data *data, t_img *xpm, char *path);
+void			import_imgs_part6(t_data *data);
 
 int				get_color(t_img *xpm, int x, int y);
 void			pixel_put_tmp_layer(t_data *data, int x, int y, int color);
@@ -237,6 +238,7 @@ void			put_img_to_back(t_data *data, t_img *xpm, int x, int y);
 void			put_img_to_front(t_data *data, t_img *xpm, int x, int y);
 void			draw_mini_map(t_data *data, t_img *xpm, t_coord player);
 void			draw_mini_map_tlayer(t_data *data, t_img *xpm, t_coord player);
+
 void			put_player(t_data *d, t_coord coord, t_sprite p, int frame);
 void			put_coins(t_data *data, t_coord coord);
 void			put_exit_to_map(t_data *data);
@@ -282,11 +284,8 @@ int				is_left_corner(t_data *data, int x, int y);
 int				is_right_corner(t_data *data, int x, int y);
 int				is_wall_continuing_down(t_data *data, int x, int y);
 void			place_monsters(t_data *data);
-
 int				get_random(void);
 int				get_n_random(int n);
-
-int				close_window(t_data *data);
 
 			/* Game */
 void			init_mlx(t_data *data);
@@ -306,5 +305,7 @@ char			get_type_tile_player(t_data *data, t_map *map, int x, int y);
 char			get_type_tile_under_player(t_data *data,
 					t_map *map, int x, int y);
 char			get_type_tile(t_map *map, int x, int y);
+int				close_window(t_data *data);
+int				close_window_part6(t_data *data);
 
 #endif
