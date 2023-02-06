@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/06 00:18:35 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/06 13:17:24 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@
 # define RES_X 1280
 # define RES_Y 720
 
-# define MINI_LOOP 30
-# define LONG_LOOP 40
+# define MINI_LOOP 16
+# define LONG_LOOP 20
 
-# define SPEED_CARDINAL 80
-# define SPEED_DIAGONAL 52
+# define SPEED_CARDINAL 100
+# define SPEED_DIAGONAL 70
 
 typedef struct s_coord {
 	int	x;
@@ -211,6 +211,8 @@ void			check_map_flood(char **map);
 			/* MAP ERROR */
 void			parse_map_error(int return_value);
 void			check_map_error(int return_value, char **map);
+void			lst_to_tab_error(t_list *lst, char **map, int fd);
+void			lst_to_tab_calloc_fail(t_list *lst, int fd);
 
 			/* Map */
 char			**import_map(char *path);

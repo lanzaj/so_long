@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 16:11:43 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/03 00:03:51 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/06 13:16:48 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,19 @@ void	check_map_error(int return_value, char **map)
 		ft_putendl_fd("Map is too big", 2);
 	free_map(map);
 	exit (return_value);
+}
+
+void	lst_to_tab_error(t_list *lst, char **map, int fd)
+{
+	close(fd);
+	ft_lstclear(&lst, &free);
+	free_map(map);
+	exit (1);
+}
+
+void	lst_to_tab_calloc_fail(t_list *lst, int fd)
+{
+	close(fd);
+	ft_lstclear(&lst, &free);
+	exit (1);
 }

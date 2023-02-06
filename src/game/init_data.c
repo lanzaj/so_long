@@ -6,25 +6,14 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 22:42:56 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/05 18:59:48 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/06 12:47:56 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-static void	init_data_part2(t_data *data)
+static void	init_data_part3(t_data *data)
 {
-	data->map.tile_coord.x = (data->coord.x / 10
-			+ data->width / 2) / 64 - 1;
-	data->map.tile_coord.y = (data->coord.y / 10
-			+ 30 + data->height / 2) / 64 - 1;
-	generate_minimap(data);
-	background_put_tmp(data, 0x00232323);
-	data->demon.coord.x = INT_MIN;
-	data->demon.coord.y = INT_MIN;
-	data->orc.coord.x = INT_MIN;
-	data->orc.coord.y = INT_MIN;
-	data->undead.coord.x = INT_MIN;
 	data->undead.coord.y = INT_MIN;
 	data->demon.dir = 0;
 	data->orc.dir = 0;
@@ -34,20 +23,8 @@ static void	init_data_part2(t_data *data)
 	data->end.lost = 0;
 }
 
-void	init_data(t_data *data)
+static void	init_data_part2(t_data *data)
 {
-	data->mlx = mlx_init();
-	data->width = RES_X;
-	data->height = RES_Y;
-	data->win = mlx_new_window(data->mlx, RES_X, RES_Y, "so_long");
-	import_imgs(data);
-	data->last_pixel_offset = (480 * data->layer.tmp.line_length
-			+ 736 * (data->layer.tmp.bits_per_pixel / 8)) - 2945;
-	data->way.up = 0;
-	data->way.down = 0;
-	data->way.left = 0;
-	data->way.right = 0;
-	data->way.dir = 1;
 	data->frame = 0;
 	data->long_frame = 0;
 	data->number_of_mouvements = 0;
@@ -60,5 +37,44 @@ void	init_data(t_data *data)
 	data->nbr_of_collectible = 0;
 	data->nbr_of_collectible = count_char_in_map(data->map.ptr, 'C');
 	get_starting_pos(data);
+	data->map.tile_coord.x = (data->coord.x / 10
+			+ data->width / 2) / 64 - 1;
+	data->map.tile_coord.y = (data->coord.y / 10
+			+ 30 + data->height / 2) / 64 - 1;
+	generate_minimap(data);
+	background_put_tmp(data, 0x00232323);
+	data->demon.coord.x = INT_MIN;
+	data->demon.coord.y = INT_MIN;
+	data->orc.coord.x = INT_MIN;
+	data->orc.coord.y = INT_MIN;
+	data->undead.coord.x = INT_MIN;
+	init_data_part3(data);
+}
+
+void	init_data(t_data *data)
+{
+	data->mlx = mlx_init();
+	if (data->mlx == NULL)
+	{
+		free_map(data->map.ptr);
+		exit(0);
+	}
+	data->width = RES_X;
+	data->height = RES_Y;
+	data->win = mlx_new_window(data->mlx, RES_X, RES_Y, "so_long");
+	if (data->win == NULL)
+	{
+		free_map(data->map.ptr);
+		mlx_destroy_display(data->mlx);
+		free(data->mlx);
+	}
+	import_imgs(data);
+	data->last_pixel_offset = (480 * data->layer.tmp.line_length
+			+ 736 * (data->layer.tmp.bits_per_pixel / 8)) - 2945;
+	data->way.up = 0;
+	data->way.down = 0;
+	data->way.left = 0;
+	data->way.right = 0;
+	data->way.dir = 1;
 	init_data_part2(data);
 }
