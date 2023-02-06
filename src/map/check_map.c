@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 19:55:57 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/02 23:57:31 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/06 00:45:46 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	check_start_exit_and_collectible(char **map)
 
 static void	check_size(char **map)
 {
-	if ((count_number_of_lines(map) > 43) || (ft_strlen(map[0]) > 64))
+	if ((count_number_of_lines(map) > 43) || (ft_strlen(map[0]) > 80))
 		check_map_error(12, map);
 }
 

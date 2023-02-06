@@ -6,15 +6,15 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:05:56 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/05 01:46:48 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/06 00:34:11 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-// LISTE DE TRUCS A FAIRE :
-// - ajouter enemies
-
+//protect mlx init
+//protect mlx new_window
+//protect mlx new_image
+//protect ft_calloc
 int	main(int argc, char *argv[])
 {
 	t_data	data;

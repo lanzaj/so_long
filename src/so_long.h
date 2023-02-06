@@ -13,9 +13,6 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-//# include <sys/types.h>
-//# include <sys/stat.h>
-
 /* include for open */
 # include <fcntl.h>
 
@@ -223,7 +220,6 @@ void			print_map(char **map);
 
 			/* graphic */
 void			new_layer(t_data *data, t_img *layer);
-void			big_new_layer(t_data *data, t_img *layer);
 void			import_imgs(t_data *data);
 void			import_img(t_data *data, t_img *xpm, char *path);
 void			import_imgs_part6(t_data *data);

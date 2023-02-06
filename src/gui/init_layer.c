@@ -21,13 +21,3 @@ void	new_layer(t_data *data, t_img *layer)
 			&(layer->line_length),
 			&(layer->endian));
 }
-
-void	big_new_layer(t_data *data, t_img *layer)
-{
-	layer->width = 1024;
-	layer->height = 1024;
-	layer->img = mlx_new_image(data->mlx, layer->width, layer->height);
-	layer->addr = mlx_get_data_addr(layer->img, &(layer->bits_per_pixel),
-			&(layer->line_length),
-			&(layer->endian));
-}

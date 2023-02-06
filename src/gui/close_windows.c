@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 22:29:38 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/06 00:17:20 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/06 00:33:24 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	close_window_part5(t_data *data)
 	mlx_destroy_image(data->mlx, data->undead.l.idle_2.img);
 	mlx_destroy_image(data->mlx, data->undead.l.idle_3.img);
 	mlx_destroy_image(data->mlx, data->undead.l.run_0.img);
-	close_window_part6(data);
+	return (close_window_part6(data));
 }
 
 static int	close_window_part4(t_data *data)
@@ -65,7 +65,7 @@ static int	close_window_part4(t_data *data)
 	mlx_destroy_image(data->mlx, data->orc.r.idle_3.img);
 	mlx_destroy_image(data->mlx, data->orc.r.run_0.img);
 	mlx_destroy_image(data->mlx, data->orc.r.run_1.img);
-	close_window_part4(data);
+	return (close_window_part5(data));
 }
 
 static int	close_window_part3(t_data *data)
@@ -93,7 +93,7 @@ static int	close_window_part3(t_data *data)
 	mlx_destroy_image(data->mlx, data->digit.d_6.img);
 	mlx_destroy_image(data->mlx, data->digit.d_7.img);
 	mlx_destroy_image(data->mlx, data->digit.d_8.img);
-	close_window_part4(data);
+	return (close_window_part4(data));
 }
 
 static int	close_window_part2(t_data *data)
