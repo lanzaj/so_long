@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:20:44 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/08 12:38:28 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/08 13:35:26 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	new_layer(t_data *data, t_img *layer)
 	layer->height = data->height;
 	layer->img = mlx_new_image(data->mlx, layer->width, layer->height);
 	if (layer->img == NULL)
-		close_window(data);
+		close_window_error(data);
 	data->img_tab[i] = layer->img;
 	i++;
 	data->img_tab[i] = 0;

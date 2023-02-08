@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 22:42:56 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/06 12:47:56 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/08 12:57:12 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	init_data(t_data *data)
 	if (data->mlx == NULL)
 	{
 		free_map(data->map.ptr);
-		exit(0);
+		exit(1);
 	}
 	data->width = RES_X;
 	data->height = RES_Y;
@@ -67,6 +67,7 @@ void	init_data(t_data *data)
 		free_map(data->map.ptr);
 		mlx_destroy_display(data->mlx);
 		free(data->mlx);
+		exit(1);
 	}
 	import_imgs(data);
 	data->last_pixel_offset = (480 * data->layer.tmp.line_length
