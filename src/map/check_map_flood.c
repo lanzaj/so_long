@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 00:11:28 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/08 17:17:42 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/08 17:42:01 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ static char	flood_map(char **map)
 		}
 		i++;
 	}
-	print_map(map);
-	ft_printf("\n");
 	return (b_has_spread);
 }
 
