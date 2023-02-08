@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 00:08:13 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/06 13:45:18 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/08 12:38:12 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,15 @@
 
 void	import_img(t_data *data, t_img *xpm, char *path)
 {
+	static int	i = 2;
+
 	xpm->img = mlx_xpm_file_to_image(data->mlx,
 			path, &(xpm->width), &(xpm->height));
+	if (xpm->img == NULL)
+		close_window(data);
+	data->img_tab[i] = xpm->img;
+	i++;
+	data->img_tab[i] = 0;
 	xpm->addr = mlx_get_data_addr(xpm->img, &(xpm->bits_per_pixel),
 			&(xpm->line_length), &(xpm->endian));
 }

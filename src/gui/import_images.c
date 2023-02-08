@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:26:40 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/06 13:45:09 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/08 11:17:15 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,9 +126,9 @@ static void	import_imgs_part2(t_data *data)
 
 void	import_imgs(t_data *data)
 {
-	import_img(data, &(data->layer.front), "./img/empty.xpm");
 	new_layer(data, &(data->layer.back));
 	new_layer(data, &(data->layer.tmp));
+	import_img(data, &(data->layer.front), "./img/empty.xpm");
 	import_img(data, &(data->floor.f1), "./img/floor_1.xpm");
 	import_img(data, &(data->floor.f2), "./img/floor_2.xpm");
 	import_img(data, &(data->floor.f3), "./img/floor_3.xpm");

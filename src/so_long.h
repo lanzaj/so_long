@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/06 13:17:24 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/08 12:33:38 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,7 @@ typedef struct s_data {
 	int			long_frame;
 	int			number_of_mouvements;
 	int			nbr_of_collectible;
+	void		*img_tab[124];
 	t_end		end;
 	t_map		map;
 	t_coord		coord;
@@ -304,6 +305,6 @@ char			get_type_tile_under_player(t_data *data,
 					t_map *map, int x, int y);
 char			get_type_tile(t_map *map, int x, int y);
 int				close_window(t_data *data);
-int				close_window_part6(t_data *data);
+int				close_window_error(t_data *data);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 15:24:20 by jlanza            #+#    #+#              #
-#    Updated: 2023/02/06 00:18:16 by jlanza           ###   ########.fr        #
+#    Updated: 2023/02/08 12:30:12 by jlanza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,6 @@ SRC =	src/main.c \
 		src/gui/import_images.c \
 		src/gui/import_images2.c \
 		src/gui/close_windows.c \
-		src/gui/close_windows2.c \
 		src/gui/draw_mini_map.c \
 		src/gui/put_player.c \
 		src/gui/put_coin.c \
