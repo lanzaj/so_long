@@ -6,35 +6,29 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/08 12:33:38 by jlanza           ###   ########.fr       */
+/*   Updated: 2024/03/22 17:23:14 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-/* include for open */
 # include <fcntl.h>
-
-/* include math lib*/
 # include <math.h>
-
-/* include libft */
 # include "../libft/libft.h"
-
-/* include minilix */
 # include "../minilibx-linux/mlx.h"
-
 # include <limits.h>
+# include <sys/time.h>
 
 # define RES_X 1280
 # define RES_Y 720
 
-# define MINI_LOOP 16
-# define LONG_LOOP 20
+# define MINI_LOOP 12
+# define LONG_LOOP 25
 
-# define SPEED_CARDINAL 100
-# define SPEED_DIAGONAL 70
+# define SPEED_CARDINAL 150
+# define SPEED_DIAGONAL 106
+# define FPS 60
 
 typedef struct s_coord {
 	int	x;
@@ -197,6 +191,7 @@ typedef struct s_data {
 	t_monster	demon;
 	t_monster	orc;
 	t_monster	undead;
+	struct timeval	last_time;
 }				t_data;
 
 			/* COUNT IN MAP */

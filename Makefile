@@ -6,7 +6,7 @@
 #    By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 15:24:20 by jlanza            #+#    #+#              #
-#    Updated: 2023/02/08 18:27:30 by jlanza           ###   ########.fr        #
+#    Updated: 2024/03/22 15:09:01 by jlanza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,7 @@ LIBMLX_LINUX = minilibx-linux/libmlx_Linux.a
 OBJ = ${SRC:.c=.o}
 
 NAME = so_long
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -O3 -march=native -flto
 CC = cc
 RM = rm -f
 HEADER = src/so_long.h
