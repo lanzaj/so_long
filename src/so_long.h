@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2024/03/22 17:23:14 by jlanza           ###   ########.fr       */
+/*   Updated: 2024/03/22 17:59:09 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@
 # include <limits.h>
 # include <sys/time.h>
 
-# define RES_X 1280
-# define RES_Y 720
+# define RES_X 1920
+# define RES_Y 1280
 
 # define MINI_LOOP 12
 # define LONG_LOOP 25
 
 # define SPEED_CARDINAL 150
 # define SPEED_DIAGONAL 106
-# define FPS 60
+# define FPS 300
 
 typedef struct s_coord {
 	int	x;

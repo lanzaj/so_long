@@ -6,7 +6,7 @@
 #    By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 15:24:20 by jlanza            #+#    #+#              #
-#    Updated: 2024/03/22 15:09:01 by jlanza           ###   ########.fr        #
+#    Updated: 2024/03/22 17:55:30 by jlanza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,6 +90,4 @@ fclean: clean
 
 re: fclean all
 
-bonus: all
-
-.PHONY: all clean fclean re all bonus
+.PHONY: all clean fclean re
