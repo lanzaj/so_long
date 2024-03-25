@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2024/03/25 16:48:01 by jlanza           ###   ########.fr       */
+/*   Updated: 2024/03/25 19:13:50 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,56 +23,54 @@
 # include <X11/Xutil.h>
 # include <X11/Xatom.h>
 
-# define MINI_LOOP 12
-# define LONG_LOOP 25
+# define MINI_LOOP 100
+# define LONG_LOOP MINI_LOOP * 1.5
 
-# define SPEED_CARDINAL 120
-# define SPEED_DIAGONAL 70
-# define FPS 60
+# define SPEED_DIAGONAL 0.70710678
 
-# define MLX_MAX_EVENT LASTEvent
+// # define MLX_MAX_EVENT LASTEvent
 
-typedef struct	s_event_list
-{
-	int		mask;
-	int		(*hook)();
-	void	*param;
-}				t_event_list;
+// typedef struct	s_event_list
+// {
+// 	int		mask;
+// 	int		(*hook)();
+// 	void	*param;
+// }				t_event_list;
 
-typedef struct	s_win_list
-{
-	Window				window;
-	GC					gc;
-	struct s_win_list	*next;
-	int					(*mouse_hook)();
-	int					(*key_hook)();
-	int					(*expose_hook)();
-	void				*mouse_param;
-	void				*key_param;
-	void				*expose_param;
-	t_event_list		hooks[MLX_MAX_EVENT];
-}				t_win_list;
+// typedef struct	s_win_list
+// {
+// 	Window				window;
+// 	GC					gc;
+// 	struct s_win_list	*next;
+// 	int					(*mouse_hook)();
+// 	int					(*key_hook)();
+// 	int					(*expose_hook)();
+// 	void				*mouse_param;
+// 	void				*key_param;
+// 	void				*expose_param;
+// 	t_event_list		hooks[MLX_MAX_EVENT];
+// }				t_win_list;
 
-typedef struct	s_xvar
-{
-	Display		*display;
-	Window		root;
-	int			screen;
-	int			depth;
-	Visual		*visual;
-	Colormap	cmap;
-	int			private_cmap;
-	t_win_list	*win_list;
-	int			(*loop_hook)();
-	void		*loop_param;
-	int			use_xshm;
-	int			pshm_format;
-	int			do_flush;
-	int			decrgb[6];
-	Atom		wm_delete_window;
-	Atom		wm_protocols;
-	int 		end_loop;
-}				t_xvar;
+// typedef struct	s_xvar
+// {
+// 	Display		*display;
+// 	Window		root;
+// 	int			screen;
+// 	int			depth;
+// 	Visual		*visual;
+// 	Colormap	cmap;
+// 	int			private_cmap;
+// 	t_win_list	*win_list;
+// 	int			(*loop_hook)();
+// 	void		*loop_param;
+// 	int			use_xshm;
+// 	int			pshm_format;
+// 	int			do_flush;
+// 	int			decrgb[6];
+// 	Atom		wm_delete_window;
+// 	Atom		wm_protocols;
+// 	int 		end_loop;
+// }				t_xvar;
 
 typedef struct s_coord {
 	int	x;
@@ -217,6 +215,7 @@ typedef struct s_data {
 	int			width;
 	int			height;
 	int			last_pixel_offset;
+	int			speed;
 	int			frame;
 	int			long_frame;
 	int			number_of_mouvements;

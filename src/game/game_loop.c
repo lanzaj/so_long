@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 22:25:21 by jlanza            #+#    #+#             */
-/*   Updated: 2024/03/25 15:55:53 by jlanza           ###   ########.fr       */
+/*   Updated: 2024/03/25 19:16:16 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,23 @@ static void	update_frame(t_data *data)
 {
 	struct timeval	tv;
 	unsigned long	time_past;
-	double			fps_wanted;
-	unsigned long	time_to_wait;
+//	double			fps_wanted;
+//	unsigned long	time_to_wait;
 
 	gettimeofday(&tv, NULL);
-	fps_wanted = (double)FPS;
-	time_to_wait = (unsigned long)(((double)1 / fps_wanted) * 1000000);
-	if (data->last_time.tv_sec)
-	{
-		time_past = get_timediff_us(tv, data->last_time);
-		if (time_past < time_to_wait)
-			usleep(time_to_wait - time_past);
-	}
+	time_past = get_timediff_us(tv, data->last_time);
+	data->speed = 130000 / time_past;
+
+	// V = D / T
+	// --> D = V / T
+	// fps_wanted = (double)FPS;
+	// time_to_wait = (unsigned long)(((double)1 / fps_wanted) * 1000000);
+	// if (data->last_time.tv_sec)
+	// {
+	// 	time_past = get_timediff_us(tv, data->last_time);
+	// 	if (time_past < time_to_wait)
+	// 		usleep(time_to_wait - time_past);
+	// }
 	gettimeofday(&tv, NULL);
 	data->last_time = tv;
 

@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 22:35:56 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/03 22:36:31 by jlanza           ###   ########.fr       */
+/*   Updated: 2024/03/25 19:07:32 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void	update_x_y(t_data *data, t_way *way, t_coord *coord)
 
 	move = 0;
 	if (way->up != way->down && way->right != way->left)
-		move = SPEED_DIAGONAL;
+		move = data->speed * SPEED_DIAGONAL;
 	else if (way->up != way->down || way->right != way->left)
-		move = SPEED_CARDINAL;
+		move = data->speed;
 	if (way->up && !(way->down) && get_type_tile_player(data,
 			&(data->map), coord->x, coord->y - move - 200) != '1')
 			coord->y += -move;
