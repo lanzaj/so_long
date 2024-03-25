@@ -6,13 +6,13 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 00:29:00 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/04 00:29:25 by jlanza           ###   ########.fr       */
+/*   Updated: 2024/03/25 15:13:32 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-void	put_player(t_data *d, t_coord coord, t_sprite p, int frame)
+void	put_player_R_or_L(t_data *d, t_coord coord, t_sprite p, int frame)
 {
 	if (d->way.up != d->way.down || d->way.right != d->way.left)
 	{
@@ -36,4 +36,12 @@ void	put_player(t_data *d, t_coord coord, t_sprite p, int frame)
 		else
 			put_img_to_tmp(d, &(p.idle_3), coord.x, coord.y);
 	}
+}
+
+void	put_player(t_data *data)
+{
+	if (data->way.dir)
+		put_player_R_or_L(data, data->player.coord, data->player.r, data->frame);
+	else
+		put_player_R_or_L(data, data->player.coord, data->player.l, data->frame);
 }

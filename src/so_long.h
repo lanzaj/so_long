@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2024/03/22 17:59:09 by jlanza           ###   ########.fr       */
+/*   Updated: 2024/03/25 16:48:01 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,7 @@ typedef struct s_monster {
 	t_sprite	r;
 	t_coord		coord;
 	int			dir;
+	int			moving;
 }				t_monster;
 
 typedef struct s_coin {
@@ -278,7 +279,7 @@ void			put_img_to_front(t_data *data, t_img *xpm, int x, int y);
 void			draw_mini_map(t_data *data, t_img *xpm, t_coord player);
 void			draw_mini_map_tlayer(t_data *data, t_img *xpm, t_coord player);
 
-void			put_player(t_data *d, t_coord coord, t_sprite p, int frame);
+void			put_player(t_data *d);
 void			put_coins(t_data *data, t_coord coord);
 void			put_exit_to_map(t_data *data);
 void			put_nbr_of_mouvement(t_data *data, int n);

@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 22:42:56 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/08 12:57:12 by jlanza           ###   ########.fr       */
+/*   Updated: 2024/03/25 15:00:28 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	init_data(t_data *data)
 		free(data->mlx);
 		exit(1);
 	}
+	mlx_mouse_hide(data->mlx, data->win);
 	import_imgs(data);
 	data->last_pixel_offset = (480 * data->layer.tmp.line_length
 			+ 736 * (data->layer.tmp.bits_per_pixel / 8)) - 2945;

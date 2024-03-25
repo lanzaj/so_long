@@ -6,7 +6,7 @@
 #    By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 15:24:20 by jlanza            #+#    #+#              #
-#    Updated: 2023/02/08 14:09:27 by jlanza           ###   ########.fr        #
+#    Updated: 2024/03/25 12:03:33 by jlanza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,7 @@ OBJ = ${SRC:.c=.o}
 
 AR = ar rcs
 NAME = libft.a
-CFLAGS = -Wall -Wextra -Werror -O3 -march=native -flto
+CFLAGS = -Wall -Wextra -Werror -O3
 CC = cc
 RM = rm -f
 HEADER =	libft.h \
