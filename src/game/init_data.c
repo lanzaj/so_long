@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 22:42:56 by jlanza            #+#    #+#             */
-/*   Updated: 2024/03/25 15:00:28 by jlanza           ###   ########.fr       */
+/*   Updated: 2024/03/25 19:24:13 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ static void	init_data_part3(t_data *data)
 
 static void	init_data_part2(t_data *data)
 {
-	data->frame = 0;
-	data->long_frame = 0;
+	gettimeofday(&data->t0, NULL);
 	data->number_of_mouvements = 0;
 	data->map.width = ft_strlen((data->map.ptr)[0]);
 	data->map.height = count_number_of_lines(data->map.ptr);

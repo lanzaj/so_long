@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2024/03/25 19:13:50 by jlanza           ###   ########.fr       */
+/*   Updated: 2024/03/25 19:33:51 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@
 # include <X11/Xutil.h>
 # include <X11/Xatom.h>
 
-# define MINI_LOOP 100
-# define LONG_LOOP MINI_LOOP * 1.5
-
 # define SPEED_DIAGONAL 0.70710678
+
+# define MINI_LOOP 500000
+# define LONG_LOOP 1000000
 
 // # define MLX_MAX_EVENT LASTEvent
 
@@ -216,8 +216,6 @@ typedef struct s_data {
 	int			height;
 	int			last_pixel_offset;
 	int			speed;
-	int			frame;
-	int			long_frame;
 	int			number_of_mouvements;
 	int			nbr_of_collectible;
 	void		*img_tab[124];
@@ -235,7 +233,10 @@ typedef struct s_data {
 	t_monster	demon;
 	t_monster	orc;
 	t_monster	undead;
+	unsigned long	frame;
+	unsigned long	long_frame;
 	struct timeval	last_time;
+	struct timeval	t0;
 }				t_data;
 
 			/* COUNT IN MAP */

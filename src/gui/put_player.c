@@ -6,21 +6,21 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 00:29:00 by jlanza            #+#    #+#             */
-/*   Updated: 2024/03/25 15:13:32 by jlanza           ###   ########.fr       */
+/*   Updated: 2024/03/25 19:32:20 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-void	put_player_R_or_L(t_data *d, t_coord coord, t_sprite p, int frame)
+void	put_player_R_or_L(t_data *d, t_coord coord, t_sprite p)
 {
 	if (d->way.up != d->way.down || d->way.right != d->way.left)
 	{
-		if (frame < MINI_LOOP / 4)
+		if (d->frame < MINI_LOOP / 4)
 			put_img_to_tmp(d, &(p.run_0), coord.x, coord.y);
-		else if (frame < MINI_LOOP / 2)
+		else if (d->frame < MINI_LOOP / 2)
 			put_img_to_tmp(d, &(p.run_1), coord.x, coord.y);
-		else if (frame < MINI_LOOP * 3 / 4)
+		else if (d->frame < MINI_LOOP * 3 / 4)
 			put_img_to_tmp(d, &(p.run_2), coord.x, coord.y);
 		else
 			put_img_to_tmp(d, &(p.run_3), coord.x, coord.y);
@@ -41,7 +41,7 @@ void	put_player_R_or_L(t_data *d, t_coord coord, t_sprite p, int frame)
 void	put_player(t_data *data)
 {
 	if (data->way.dir)
-		put_player_R_or_L(data, data->player.coord, data->player.r, data->frame);
+		put_player_R_or_L(data, data->player.coord, data->player.r);
 	else
-		put_player_R_or_L(data, data->player.coord, data->player.l, data->frame);
+		put_player_R_or_L(data, data->player.coord, data->player.l);
 }
