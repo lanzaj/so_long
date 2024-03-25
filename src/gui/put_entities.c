@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   put_monsters.c                                     :+:      :+:    :+:   */
+/*   put_entities.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -36,8 +36,12 @@ static void	put_monster(t_data *data, t_monster *monster, int x, int y)
 		put_monster_frame(data, coord, monster->l);
 }
 
-void	put_monsters(t_data *data)
+void	put_entities(t_data *data)
 {
+	if (data->way.dir)
+		put_player(data, data->player.coord, data->player.r, data->frame);
+	else
+		put_player(data, data->player.coord, data->player.l, data->frame);
 	put_monster(data, &(data->demon),
 		(data->demon.coord.x - data->coord.x) / 10 - 32,
 		(data->demon.coord.y - data->coord.y) / 10 - 64);

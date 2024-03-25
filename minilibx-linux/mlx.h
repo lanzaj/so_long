@@ -44,6 +44,8 @@ void	*mlx_init();
 */
 
 void	*mlx_new_window(void *mlx_ptr, int size_x, int size_y, char *title);
+void	*mlx_new_fullscreen_window(void *xvar,int *size_x,int *size_y,char *title);
+
 /*
 **  return void *0 if failed
 */

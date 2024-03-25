@@ -63,7 +63,7 @@ OBJ = ${SRC:.c=.o}
 
 AR = ar rcs
 NAME = libft.a
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -O3 -march=native -flto
 CC = cc
 RM = rm -f
 HEADER =	libft.h \

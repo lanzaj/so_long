@@ -36,7 +36,7 @@ SRC =	src/main.c \
 		src/gui/put_background.c \
 		src/gui/put_img_to_layer.c \
 		src/gui/put_nbr_of_mouvement.c \
-		src/gui/put_monsters.c \
+		src/gui/put_entities.c \
 		src/gui/display_endscreen.c \
 		src/generate_map/draw_wall.c \
 		src/generate_map/draw_floor.c \

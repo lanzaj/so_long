@@ -19,16 +19,60 @@
 # include "../minilibx-linux/mlx.h"
 # include <limits.h>
 # include <sys/time.h>
-
-# define RES_X 1920
-# define RES_Y 1280
+# include <X11/Xlib.h>
+# include <X11/Xutil.h>
+# include <X11/Xatom.h>
 
 # define MINI_LOOP 12
 # define LONG_LOOP 25
 
-# define SPEED_CARDINAL 150
-# define SPEED_DIAGONAL 106
-# define FPS 300
+# define SPEED_CARDINAL 120
+# define SPEED_DIAGONAL 70
+# define FPS 60
+
+# define MLX_MAX_EVENT LASTEvent
+
+typedef struct	s_event_list
+{
+	int		mask;
+	int		(*hook)();
+	void	*param;
+}				t_event_list;
+
+typedef struct	s_win_list
+{
+	Window				window;
+	GC					gc;
+	struct s_win_list	*next;
+	int					(*mouse_hook)();
+	int					(*key_hook)();
+	int					(*expose_hook)();
+	void				*mouse_param;
+	void				*key_param;
+	void				*expose_param;
+	t_event_list		hooks[MLX_MAX_EVENT];
+}				t_win_list;
+
+typedef struct	s_xvar
+{
+	Display		*display;
+	Window		root;
+	int			screen;
+	int			depth;
+	Visual		*visual;
+	Colormap	cmap;
+	int			private_cmap;
+	t_win_list	*win_list;
+	int			(*loop_hook)();
+	void		*loop_param;
+	int			use_xshm;
+	int			pshm_format;
+	int			do_flush;
+	int			decrgb[6];
+	Atom		wm_delete_window;
+	Atom		wm_protocols;
+	int 		end_loop;
+}				t_xvar;
 
 typedef struct s_coord {
 	int	x;
@@ -228,6 +272,7 @@ void			background_put_tmp(t_data *data, int color);
 void			background_put_back(t_data *data, int color);
 void			banner_put_tmp(t_data *data, int color);
 void			put_img_to_tmp(t_data *data, t_img *xpm, int x, int y);
+void			put_img_to_fullscreen_tmp(t_data *data, t_img *xpm);
 void			put_img_to_back(t_data *data, t_img *xpm, int x, int y);
 void			put_img_to_front(t_data *data, t_img *xpm, int x, int y);
 void			draw_mini_map(t_data *data, t_img *xpm, t_coord player);
@@ -237,7 +282,7 @@ void			put_player(t_data *d, t_coord coord, t_sprite p, int frame);
 void			put_coins(t_data *data, t_coord coord);
 void			put_exit_to_map(t_data *data);
 void			put_nbr_of_mouvement(t_data *data, int n);
-void			put_monsters(t_data *data);
+void			put_entities(t_data *data);
 
 void			pixel_put_front_layer(t_data *data, int x, int y, int color);
 void			pixel_put_back_layer(t_data *data, int x, int y, int color);

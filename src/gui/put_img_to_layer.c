@@ -65,3 +65,22 @@ void	put_img_to_tmp(t_data *data, t_img *xpm, int x, int y)
 		i++;
 	}
 }
+
+void	put_img_to_fullscreen_tmp(t_data *data, t_img *xpm)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < data->height)
+	{
+		j = 0;
+		while (j < data->width)
+		{
+			pixel_put_tmp_layer(data, j, i, get_color(xpm, j * xpm->width / data->width,
+														i * xpm->height / data->height));
+			j++;
+		}
+		i++;
+	}
+}

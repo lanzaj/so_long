@@ -20,7 +20,7 @@ void	update_map_x_y(t_data *data)
 		data->map.tile_coord.x = (data->coord.x / 10
 				+ data->width / 2) / 64 - 1;
 		data->number_of_mouvements++;
-		ft_printf("\rnumber of mouvements: %d", data->number_of_mouvements);
+		ft_printf("\rSteps: %d", data->number_of_mouvements);
 	}
 	if (data->map.tile_coord.y != (data->coord.y / 10
 			+ 30 + data->height / 2) / 64 - 1)
@@ -28,7 +28,7 @@ void	update_map_x_y(t_data *data)
 		data->map.tile_coord.y = (data->coord.y / 10
 				+ 30 + data->height / 2) / 64 - 1;
 		data->number_of_mouvements++;
-		ft_printf("\rnumber of mouvements: %d", data->number_of_mouvements);
+		ft_printf("\rSteps: %d", data->number_of_mouvements);
 	}
 	put_nbr_of_mouvement(data, data->number_of_mouvements);
 }

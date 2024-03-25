@@ -59,9 +59,7 @@ void	init_data(t_data *data)
 		free_map(data->map.ptr);
 		exit(1);
 	}
-	data->width = RES_X;
-	data->height = RES_Y;
-	data->win = mlx_new_window(data->mlx, RES_X, RES_Y, "so_long");
+	data->win = mlx_new_fullscreen_window(data->mlx, &(data->width), &(data->height), "so_long");
 	if (data->win == NULL)
 	{
 		free_map(data->map.ptr);

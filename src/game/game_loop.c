@@ -57,12 +57,8 @@ int	game_loop(t_data *data)
 		banner_put_tmp(data, 0x00232323);
 		draw_mini_map(data, &(data->layer.back), data->coord);
 		put_coins(data, data->coord);
-		if (data->way.dir)
-			put_player(data, data->player.coord, data->player.r, data->frame);
-		else
-			put_player(data, data->player.coord, data->player.l, data->frame);
+		put_entities(data);
 		draw_mini_map_tlayer(data, &(data->layer.front), data->coord);
-		put_monsters(data);
 		put_nbr_of_mouvement(data, data->number_of_mouvements);
 		mlx_put_image_to_window(data->mlx, data->win,
 			data->layer.tmp.img, 0, 0);

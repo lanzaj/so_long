@@ -26,6 +26,7 @@ int	close_window(t_data *data)
 	mlx_destroy_display(data->mlx);
 	free(data->mlx);
 	free_map(data->map.ptr);
+	ft_putchar_fd('\n', 1);
 	exit(0);
 }
 
@@ -42,6 +43,6 @@ int	close_window_error(t_data *data)
 	mlx_destroy_display(data->mlx);
 	free(data->mlx);
 	free_map(data->map.ptr);
-	ft_putendl_fd("Error\n", 2);
+	ft_putendl_fd("Error", 2);
 	exit(1);
 }
