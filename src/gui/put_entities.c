@@ -42,29 +42,32 @@ int compare(const void *a, const void *b) {
 
 void	put_entities(t_data *data)
 {
+	int	y_player = data->player.coord.y ;
+	int y_demon = (data->demon.coord.y - data->coord.y) / 10 - 32;
+	int	y_undead = (data->undead.coord.y - data->coord.y) / 10 - 32;
+	int y_orc = (data->orc.coord.y - data->coord.y) / 10 - 32;
 	int	coords_Y[4];
-
-	coords_Y[0] = data->coord.y + 5000;
-	coords_Y[1] = data->demon.coord.y;
-	coords_Y[2] = data->undead.coord.y;
-	coords_Y[3] = data->orc.coord.y;
+	coords_Y[0] = y_player;
+	coords_Y[1] = y_demon;
+	coords_Y[2] = y_undead;
+	coords_Y[3] = y_orc;
 
 	qsort(coords_Y, 4, sizeof(int), compare);
 	for (int i = 0; i <= 4; ++i)
 	{
 		if (i > 0 && coords_Y[i] == coords_Y[i - 1])
 			break;
-		if (coords_Y[i] == data->coord.y + 5000)
+		if (coords_Y[i] == y_player)
 			put_player(data);
-		if (coords_Y[i] == data->demon.coord.y)
+		if (coords_Y[i] == y_demon)
 			put_monster(data, &(data->demon),
 				(data->demon.coord.x - data->coord.x) / 10 - 32,
 				(data->demon.coord.y - data->coord.y) / 10 - 64);
-		if (coords_Y[i] == data->orc.coord.y)
+		if (coords_Y[i] == y_orc)
 			put_monster(data, &(data->orc),
 				(data->orc.coord.x - data->coord.x) / 10 - 32,
 				(data->orc.coord.y - data->coord.y) / 10 - 64);
-		if (coords_Y[i] == data->undead.coord.y)
+		if (coords_Y[i] == y_undead)
 			put_monster(data, &(data->undead),
 				(data->undead.coord.x - data->coord.x) / 10 - 32,
 				(data->undead.coord.y - data->coord.y) / 10 - 64);

@@ -126,8 +126,8 @@ static void	import_imgs_part2(t_data *data)
 
 void	import_imgs(t_data *data)
 {
-	new_layer(data, &(data->layer.back));
 	new_layer(data, &(data->layer.tmp));
+	import_img(data, &(data->layer.back), "./img/empty.xpm");
 	import_img(data, &(data->layer.front), "./img/empty.xpm");
 	import_img(data, &(data->floor.f1), "./img/floor_1.xpm");
 	import_img(data, &(data->floor.f2), "./img/floor_2.xpm");
