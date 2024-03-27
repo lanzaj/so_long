@@ -12,16 +12,30 @@
 
 #include "../so_long.h"
 
-static void	put_monster_frame(t_data *d, t_coord coord, t_sprite p)
+static void	put_monster_frame(t_data *d, t_coord coord, t_sprite p, int moving)
 {
-	if (d->long_frame < LONG_LOOP / 4)
-		put_img_to_tmp(d, &(p.idle_0), coord.x, coord.y);
-	else if (d->long_frame < LONG_LOOP / 2)
-		put_img_to_tmp(d, &(p.idle_1), coord.x, coord.y);
-	else if (d->long_frame < LONG_LOOP * 3 / 4)
-		put_img_to_tmp(d, &(p.idle_2), coord.x, coord.y);
+	if (moving)
+	{
+		if (d->long_frame < MINI_LOOP / 4)
+			put_img_to_tmp(d, &(p.run_0), coord.x, coord.y);
+		else if (d->long_frame < MINI_LOOP / 2)
+			put_img_to_tmp(d, &(p.run_1), coord.x, coord.y);
+		else if (d->long_frame < MINI_LOOP * 3 / 4)
+			put_img_to_tmp(d, &(p.run_2), coord.x, coord.y);
+		else
+			put_img_to_tmp(d, &(p.run_3), coord.x, coord.y);
+	}
 	else
-		put_img_to_tmp(d, &(p.idle_3), coord.x, coord.y);
+	{
+		if (d->long_frame < LONG_LOOP / 4)
+			put_img_to_tmp(d, &(p.idle_0), coord.x, coord.y);
+		else if (d->long_frame < LONG_LOOP / 2)
+			put_img_to_tmp(d, &(p.idle_1), coord.x, coord.y);
+		else if (d->long_frame < LONG_LOOP * 3 / 4)
+			put_img_to_tmp(d, &(p.idle_2), coord.x, coord.y);
+		else
+			put_img_to_tmp(d, &(p.idle_3), coord.x, coord.y);
+	}
 }
 
 static void	put_monster(t_data *data, t_monster *monster, int x, int y)
@@ -31,9 +45,9 @@ static void	put_monster(t_data *data, t_monster *monster, int x, int y)
 	coord.x = x;
 	coord.y = y;
 	if (monster->dir)
-		put_monster_frame(data, coord, monster->r);
+		put_monster_frame(data, coord, monster->r, monster->moving);
 	else
-		put_monster_frame(data, coord, monster->l);
+		put_monster_frame(data, coord, monster->l, monster->moving);
 }
 
 int compare(const void *a, const void *b) {
