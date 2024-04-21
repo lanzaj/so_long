@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 00:37:26 by jlanza            #+#    #+#             */
-/*   Updated: 2024/04/21 18:01:09 by jlanza           ###   ########.fr       */
+/*   Updated: 2024/04/21 18:16:22 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,24 @@ double	dist(t_data *data, t_coord a, t_coord b)
 
 void	move_monster(t_data *data, t_monster *monster)
 {
-	int speed = 30;
-	if (data->coord.x + (data->width / 2 - 32) * 10 < monster->coord.x)
-		monster->coord.x -= speed;
-	else
-		monster->coord.x += speed;
-	if (data->coord.y + (data->height / 2 - 32) * 10 < monster->coord.y)
-		monster->coord.y -= speed;
-	else
-		monster->coord.y += speed;
+	int speed = 40;
+	if ((abs(data->coord.x + (data->width / 2 - 32) * 10 - monster->coord.x) <= speed)
+		|| (abs(data->coord.y + (data->height / 2 - 32) * 10 - monster->coord.y) <= speed))
+		speed *= SPEED_CARDINAL;
+	if (abs(data->coord.x + (data->width / 2 - 32) * 10 - monster->coord.x) > speed)
+	{
+		if (data->coord.x + (data->width / 2 - 32) * 10 < monster->coord.x)
+			monster->coord.x -= speed;
+		else
+			monster->coord.x += speed;
+	}
+	if (abs(data->coord.y + (data->height / 2 - 32) * 10 - monster->coord.y) > speed)
+	{
+		if (data->coord.y + (data->height / 2 - 32) * 10 < monster->coord.y)
+			monster->coord.y -= speed;
+		else
+			monster->coord.y += speed;
+	}
 }
 
 void	event_monster(t_data *data, t_monster *monster)

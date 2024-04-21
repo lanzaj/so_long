@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 01:32:23 by jlanza            #+#    #+#             */
-/*   Updated: 2024/04/21 17:46:38 by jlanza           ###   ########.fr       */
+/*   Updated: 2024/04/21 18:19:15 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ void	put_entities(t_data *data)
 	qsort(coords_Y, 4, sizeof(int), compare);
 	for (int i = 0; i <= 4; ++i)
 	{
-		if (i > 0 && coords_Y[i] == coords_Y[i - 1])
-			break;
+		//if (i > 0 && coords_Y[i] == coords_Y[i - 1])
+		//	break;
 		if (coords_Y[i] == y_player)
 			put_player(data);
 		if (coords_Y[i] == y_demon)

@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2024/04/21 17:46:28 by jlanza           ###   ########.fr       */
+/*   Updated: 2024/04/21 18:13:41 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <X11/Xutil.h>
 # include <X11/Xatom.h>
 
+# define SPEED_CARDINAL 1.414213562
 # define SPEED_DIAGONAL 0.70710678
 
 # define MINI_LOOP 500000
