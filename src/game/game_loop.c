@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 22:25:21 by jlanza            #+#    #+#             */
-/*   Updated: 2024/03/25 19:52:22 by jlanza           ###   ########.fr       */
+/*   Updated: 2024/04/21 16:35:03 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	game_loop(t_data *data)
 		update_x_y(data, &(data->way), &(data->coord));
 		update_map_x_y(data);
 		event_player(data, data->coord.x, data->coord.y);
+		event_monsters(data);
 	}
 	else
 		display_endscreen(data);

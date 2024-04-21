@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 00:37:26 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/05 20:21:36 by jlanza           ###   ########.fr       */
+/*   Updated: 2024/04/21 18:01:09 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,43 @@ void	event_player(t_data *data, int x, int y)
 		data->orc.dir = 1;
 	else
 		data->orc.dir = 0;
+}
+
+double	dist(t_data *data, t_coord a, t_coord b)
+{
+	a.y = data->coord.y + (data->height / 2 - 32) * 10;
+	a.x = a.x + (data->width / 2 - 32) * 10;
+	return (sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2)));
+}
+
+void	move_monster(t_data *data, t_monster *monster)
+{
+	int speed = 30;
+	if (data->coord.x + (data->width / 2 - 32) * 10 < monster->coord.x)
+		monster->coord.x -= speed;
+	else
+		monster->coord.x += speed;
+	if (data->coord.y + (data->height / 2 - 32) * 10 < monster->coord.y)
+		monster->coord.y -= speed;
+	else
+		monster->coord.y += speed;
+}
+
+void	event_monster(t_data *data, t_monster *monster)
+{
+	double distMonster = dist(data, data->coord, monster->coord);
+	if (distMonster < 4000 && distMonster > 500)
+	{
+		move_monster(data, monster);
+		monster->moving = 1;
+	}
+	else
+		monster->moving = 0;
+}
+
+void	event_monsters(t_data *data)
+{
+	event_monster(data, &(data->orc));
+	event_monster(data, &(data->demon));
+	event_monster(data, &(data->undead));
 }

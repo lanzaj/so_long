@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:06:04 by jlanza            #+#    #+#             */
-/*   Updated: 2024/03/25 19:33:51 by jlanza           ###   ########.fr       */
+/*   Updated: 2024/04/21 17:46:28 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -338,6 +338,7 @@ int				key_release(int keycode, void *data);
 void			update_x_y(t_data *data, t_way *way, t_coord *coord);
 void			update_map_x_y(t_data *data);
 void			event_player(t_data *data, int x, int y);
+void			event_monsters(t_data *data);
 int				from_player_x_to_map_tile_x(t_data *data, int x);
 int				from_player_y_to_map_tile_y(t_data *data, int y);
 char			from_player_pos_to_map_char(t_data *data, int x, int y);

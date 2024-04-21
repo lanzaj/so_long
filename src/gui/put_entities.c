@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 01:32:23 by jlanza            #+#    #+#             */
-/*   Updated: 2024/03/25 15:48:31 by jlanza           ###   ########.fr       */
+/*   Updated: 2024/04/21 17:46:38 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ static void	put_monster_frame(t_data *d, t_coord coord, t_sprite p, int moving)
 {
 	if (moving)
 	{
-		if (d->long_frame < MINI_LOOP / 4)
+		if (d->frame < MINI_LOOP / 4)
 			put_img_to_tmp(d, &(p.run_0), coord.x, coord.y);
-		else if (d->long_frame < MINI_LOOP / 2)
+		else if (d->frame < MINI_LOOP / 2)
 			put_img_to_tmp(d, &(p.run_1), coord.x, coord.y);
-		else if (d->long_frame < MINI_LOOP * 3 / 4)
+		else if (d->frame < MINI_LOOP * 3 / 4)
 			put_img_to_tmp(d, &(p.run_2), coord.x, coord.y);
 		else
 			put_img_to_tmp(d, &(p.run_3), coord.x, coord.y);
