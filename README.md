@@ -2,7 +2,11 @@
 
 This project is a simple 2D game coded in C. No game engine was used.
 
-![Alt Text](./img/game.webm)
+<video controls>
+  <source src="./img/game.webm" type="video/webm">
+  Your browser does not support the video tag.
+</video>
+
 
 ## Usage (linux)
 
