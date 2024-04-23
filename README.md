@@ -13,4 +13,5 @@ make && ./so_long
 
 ## Credits
 https://0x72.itch.io/dungeontileset-ii
+
 https://tinyworlds.itch.io/free-pixel-font-thaleah
