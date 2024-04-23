@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 21:55:00 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/05 19:56:12 by jlanza           ###   ########.fr       */
+/*   Updated: 2024/04/23 14:59:01 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	spawn_monster(t_data *data, char **map, t_coord tile, int n_monster)
 	update_map_monster(map, tile);
 	monster->coord.x = (tile.x + 3) * 640;
 	monster->coord.y = (tile.y + 3) * 640;
+	monster->spawnCoord.x = monster->coord.x;
+	monster->spawnCoord.y = monster->coord.y;
 }
 
 int	is_monster_spawnable(t_data *data, t_coord tile)

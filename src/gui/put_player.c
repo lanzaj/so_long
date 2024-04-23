@@ -6,13 +6,13 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 00:29:00 by jlanza            #+#    #+#             */
-/*   Updated: 2024/03/25 19:32:20 by jlanza           ###   ########.fr       */
+/*   Updated: 2024/04/23 15:18:50 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-void	put_player_R_or_L(t_data *d, t_coord coord, t_sprite p)
+void	put_player_r_or_l(t_data *d, t_coord coord, t_sprite p)
 {
 	if (d->way.up != d->way.down || d->way.right != d->way.left)
 	{
@@ -41,7 +41,7 @@ void	put_player_R_or_L(t_data *d, t_coord coord, t_sprite p)
 void	put_player(t_data *data)
 {
 	if (data->way.dir)
-		put_player_R_or_L(data, data->player.coord, data->player.r);
+		put_player_r_or_l(data, data->player.coord, data->player.r);
 	else
-		put_player_R_or_L(data, data->player.coord, data->player.l);
+		put_player_r_or_l(data, data->player.coord, data->player.l);
 }

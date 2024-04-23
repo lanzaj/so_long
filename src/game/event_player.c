@@ -6,11 +6,23 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 00:37:26 by jlanza            #+#    #+#             */
-/*   Updated: 2024/04/21 18:16:22 by jlanza           ###   ########.fr       */
+/*   Updated: 2024/04/23 15:14:36 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
+
+double	dist(t_data *data, t_coord a, t_coord b)
+{
+	a.y = data->coord.y + (data->height / 2 - 32) * 10;
+	a.x = a.x + (data->width / 2 - 32) * 10;
+	return (sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2)));
+}
+
+double	dist_spawn(t_coord a, t_coord b)
+{
+	return (sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2)));
+}
 
 void	event_player(t_data *data, int x, int y)
 {
@@ -25,7 +37,9 @@ void	event_player(t_data *data, int x, int y)
 	if ('E' == get_type_tile_under_player(data, &(data->map), x, y)
 		&& !data->nbr_of_collectible)
 		data->end.won = 1;
-	if ('M' == get_type_tile_under_player(data, &(data->map), x, y))
+	if (dist(data, data->coord, data->orc.coord) < 500
+		|| dist(data, data->coord, data->undead.coord) < 500
+		|| dist(data, data->coord, data->demon.coord) < 500)
 		data->end.lost = 1;
 	if (data->coord.x + (data->width / 2 - 32) * 10 > data->demon.coord.x)
 		data->demon.dir = 1;
@@ -41,42 +55,47 @@ void	event_player(t_data *data, int x, int y)
 		data->orc.dir = 0;
 }
 
-double	dist(t_data *data, t_coord a, t_coord b)
-{
-	a.y = data->coord.y + (data->height / 2 - 32) * 10;
-	a.x = a.x + (data->width / 2 - 32) * 10;
-	return (sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2)));
-}
 
 void	move_monster(t_data *data, t_monster *monster)
 {
-	int speed = 40;
-	if ((abs(data->coord.x + (data->width / 2 - 32) * 10 - monster->coord.x) <= speed)
-		|| (abs(data->coord.y + (data->height / 2 - 32) * 10 - monster->coord.y) <= speed))
-		speed *= SPEED_CARDINAL;
+	int		speed = (data->speed / 4) * 3;
+	t_coord	newCoord;
+	newCoord.x = monster->coord.x;
+	newCoord.y = monster->coord.y;
+	
+	if (!((abs(data->coord.x + (data->width / 2 - 32) * 10 - monster->coord.x) <= speed)
+		|| (abs(data->coord.y + (data->height / 2 - 32) * 10 - monster->coord.y) <= speed)))
+		speed *= SPEED_DIAGONAL;
 	if (abs(data->coord.x + (data->width / 2 - 32) * 10 - monster->coord.x) > speed)
 	{
 		if (data->coord.x + (data->width / 2 - 32) * 10 < monster->coord.x)
-			monster->coord.x -= speed;
-		else
-			monster->coord.x += speed;
+			newCoord.x -= speed;
+		else if ((data->coord.x + (data->width / 2 - 32) * 10 > monster->coord.x))
+			newCoord.x += speed;
 	}
 	if (abs(data->coord.y + (data->height / 2 - 32) * 10 - monster->coord.y) > speed)
 	{
 		if (data->coord.y + (data->height / 2 - 32) * 10 < monster->coord.y)
-			monster->coord.y -= speed;
-		else
-			monster->coord.y += speed;
+			newCoord.y -= speed;
+		else if (data->coord.y + (data->height / 2 - 32) * 10 > monster->coord.y)
+			newCoord.y += speed;
 	}
+	if (dist_spawn(newCoord, monster->spawnCoord) < 800)
+	{
+		monster->coord.x = newCoord.x;
+		monster->coord.y = newCoord.y;
+		monster->moving = 1;
+	}
+	else
+		monster->moving = 0;
 }
 
 void	event_monster(t_data *data, t_monster *monster)
 {
 	double distMonster = dist(data, data->coord, monster->coord);
-	if (distMonster < 4000 && distMonster > 500)
+	if (distMonster < 2000 && distMonster > 500)
 	{
 		move_monster(data, monster);
-		monster->moving = 1;
 	}
 	else
 		monster->moving = 0;
