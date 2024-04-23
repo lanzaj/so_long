@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 22:42:56 by jlanza            #+#    #+#             */
-/*   Updated: 2024/04/23 16:45:24 by jlanza           ###   ########.fr       */
+/*   Updated: 2024/04/23 17:30:07 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ void	init_data(t_data *data)
 		free_map(data->map.ptr);
 		exit(1);
 	}
-	data->width = 1280;
-	data->height = 720;
-	data->win = mlx_new_window(data->mlx, data->width, data->height, "so_long");
-	//data->win = mlx_new_fullscreen_window(data->mlx, &(data->width), &(data->height), "so_long");
+	//data->width = 1280;
+	//data->height = 720;
+	//data->win = mlx_new_window(data->mlx, data->width, data->height, "so_long");
+	data->win = mlx_new_fullscreen_window(data->mlx, &(data->width), &(data->height), "so_long");
 	if (data->win == NULL)
 	{
 		free_map(data->map.ptr);
