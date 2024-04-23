@@ -1,0 +1,13 @@
+# SO_LONG
+
+This project is a simple 2D game coded in C. No game engine was used.
+
+![Alt Text](./img/game.webm)
+
+## Usage (linux)
+
+```console
+make && ./so_long
+```
+
+## Credits

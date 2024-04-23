@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 00:37:26 by jlanza            #+#    #+#             */
-/*   Updated: 2024/04/23 15:14:36 by jlanza           ###   ########.fr       */
+/*   Updated: 2024/04/23 16:36:40 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	move_monster(t_data *data, t_monster *monster)
 void	event_monster(t_data *data, t_monster *monster)
 {
 	double distMonster = dist(data, data->coord, monster->coord);
-	if (distMonster < 2000 && distMonster > 500)
+	if (distMonster < 8000 && distMonster > 500)
 	{
 		move_monster(data, monster);
 	}
